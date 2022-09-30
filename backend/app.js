@@ -5,13 +5,15 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-const { environment } =  require('./config');
-const isProduction = environment === 'production';
-const { ValidationError } = require('sequelize');
+
 const routes = require('./routes');
 
+const { ValidationError } = require('sequelize');
+
+const { environment } =  require('./config');
+const isProduction = environment === 'production';
+
 const app = express();
-app.use(routes);
 
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -42,6 +44,7 @@ app.use(
 );
 
 
+app.use(routes);
 
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
