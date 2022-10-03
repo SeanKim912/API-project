@@ -2,8 +2,9 @@
 const {
   Model
 } = require('sequelize');
+const Group = require('./group')
 module.exports = (sequelize, DataTypes) => {
-  class GroupImages extends Model {
+  class GroupImage extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,18 +12,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      GroupImages.belongsTo(
-        model.Groups,
+      GroupImage.belongsTo(
+        models.Group,
         { foreignKey: 'groupId' }
       )
     }
   }
-  GroupImages.init({
+  GroupImage.init({
     groupId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Groups,
+        model: Group,
         key: 'id'
       }
     },
@@ -34,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'GroupImages',
+    modelName: 'GroupImage',
   });
-  return GroupImages;
+  return GroupImage;
 };

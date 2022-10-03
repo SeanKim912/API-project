@@ -1,22 +1,24 @@
 'use strict';
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('GroupImages', {
+    await queryInterface.createTable('Memberships', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       groupId: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      url: {
-        type: Sequelize.STRING
-      },
-      preview: {
-        type: Sequelize.BOOLEAN
+      status: {
+        type: Sequelize.ENUM('value')
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('GroupImages');
+    await queryInterface.dropTable('Memberships');
   }
 };

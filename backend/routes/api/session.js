@@ -66,4 +66,8 @@ router.get(
     }
 );
 
+// Get the Current User
+
+// Log In a User
+
 module.exports = router;

@@ -2,31 +2,33 @@
 const {
   Model
 } = require('sequelize');
-const user = require('./user');
+const User = require('./user');
+const Group = require('./group');
+const Event = require('./event');
 module.exports = (sequelize, DataTypes) => {
-  class Venues extends Model {
+  class Venue extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Venues.belongsToMany(
-        models.Groups,
-        { through: models.Events }
-      );
-      Venues.belongsTo(
-        models.Groups,
+      Venue.belongsTo(
+        models.Group,
         { foreignKey: 'groupId' }
+      );
+      Venue.hasMany(
+        models.Event,
+        { foreignKey: 'venueId'}
       )
     }
   }
-  Venues.init({
+  Venue.init({
     groupId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Groups,
+        model: Group,
         key: 'id'
       }
     },
@@ -55,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Venues',
+    modelName: 'Venue',
   });
-  return Venues;
+  return Venue;
 };

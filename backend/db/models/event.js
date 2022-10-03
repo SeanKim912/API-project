@@ -2,9 +2,10 @@
 const {
   Model
 } = require('sequelize');
-const venues = require('./venues');
+const Group = require('./group')
+const Venue = require('./venue');
 module.exports = (sequelize, DataTypes) => {
-  class Events extends Model {
+  class Event extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,22 +13,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Events.hasMany(
-        model.EventImages,
+      Event.hasMany(
+        models.EventImage,
         { foreignKey: 'eventId', onDelete: 'CASCADE', hooks: true }
       );
-      Events.belongsToMany(
-        model.User,
-        { through: models.Attendances }
-      )
+      Event.belongsToMany(
+        models.User,
+        { through: models.Attendance, foreignKey: 'eventId' }
+      );
+      Event.belongsTo(
+        models.Venue,
+        { foreignKey: 'venueId' }
+      );
     }
   }
-  Events.init({
+  Event.init({
     venueId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: venues,
+        model: Venue,
         key: 'id'
       }
     },
@@ -35,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Groups,
+        model: Group,
         key: 'id'
       }
     },
@@ -64,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Events',
+    modelName: 'Event',
   });
-  return Events;
+  return Event;
 };

@@ -43,17 +43,6 @@ router.post(
     }
 );
 
-// router.get(
-//     '/',
-//     restoreUser,
-//     (req, res) => {
-//         const { user } = req;
-//         if (user) {
-//             return res.json({
-//                 user: user.toSafeObject()
-//             });
-//         } else return res.json({});
-//     }
-// );
+// Sign Up a User
 
 module.exports = router;

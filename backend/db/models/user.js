@@ -1,6 +1,7 @@
 'use strict';
 const { Model, Validator } = require('sequelize');
 const bcrypt = require('bcryptjs');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
 
@@ -41,20 +42,15 @@ module.exports = (sequelize, DataTypes) => {
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
+
     static associate(models) {
       // define association here
-      User.belongsToMany([
-        [models.Events,
-        { through: models.Attendances }],
-        [models.Groups,
-        { through: models.Memberships }]
-        ]);
-      User.hasMany(
-        models.Groups,
-        { foreignKey: 'organizerId' }
-      );
+      User.belongsToMany(models.Event, { through: 'Attendances' });
+      User.belongsToMany(models.Group, { through: 'Memberships' });
+      User.hasMany(models.Group, { foreignKey: 'organizerId' });
     }
   }
+
   User.init({
     username: {
       type: DataTypes.STRING,
