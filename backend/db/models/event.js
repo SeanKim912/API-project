@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT
     },
     type: {
-      type: DataTypes.ENUM('value')
+      type: DataTypes.STRING
     },
     capacity: {
       type: DataTypes.INTEGER

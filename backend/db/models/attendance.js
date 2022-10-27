@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     status: {
-      type: DataTypes.ENUM('value')
+      type: DataTypes.STRING
     }
   }, {
     sequelize,
