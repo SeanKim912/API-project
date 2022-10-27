@@ -47,6 +47,7 @@ app.use(
 app.use(routes);
 
 app.use('/groups', require('./routes/api/groups'));
+app.use('/events', require('./routes/api/events'));
 
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
