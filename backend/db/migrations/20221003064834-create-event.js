@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false
       },
       type: {
-        type: Sequelize.ENUM('value')
+        type: Sequelize.STRING
       },
       capacity: {
         type: Sequelize.INTEGER,

@@ -49,6 +49,6 @@ router.post(
     }
 );
 
-// Sign Up a User
+
 
 module.exports = router;
