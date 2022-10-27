@@ -12,7 +12,7 @@ const setTokenCookie = (res, user) => {
         { data: user.toSafeObject() },
         secret,
         { expiresIn: parseInt(expiresIn) } // 604,800 seconds is 1 week
-    )
+    );
 
 
     const isProduction = process.env.NODE_ENV === "production";
@@ -31,7 +31,6 @@ const setTokenCookie = (res, user) => {
 const restoreUser = (req, res, next) => {
     // token parsed from cookies
     const { token } = req.cookies;
-    req.user = null;
 
     return jwt.verify(token, secret, null, async (err, jwtPayload) => {
         if (err) {
@@ -53,14 +52,14 @@ const restoreUser = (req, res, next) => {
 };
 
 // If there is no current user, return an error
-const requireAuth = function (req, res, next) {
+const requireAuth = function (req, _res, next) {
     if (req.user) return next();
 
-    const err = new Error('Unauthorized');
-    err.title = 'Unauthorized';
-    err.errors = ['Unauthorized'];
-    err.status = 401;
-    return next(err);
-}
+        const err = new Error('Unauthorized');
+        err.title = 'Unauthorized';
+        err.errors = ['Unauthorized'];
+        err.status = 401;
+        return next(err);
+};
 
 module.exports = { setTokenCookie, restoreUser, requireAuth };

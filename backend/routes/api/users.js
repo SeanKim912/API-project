@@ -1,14 +1,20 @@
 // backend/routes/api/users.js
 const express = require('express');
+const router = express.Router();
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const router = express.Router();
 
 const validateSignup = [
+    check('firstName')
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide a first name.'),
+    check('lastName')
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide a last name'),
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
@@ -30,9 +36,10 @@ const validateSignup = [
 
 router.post(
     '/',
+    validateSignup,
     async (req, res) => {
-        const { email, password, username } = req.body;
-        const user = await User.signup({ email, username, password });
+        const { firstName, lastName, email, username, password } = req.body;
+        const user = await User.signup({ firstName, lastName, email, username, password });
 
         await setTokenCookie(res, user);
 
@@ -42,32 +49,6 @@ router.post(
     }
 );
 
-router.get(
-    '/',
-    restoreUser,
-    (req, res) => {
-        const { user } = req;
-        if (user) {
-            return res.json({
-                user: user.toSafeObject()
-            });
-        } else return res.json({});
-    }
-);
-
-router.post(
-    '/',
-    validateSignup,
-    async (req, res) => {
-        const { email, password, username } = req.body;
-        const user = await User.signup({ email, username, password });
-
-        await setTokenCookie(res, user);
-
-        return res.json({
-            user,
-        });
-    }
-);
+// Sign Up a User
 
 module.exports = router;
