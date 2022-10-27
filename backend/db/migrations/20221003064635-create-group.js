@@ -23,7 +23,7 @@ module.exports = {
         allowNull: false
       },
       type: {
-        type: Sequelize.ENUM('value')
+        type: Sequelize.STRING
       },
       private: {
         type: Sequelize.BOOLEAN

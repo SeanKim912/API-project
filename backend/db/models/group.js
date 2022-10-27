@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT
     },
     type: {
-      type: DataTypes.ENUM('value')
+      type: DataTypes.STRING
     },
     private: {
       type: DataTypes.BOOLEAN
