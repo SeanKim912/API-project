@@ -4,7 +4,6 @@
 
 <img width="840" alt="meetup_dbdiagram" src="https://user-images.githubusercontent.com/106803067/192572123-46457ea7-fb40-411e-be93-26b8a094939f.png">
 
-
 ## API Documentation
 
 ## USER AUTHENTICATION/AUTHORIZATION
@@ -53,7 +52,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/profile'
+  * URL: /api/session
   * Body: none
 
 * Successful Response
@@ -79,7 +78,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: '/login'
+  * URL: /api/session
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -145,7 +144,7 @@ user's information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: '/signup'
+  * URL: /api/users
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -218,7 +217,7 @@ Returns all the groups.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/groups'
+  * URL: /api/groups
   * Body: none
 
 * Successful Response
@@ -255,7 +254,7 @@ Returns all the groups.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/profile/groups'
+  * URL: /api/groups/current
   * Body: none
 
 * Successful Response
@@ -292,7 +291,7 @@ Returns the details of a group specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/groups/:id'
+  * URL: /api/groups/:groupId
   * Body: none
 
 * Successful Response
@@ -365,7 +364,7 @@ Creates and returns a new group.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: '/groups'
+  * URL: /api/groups
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -430,8 +429,8 @@ Create and return a new image for a group specified by id.
 * Require Authentication: true
 * Require proper authorization: Current User must be the organizer for the group
 * Request
-  * Method: PUT
-  * URL: '/groups/:id'
+  * Method: POST
+  * URL: /api/groups/:groupId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -478,7 +477,7 @@ Updates and returns an existing group.
 * Require proper authorization: Group must belong to the current user
 * Request
   * Method: PUT
-  * URL: '/profile/groups/:id'
+  * URL: /api/groups/:groupId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -557,7 +556,7 @@ Deletes an existing group.
 * Require proper authorization: Group must belong to the current user
 * Request
   * Method: DELETE
-  * URL: 'profile/groups'
+  * URL: /api/groups/:groupId
   * Body: none
 
 * Successful Response
@@ -597,7 +596,7 @@ Returns all venues for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: GET
-  * URL: '/groups/:id/venues'
+  * URL: /api/groups/:groupId/venues
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -622,7 +621,7 @@ Returns all venues for a group specified by its id
       }
     ]
   }
-  
+
   ```
 
 * Error response: Couldn't find a Group with the specified id
@@ -647,7 +646,7 @@ Creates and returns a new venue for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: '/groups/:id/venues'
+  * URL: /api/groups/:groupId/venues
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -722,7 +721,7 @@ Edit a new venue specified by its id
   the group with a status of "co-host"
 * Request
   * Method: PUT
-  * URL: '/venues/:id'
+  * URL: /api/venues/:venueId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -797,7 +796,7 @@ Returns all the events.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/events'
+  * URL: /api/events
   * Body: none
 
 * Successful Response
@@ -860,7 +859,7 @@ Returns all the events of a group specified by its id
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/groups/:id/events'
+  * URL: /api/groups/:groupId/events
   * Body: none
 
 * Successful Response
@@ -936,7 +935,7 @@ Returns the details of an event specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/events/:id'
+  * URL: /api/events/:eventId
   * Body: none
 
 * Successful Response
@@ -1010,7 +1009,7 @@ Creates and returns a new event for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: 'groups/:id/events'
+  * URL: /api/groups/:groupId/events
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1090,10 +1089,10 @@ Creates and returns a new event for a group specified by its id
 Create and return a new image for an event specified by id.
 
 * Require Authentication: true
-* Require proper authorization: Current User must be an attendee of the event
+* Require proper authorization: Current User must be an attendee, host, or co-host of the event
 * Request
-  * Method: PUT
-  * URL: 'events/:id'
+  * Method: POST
+  * URL: /api/events/:eventId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1141,7 +1140,7 @@ Edit and returns an event specified by its id
   the group with a status of "co-host"
 * Request
   * Method: PUT
-  * URL: 'events/:id'
+  * URL: /api/events/:eventId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1238,7 +1237,7 @@ Delete an event specified by its id
   the group with a status of "co-host"
 * Request
   * Method: DELETE
-  * URL: 'events/:id'
+  * URL: /api/events/:eventId
   * Body: none
 
 * Successful Response
@@ -1275,7 +1274,7 @@ Returns the members of a group specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: 'groups/:id/members'
+  * URL: /api/groups/:groupId/members
   * Body: none
 
 * Successful Response: If you ARE the organizer or a co-host of the group. Shows
@@ -1365,8 +1364,8 @@ Request a new membership for a group specified by id.
 
 * Require Authentication: true
 * Request
-  * Method: GET
-  * URL: '/groups/:id/membership'
+  * Method: POST
+  * URL: /api/groups/:groupId/membership
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1379,7 +1378,6 @@ Request a new membership for a group specified by id.
 
     ```json
     {
-      "groupId": 1,
       "memberId": 2,
       "status": "pending"
     }
@@ -1438,7 +1436,7 @@ Change the status of a membership for a group specified by id.
     * Current User must already be the organizer
 * Request
   * Method: PUT
-  * URL: '/groups/:id/membership/memberId'
+  * URL: /api/groups/:groupId/membership
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1532,7 +1530,7 @@ Delete a membership to a group specified by id.
   the user whose membership is being deleted
 * Request
   * Method: DELETE
-  * URL: '/groups/:id/membership'
+  * URL: /api/groups/:groupId/membership
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1606,7 +1604,7 @@ Returns the attendees of an event specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/events/:id/attendees'
+  * URL: /api/events/:eventId/attendees
   * Body: none
 
 * Successful Response: If you ARE the organizer of the group or a member of the
@@ -1699,8 +1697,8 @@ Request attendance for an event specified by id.
 * Require Authentication: true
 * Require Authorization: Current User must be a member of the group
 * Request
-  * Method: GET
-  * URL: 'events/:id/request'
+  * Method: POST
+  * URL: /api/events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1713,7 +1711,6 @@ Request attendance for an event specified by id.
 
     ```json
     {
-      "eventId": 1,
       "userId": 2,
       "status": "pending"
     }
@@ -1768,7 +1765,7 @@ Change the status of an attendance for an event specified by id.
   have a membership to the group with the status of "co-host"
 * Request
   * Method: PUT
-  * URL: 'events/:id/attendees'
+  * URL: /api/events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1776,7 +1773,7 @@ Change the status of an attendance for an event specified by id.
     ```json
     {
       "userId": 2,
-      "status": "member"
+      "status": "attending"
     }
     ```
 
@@ -1791,7 +1788,7 @@ Change the status of an attendance for an event specified by id.
       "id": 1,
       "eventId": 1,
       "userId": 2,
-      "status": "member"
+      "status": "attending"
     }
     ```
 
@@ -1843,7 +1840,7 @@ Delete an attendance to an event specified by id.
   the user whose attendance is being deleted
 * Request
   * Method: DELETE
-  * URL: '/events/:id/attendees'
+  * URL: /api/events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1915,8 +1912,8 @@ Delete an existing image for a Group.
 * Require proper authorization: Current user must be the organizer or "co-host"
   of the Group
 * Request
-  * Method: PUT
-  * URL: '/groups'
+  * Method: DELETE
+  * URL: /api/group-images/:imageId
   * Body: none
 
 * Successful Response
@@ -1954,8 +1951,8 @@ Delete an existing image for an Event.
 * Require proper authorization: Current user must be the organizer or "co-host"
   of the Group that the Event belongs to
 * Request
-  * Method: PUT
-  * URL: '/events'
+  * Method: DELETE
+  * URL: /api/event-images/:imageId
   * Body: none
 
 * Successful Response
@@ -1991,11 +1988,11 @@ Return events filtered by query parameters.
 
 * Require Authentication: false
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: GET
+  * URL: /api/events
   * Query Parameters
-    * page: integer, minimum: 0, maximum: 10, default: 0
-    * size: integer, minimum: 0, maximum: 20, default: 20
+    * page: integer, minimum: 1, maximum: 10, default: 1
+    * size: integer, minimum: 1, maximum: 20, default: 20
     * name: string, optional
     * type: string, optional
     * startDate: string, optional
@@ -2065,8 +2062,8 @@ Return events filtered by query parameters.
       "message": "Validation Error",
       "statusCode": 400,
       "errors": {
-        "page": "Page must be greater than or equal to 0",
-        "size": "Size must be greater than or equal to 0",
+        "page": "Page must be greater than or equal to 1",
+        "size": "Size must be greater than or equal to 1",
         "name": "Name must be a string",
         "type": "Type must be 'Online' or 'In Person'",
         "startDate": "Start date must be a valid datetime",
