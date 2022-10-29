@@ -25,9 +25,8 @@ router.post('/', async (req, res) => {
 // Add an Image to a Group based on the Group's id
 router.post('/:groupId/images', async (req, res) => {
     const { url, preview } = req.body;
-    const id = req.params.groupId;
 
-    const group = await Group.findByPk(id);
+    const group = await Group.findByPk(req.params.groupId);
 
     if (!group) {
         res.statusCode = 404;
