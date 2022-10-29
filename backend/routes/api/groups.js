@@ -4,24 +4,6 @@ const router = express.Router();
 const { Group, GroupImage, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
-// Return all groups
-router.get('/', async (req, res) => {
-
-    const groups = await Group.findAll();
-
-    return res.json(groups)
-});
-
-// Create a Group
-router.post('/', async (req, res) => {
-    const { name, about, type, private, city, state } = req.body;
-    const newGroup = await Group.create({ organizerId: req.user.id, name, about, type, private, city, state });
-
-    return res.json({
-        newGroup
-    });
-});
-
 // Add an Image to a Group based on the Group's id
 router.post('/:groupId/images', async (req, res) => {
     const { url, preview } = req.body;
@@ -45,6 +27,25 @@ router.post('/:groupId/images', async (req, res) => {
 
     res.json(newGroupImage);
 });
+
+// Return all groups
+router.get('/', async (req, res) => {
+
+    const groups = await Group.findAll();
+
+    return res.json(groups)
+});
+
+// Create a Group
+router.post('/', async (req, res) => {
+    const { name, about, type, private, city, state } = req.body;
+    const newGroup = await Group.create({ organizerId: req.user.id, name, about, type, private, city, state });
+
+    return res.json({
+        newGroup
+    });
+});
+
 
 // Return all groups joined/organized by Current User
 // router.get('/current', async (req, res) => {});
