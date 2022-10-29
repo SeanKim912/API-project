@@ -35,13 +35,14 @@ router.post('/:groupId/images', async (req, res) => {
             "message": "Group couldn't be found",
             "statusCode": 404
         });
-    } else {
-        const newGroupImage = await GroupImage.create({
+    }
+        
+    const newGroupImage = await GroupImage.create({
             groupId: group.id,
             url,
             preview
         });
-    }
+
 
     res.json(newGroupImage);
 });
