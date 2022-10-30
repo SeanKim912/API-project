@@ -7,8 +7,9 @@ const { requireAuth } = require('../../utils/auth');
 // Add an Image to a Group based on the Group's id
 router.post('/:groupId/images', async (req, res) => {
     const { url, preview } = req.body;
+    const { groupId } = req.params;
 
-    const group = await Group.findByPk(req.params.groupId);
+    const group = await Group.findByPk(groupId);
 
     if (!group) {
         res.statusCode = 404;
@@ -19,12 +20,16 @@ router.post('/:groupId/images', async (req, res) => {
     }
 
     const newGroupImage = await GroupImage.create({
-        groupId: group.id,
+        groupId,
         url,
         preview
     });
 
-    res.json(newGroupImage);
+    res.json({
+        id: newGroupImage.id,
+        url: newGroupImage.url,
+        preview: newGroupImage.preview
+    });
 });
 
 // Return all groups
