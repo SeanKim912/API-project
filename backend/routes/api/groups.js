@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, User } = require('../../db/models');
+const { Group, GroupImage, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 // Add an Image to a Group based on the Group's id
 router.post('/:groupId/images', async (req, res) => {
-    
+
 });
 
 // Return all groups
@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
         newGroup
     });
 });
+
 
 // Return all groups joined/organized by Current User
 // router.get('/current', async (req, res) => {});
