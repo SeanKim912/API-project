@@ -1,8 +1,31 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, User } = require('../../db/models');
+const { Group, GroupImage, User } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+
+// Add an Image to a Group based on the Group's id
+router.post('/:groupId/images', async (req, res) => {
+    const { url, preview } = req.body;
+
+    const group = await Group.findByPk(req.params.groupId);
+
+    if (!group) {
+        res.statusCode = 404;
+        res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+        });
+    }
+
+    const newGroupImage = await GroupImage.create({
+        groupId: group.id,
+        url,
+        preview
+    });
+
+    res.json(newGroupImage);
+});
 
 // Return all groups
 router.get('/', async (req, res) => {
@@ -22,6 +45,7 @@ router.post('/', async (req, res) => {
     });
 });
 
+
 // Return all groups joined/organized by Current User
 // router.get('/current', async (req, res) => {});
 
@@ -29,8 +53,6 @@ router.post('/', async (req, res) => {
 // router.get('/:groupId', async (req, res) => {});
 
 
-// Add an Image to a Group based on the Group's id
-// router.post('/:groupId/images', async (req, res) => {});
 
 // Edit a Group
 // router.put('/:groupId', async (req, res) => {});
