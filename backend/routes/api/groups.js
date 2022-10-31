@@ -12,11 +12,11 @@ router.post('/:groupId/images', async (req, res) => {
     const group = await Group.findByPk(groupId);
 
     if (!group) {
-        res.statusCode = 404;
-        res.json({
-            "message": "Group couldn't be found",
-            "statusCode": 404
-        });
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+
     }
 
     const newGroupImage = await GroupImage.create({
@@ -69,11 +69,10 @@ router.put('/:groupId', async (req, res) => {
     const group = await Group.findByPk(groupId);
 
     if (!group) {
-        res.statusCode = 404;
-        res.json({
-            "message": "Group couldn't be found",
-            "statusCode": 404
-        });
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
     };
 
     const updatedGroup = await group.update({
@@ -95,14 +94,14 @@ router.put('/:groupId', async (req, res) => {
 });
 
 // Delete a Group
-router.delete('/:groupId', async (req, res) => {
+router.delete('/:groupId', async (req, res, next) => {
     const group = await Group.findByPk(req.params.groupId);
 
     if (!group) {
-        res.json({
-            "message": "Group couldn't be found",
-            "statusCode": 404
-        });
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
     };
 
     await group.destroy();
@@ -110,22 +109,6 @@ router.delete('/:groupId', async (req, res) => {
     res.json({
         "message": "Successfully deleted",
         "statusCode": 200
-    })
-});
-
-// Return all groups joined/organized by Current User
-router.get('/current', async (req, res) => {
-    const organized = await Group.findAll({
-        where: { organizerId: req.user.id }
-            });
-
-    const joined = await User.findByPk(req.user.id, {
-        include: { model: Group }
-    });
-
-    return res.json({
-        organized,
-        joined
     });
 });
 
