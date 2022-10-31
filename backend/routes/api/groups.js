@@ -64,6 +64,12 @@ router.get('/:groupId', async (req, res) => {
     });
 });
 
+// Edit a Group
+// router.put('/:groupId', async (req, res) => {});
+
+// Delete a Group
+// router.delete('/:groupId', async (req, res) => {});
+
 // Return all groups
 router.get('/', async (req, res) => {
 
@@ -82,15 +88,5 @@ router.post('/', async (req, res) => {
     });
 });
 
-
-
-
-
-
-// Edit a Group
-// router.put('/:groupId', async (req, res) => {});
-
-// Delete a Group
-// router.delete('/:groupId', async (req, res) => {});
 
 module.exports = router;
