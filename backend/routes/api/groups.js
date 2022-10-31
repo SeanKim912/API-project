@@ -20,9 +20,7 @@ router.post('/:groupId/images', async (req, res, next) => {
         return next(err);
     }
 
-    const newGroupImage = await GroupImage.create({
-        groupId, url, preview
-    });
+    const newGroupImage = await GroupImage.create({ groupId, url, preview });
 
     res.json({
         id: newGroupImage.id,
@@ -53,7 +51,7 @@ router.get('/:groupId/venues', async (req, res, next) => {
             state: venues.state,
             lat: venues.lat,
             lng: venues.lng
-        };
+        }
     });
 });
 
