@@ -8,7 +8,7 @@ const { requireAuth } = require('../../utils/auth');
 
 
 // Edit a Venue from its id
-router.put('/venues/:venueId', async (req, res, next) => {
+router.put('/:venueId', async (req, res, next) => {
     const { address, city, state, lat, lng } = req.body;
     const { venueId } = req.params;
 
