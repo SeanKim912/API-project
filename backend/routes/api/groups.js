@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, GroupImage, User } = require('../../db/models');
+const { Group, GroupImage, User, Membership, Organizer, Venue } = require('../../db/models');
+const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 
 // Add an Image to a Group based on the Group's id
@@ -32,6 +33,37 @@ router.post('/:groupId/images', async (req, res) => {
     });
 });
 
+// Return all groups joined/organized by Current User
+router.get('/current', async (req, res) => {
+    const organized = await Group.findAll({
+        where: { organizerId: req.user.id }
+            });
+
+    const joined = await User.findByPk(req.user.id, {
+        include: { model: Group }
+    });
+
+    return res.json({
+        organized,
+        joined
+    });
+});
+
+// Get details of a Group from its id
+router.get('/:groupId', async (req, res) => {
+    const details = await Group.findByPk(req.params.groupId);
+    const images = await GroupImage.findAll({ where: { groupId: req.params.groupId } });
+    const organizer = await User.findByPk(details.organizerId);
+    const venue = await Venue.findAll({ where: { groupId: req.params.groupId } });
+
+    res.json({
+        Groups: details,
+        GroupImages: images,
+        Organizer: organizer,
+        Venues: venue
+    });
+});
+
 // Return all groups
 router.get('/', async (req, res) => {
 
@@ -51,11 +83,7 @@ router.post('/', async (req, res) => {
 });
 
 
-// Return all groups joined/organized by Current User
-// router.get('/current', async (req, res) => {});
 
-// Get details of a Group from its id
-// router.get('/:groupId', async (req, res) => {});
 
 
 
