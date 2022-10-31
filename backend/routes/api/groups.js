@@ -22,11 +22,7 @@ router.post('/:groupId/images', async (req, res, next) => {
 
     }
 
-    const newGroupImage = await GroupImage.create({
-        groupId,
-        url,
-        preview
-    });
+    const newGroupImage = await GroupImage.create({ groupId, url, preview });
 
     res.json({
         id: newGroupImage.id,

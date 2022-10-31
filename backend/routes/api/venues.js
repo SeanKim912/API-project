@@ -21,9 +21,7 @@ router.put('/venues/:venueId', async (req, res, next) => {
         return next(err);
     };
 
-    const updatedVenue = await venue.update({
-        address, city, state, lat, lng
-    });
+    const updatedVenue = await venue.update({ address, city, state, lat, lng });
 
     res.json({
         id: updatedVenue.id,
