@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     address: {
-      type: DataTypes.STRING(100)
+      type: DataTypes.STRING(100),
     },
     city: {
       type: DataTypes.STRING(20)

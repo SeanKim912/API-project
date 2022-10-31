@@ -31,6 +31,32 @@ router.post('/:groupId/images', async (req, res, next) => {
 
 
 
+// Get all Venues of a Group from its id
+router.get('/:groupId/venues', async (req, res, next) => {
+    const venues = await Venue.findAll({ where: { groupId: req.params.groupId } });
+
+    if (!venues) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    res.json({
+        Venues: {
+            id: venues.id,
+            groupId: venues.groupId,
+            address: venues.address,
+            city: venues.city,
+            state: venues.state,
+            lat: venues.lat,
+            lng: venues.lng
+        }
+    })
+});
+
+
+
 // Create a Venue for a Group based on its id
 router.post('/:groupId/venues', async (req, res, next) => {
     const { address, city, state, lat, lng } = req.body;
@@ -44,58 +70,6 @@ router.post('/:groupId/venues', async (req, res, next) => {
 
         return next(err);
     }
-
-    const newVenue = await Venue.create({ groupId, address, city, state, lat, lng });
-
-    res.json({
-        id: newVenue.id,
-        groupId: newVenue.groupId,
-        address: newVenue.address,
-        city: newVenue.city,
-        state: newVenue.state,
-        lat: newVenue.lat,
-        lng: newVenue.lng
-    });
-});
-
-
-
-// Get all Venues of a Group from its id
-router.get('/:groupId/venues', async (req, res, next) => {
-    const venues = await Venue.findAll({ where: { groupId: req.params.groupId } });
-
-    if (!venues) {
-        const err = new Error("Group couldn't be found");
-        err.status = 404;
-
-        return next(err);
-    };
-
-    res.json({
-            id: venues.id,
-            groupId: venues.groupId,
-            address: venues.address,
-            city: venues.city,
-            state: venues.state,
-            lat: venues.lat,
-            lng: venues.lng
-    });
-});
-
-
-
-// Create a new Venue for a Group from its id
-router.post('/:groupId/venues', async (req, res, next) => {
-    const { address, city, state, lat, lng } = req.body;
-    const { groupId } = req.params;
-    const group = await Group.findByPk(groupId);
-
-    if (!group) {
-        const err = new Error("Group couldn't be found");
-        err.status = 404;
-
-        return next(err);
-    };
 
     const newVenue = await Venue.create({ groupId, address, city, state, lat, lng });
 
@@ -180,6 +154,8 @@ router.post('/:groupId/events', async (req, res, next) => {
         endDate: newEvent.endDate
     });
 });
+
+
 
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
