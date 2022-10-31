@@ -30,6 +30,21 @@ router.post('/:groupId/images', async (req, res) => {
     });
 });
 
+// Return all groups joined/organized by Current User
+router.get('/current', async (req, res) => {
+    const organized = await Group.findAll({
+        where: { organizerId: req.user.id }
+    });
+
+    const joined = await User.findByPk(req.user.id, {
+        include: { model: Group }
+    });
+
+    return res.json({
+        organized,
+        joined
+    });
+});
 
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
@@ -78,7 +93,6 @@ router.put('/:groupId', async (req, res) => {
         updatedAt: updatedGroup.updatedAt
     })
 });
-
 
 // Delete a Group
 // router.delete('/:groupId', async (req, res) => {});
