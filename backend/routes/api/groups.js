@@ -95,7 +95,23 @@ router.put('/:groupId', async (req, res) => {
 });
 
 // Delete a Group
-// router.delete('/:groupId', async (req, res) => {});
+router.delete('/:groupId', async (req, res) => {
+    const group = await Group.findByPk(req.params.groupId);
+
+    if (!group) {
+        res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+        });
+    };
+
+    await group.destroy();
+
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
+});
 
 // Return all groups joined/organized by Current User
 router.get('/current', async (req, res) => {
