@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { Sequelize, Op } = require('sequelize');
 
 const { Group, GroupImage, User, Membership, Venue, Event, Attendance } = require('../../db/models');
 const user = require('../../db/models/user');
@@ -7,10 +8,19 @@ const { requireAuth } = require('../../utils/auth');
 
 
 
-// Get all Members of a Group from its id
+// // Get all Members of a Group from its id
 // router.get('/:groupId/members', async (req, res, next) => {
 //     const { groupId } = req.params;
+//     const userId = req.user.id;
 //     const group = await Group.findByPk(groupId);
+//     const roster = await User.findAll({
+//             where: {
+//                 groupId: groupId
+//             },
+//             include: Membership
+
+//             }
+//         })
 
 //     if (!group) {
 //         const err = new Error("Group couldn't be found");
@@ -19,8 +29,12 @@ const { requireAuth } = require('../../utils/auth');
 //         return next(err);
 //     };
 
+//     if (userId !== group.organizerId) {
+
+//     }
+
 //     res.json({
-//         Venues: {
+//         Members: {
 //             id: venues.id,
 //             groupId: venues.groupId,
 //             address: venues.address,
