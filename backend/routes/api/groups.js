@@ -33,6 +33,32 @@ router.post('/:groupId/images', async (req, res, next) => {
 
 
 
+// Get all Venues of a Group from its id
+router.get('/:groupId/venues', async (req, res, next) => {
+    const venues = await Venue.findAll({ where: { groupId: req.params.groupId } });
+
+    if (!venues) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    res.json({
+        Venues: {
+            id: venues.id,
+            groupId: venues.groupId,
+            address: venues.address,
+            city: venues.city,
+            state: venues.state,
+            lat: venues.lat,
+            lng: venues.lng
+        }
+    })
+});
+
+
+
 // Create a Venue for a Group based on its id
 router.post('/:groupId/venues', async (req, res, next) => {
     const { address, city, state, lat, lng } = req.body;
@@ -58,32 +84,6 @@ router.post('/:groupId/venues', async (req, res, next) => {
         lat: newVenue.lat,
         lng: newVenue.lng
     });
-});
-
-
-
-// Get all Venues of a Group from its id
-router.get('/:groupId/venues', async (req, res, next) => {
-    const venues = await Venue.findAll({ where: { groupId: req.params.groupId } });
-
-    if (!venues) {
-        const err = new Error("Group couldn't be found");
-        err.status = 404;
-
-        return next(err);
-    };
-
-    res.json({
-        Venues: {
-            id: venues.id,
-            groupId: venues.groupId,
-            address: venues.address,
-            city: venues.city,
-            state: venues.state,
-            lat: venues.lat,
-            lng: venues.lng
-        }
-    })
 });
 
 
