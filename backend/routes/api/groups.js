@@ -37,7 +37,7 @@ router.post('/:groupId/images', async (req, res) => {
 router.get('/current', async (req, res) => {
     const organized = await Group.findAll({
         where: { organizerId: req.user.id }
-            });
+    });
 
     const joined = await User.findByPk(req.user.id, {
         include: { model: Group }
@@ -65,7 +65,37 @@ router.get('/:groupId', async (req, res) => {
 });
 
 // Edit a Group
-// router.put('/:groupId', async (req, res) => {});
+router.put('/:groupId', async (req, res) => {
+    const { name, about, type, private, city, state } = req.body;
+    const { groupId } = req.params;
+
+    const group = await Group.findByPk(groupId);
+
+    if (!group) {
+        res.statusCode = 404;
+        res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+        });
+    };
+
+    const updatedGroup = await group.update({
+        name, about, type, private, city, state
+    });
+
+    res.json({
+        id: updatedGroup.id,
+        organizerId: updatedGroup.organizerId,
+        name: updatedGroup.name,
+        about: updatedGroup.about,
+        type: updatedGroup.type,
+        private: updatedGroup.private,
+        city: updatedGroup.city,
+        state: updatedGroup.state,
+        createdAt: updatedGroup.createdAt,
+        updatedAt: updatedGroup.updatedAt
+    })
+});
 
 // Delete a Group
 // router.delete('/:groupId', async (req, res) => {});
