@@ -33,8 +33,37 @@ router.post('/:groupId/images', async (req, res, next) => {
 
 
 
+// Create a Venue for a Group based on its id
+router.post('/:groupId/venues', async (req, res, next) => {
+    const { address, city, state, lat, lng } = req.body;
+    const { groupId } = req.params;
+
+    const group = await Group.findByPk(groupId);
+
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
+    const newVenue = await Venue.create({ groupId, address, city, state, lat, lng });
+
+    res.json({
+        id: newVenue.id,
+        groupId: newVenue.groupId,
+        address: newVenue.address,
+        city: newVenue.city,
+        state: newVenue.state,
+        lat: newVenue.lat,
+        lng: newVenue.lng
+    });
+});
+
+
+
 // Get all Venues of a Group from its id
-router.get('/:groupId/venues', async (req, res) => {
+router.get('/:groupId/venues', async (req, res, next) => {
     const venues = await Venue.findAll({ where: { groupId: req.params.groupId } });
 
     if (!venues) {
@@ -58,6 +87,75 @@ router.get('/:groupId/venues', async (req, res) => {
 });
 
 
+
+// Get all Events of a Group from its id
+router.get('/:groupId/events', async (req, res, next) => {
+    const events = await Event.findAll({ where: { groupId: req.params.groupId } });
+    const groups = await Group.findByPk(req.params.groupId);
+    const venues = await Venue.findByPk(req.body.venueId);
+
+    if (!events) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    res.json({
+        Events: {
+            id: events.id,
+            groupId: events.groupId,
+            venueId: events.venueId,
+            name: events.name,
+            type: events.type,
+            startDate: events.startDate,
+            endDate: events.endDate,
+            Group: {
+                id: groups.id,
+                name: groups.name,
+                city: groups.city,
+                state: groups.state
+            },
+            Venue: {
+                id: venues.id,
+                city: venues.city,
+                state: venues.state
+            }
+        }
+    });
+});
+
+
+
+// Create an Event for a Group from its id
+router.post('/:groupId/events', async (req, res, next) => {
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    const { groupId } = req.params;
+
+    const group = await Group.findByPk(groupId);
+
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
+    const newEvent = await Venue.create({ groupId, venueId, name, type, capacity, price, description, startDate, endDate });
+
+    res.json({
+        id: newEvent.id,
+        groupId: newEvent.groupId,
+        venueId: newEvent.venueId,
+        name: newEvent.name,
+        type: newEvent.type,
+        capacity: newEvent.capacity,
+        price: newEvent.price,
+        description: newEvent.description,
+        startDate: newEvent.startDate,
+        endDate: newEvent.endDate
+    });
+});
 
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
