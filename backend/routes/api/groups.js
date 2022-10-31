@@ -157,6 +157,8 @@ router.post('/:groupId/events', async (req, res, next) => {
     });
 });
 
+
+
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
     const details = await Group.findByPk(req.params.groupId);
