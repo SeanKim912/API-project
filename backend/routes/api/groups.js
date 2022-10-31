@@ -1,9 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, GroupImage, User, Membership, Venue } = require('../../db/models');
+const { Group, GroupImage, User, Membership, Venue, Event, Attendance } = require('../../db/models');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
+
+
+
+// Get all Members of a Group from its id
+// router.get('/:groupId/members', async (req, res, next) => {
+//     const { groupId } = req.params;
+//     const group = await Group.findByPk(groupId);
+
+//     if (!group) {
+//         const err = new Error("Group couldn't be found");
+//         err.status = 404;
+
+//         return next(err);
+//     };
+
+//     res.json({
+//         Venues: {
+//             id: venues.id,
+//             groupId: venues.groupId,
+//             address: venues.address,
+//             city: venues.city,
+//             state: venues.state,
+//             lat: venues.lat,
+//             lng: venues.lng
+//         }
+//     });
+// });
 
 
 
@@ -34,7 +61,8 @@ router.post('/:groupId/images', async (req, res, next) => {
 
 // Get all Venues of a Group from its id
 router.get('/:groupId/venues', async (req, res, next) => {
-    const venues = await Venue.findAll({ where: { groupId: req.params.groupId } });
+    const { groupId } = req.params;
+    const venues = await Venue.findAll({ where: { groupId: groupId } });
 
     if (!venues) {
         const err = new Error("Group couldn't be found");
@@ -53,7 +81,7 @@ router.get('/:groupId/venues', async (req, res, next) => {
             lat: venues.lat,
             lng: venues.lng
         }
-    })
+    });
 });
 
 
@@ -89,9 +117,10 @@ router.post('/:groupId/venues', async (req, res, next) => {
 
 // Get all Events of a Group from its id
 router.get('/:groupId/events', async (req, res, next) => {
-    const events = await Event.findAll({ where: { groupId: req.params.groupId } });
-    const groups = await Group.findByPk(req.params.groupId);
-    const venues = await Venue.findByPk(req.body.venueId);
+    const { groupId } = req.params;
+    const events = await Event.findAll({ where: { groupId: groupId } });
+    const groups = await Group.findByPk(groupId);
+    const venues = await Venue.findByPk(events.venueId);
 
     if (!events) {
         const err = new Error("Group couldn't be found");
