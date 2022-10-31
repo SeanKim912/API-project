@@ -1,9 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, GroupImage, User, Membership, Organizer, Venue } = require('../../db/models');
+const { Group, GroupImage, User, Membership, Venue, Event, Attendance } = require('../../db/models');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
+
+
+
+// Get all Members of a Group from its id
+// router.get('/:groupId/members', async (req, res, next) => {
+//     const { groupId } = req.params;
+//     const group = await Group.findByPk(groupId);
+
+//     if (!group) {
+//         const err = new Error("Group couldn't be found");
+//         err.status = 404;
+
+//         return next(err);
+//     };
+
+//     res.json({
+//         Venues: {
+//             id: venues.id,
+//             groupId: venues.groupId,
+//             address: venues.address,
+//             city: venues.city,
+//             state: venues.state,
+//             lat: venues.lat,
+//             lng: venues.lng
+//         }
+//     });
+// });
 
 
 
@@ -19,7 +46,6 @@ router.post('/:groupId/images', async (req, res, next) => {
         err.status = 404;
 
         return next(err);
-
     }
 
     const newGroupImage = await GroupImage.create({ groupId, url, preview });
@@ -35,7 +61,8 @@ router.post('/:groupId/images', async (req, res, next) => {
 
 // Get all Venues of a Group from its id
 router.get('/:groupId/venues', async (req, res, next) => {
-    const venues = await Venue.findAll({ where: { groupId: req.params.groupId } });
+    const { groupId } = req.params;
+    const venues = await Venue.findAll({ where: { groupId: groupId } });
 
     if (!venues) {
         const err = new Error("Group couldn't be found");
@@ -54,7 +81,7 @@ router.get('/:groupId/venues', async (req, res, next) => {
             lat: venues.lat,
             lng: venues.lng
         }
-    })
+    });
 });
 
 
@@ -90,9 +117,10 @@ router.post('/:groupId/venues', async (req, res, next) => {
 
 // Get all Events of a Group from its id
 router.get('/:groupId/events', async (req, res, next) => {
-    const events = await Event.findAll({ where: { groupId: req.params.groupId } });
-    const groups = await Group.findByPk(req.params.groupId);
-    const venues = await Venue.findByPk(req.body.venueId);
+    const { groupId } = req.params;
+    const events = await Event.findAll({ where: { groupId: groupId } });
+    const groups = await Group.findByPk(groupId);
+    const venues = await Venue.findByPk(events.venueId);
 
     if (!events) {
         const err = new Error("Group couldn't be found");
@@ -159,6 +187,24 @@ router.post('/:groupId/events', async (req, res, next) => {
 
 
 
+// Return all groups joined/organized by Current User
+router.get('/current', async (req, res) => {
+    const organized = await Group.findAll({
+        where: { organizerId: req.user.id }
+    });
+
+    const joined = await User.findByPk(req.user.id, {
+        include: { model: Group }
+    });
+
+    return res.json({
+        organized,
+        joined
+    });
+});
+
+
+
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
     const details = await Group.findByPk(req.params.groupId);
@@ -176,7 +222,7 @@ router.get('/:groupId', async (req, res) => {
 
 
 
-// Edit a Group
+// Edit a Group by its id
 router.put('/:groupId', async (req, res, next) => {
     const { name, about, type, private, city, state } = req.body;
     const { groupId } = req.params;
@@ -190,9 +236,7 @@ router.put('/:groupId', async (req, res, next) => {
         return next(err);
     };
 
-    const updatedGroup = await group.update({
-        name, about, type, private, city, state
-    });
+    const updatedGroup = await group.update({ name, about, type, private, city, state });
 
     res.json({
         id: updatedGroup.id,
@@ -212,7 +256,7 @@ router.put('/:groupId', async (req, res, next) => {
 
 // Delete a Group
 router.delete('/:groupId', async (req, res, next) => {
-    const group = await Venue.findByPk(req.params.groupId);
+    const group = await Group.findByPk(req.params.groupId);
 
     if (!group) {
         const err = new Error("Group couldn't be found");
@@ -226,24 +270,6 @@ router.delete('/:groupId', async (req, res, next) => {
     res.json({
         "message": "Successfully deleted",
         "statusCode": 200
-    });
-});
-
-
-
-// Return all groups joined/organized by Current User
-router.get('/current', async (req, res) => {
-    const organized = await Group.findAll({
-        where: { organizerId: req.user.id }
-    });
-
-    const joined = await User.findByPk(req.user.id, {
-        include: { model: Group }
-    });
-
-    return res.json({
-        organized,
-        joined
     });
 });
 
