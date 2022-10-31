@@ -157,6 +157,24 @@ router.post('/:groupId/events', async (req, res, next) => {
 
 
 
+// Return all groups joined/organized by Current User
+router.get('/current', async (req, res) => {
+    const organized = await Group.findAll({
+        where: { organizerId: req.user.id }
+    });
+
+    const joined = await User.findByPk(req.user.id, {
+        include: { model: Group }
+    });
+
+    return res.json({
+        organized,
+        joined
+    });
+});
+
+
+
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
     const details = await Group.findByPk(req.params.groupId);
@@ -174,7 +192,7 @@ router.get('/:groupId', async (req, res) => {
 
 
 
-// Edit a Group
+// Edit a Group by its id
 router.put('/:groupId', async (req, res, next) => {
     const { name, about, type, private, city, state } = req.body;
     const { groupId } = req.params;
@@ -188,9 +206,7 @@ router.put('/:groupId', async (req, res, next) => {
         return next(err);
     };
 
-    const updatedGroup = await group.update({
-        name, about, type, private, city, state
-    });
+    const updatedGroup = await group.update({ name, about, type, private, city, state });
 
     res.json({
         id: updatedGroup.id,
@@ -210,7 +226,7 @@ router.put('/:groupId', async (req, res, next) => {
 
 // Delete a Group
 router.delete('/:groupId', async (req, res, next) => {
-    const group = await Venue.findByPk(req.params.groupId);
+    const group = await Group.findByPk(req.params.groupId);
 
     if (!group) {
         const err = new Error("Group couldn't be found");
@@ -224,24 +240,6 @@ router.delete('/:groupId', async (req, res, next) => {
     res.json({
         "message": "Successfully deleted",
         "statusCode": 200
-    });
-});
-
-
-
-// Return all groups joined/organized by Current User
-router.get('/current', async (req, res) => {
-    const organized = await Group.findAll({
-        where: { organizerId: req.user.id }
-    });
-
-    const joined = await User.findByPk(req.user.id, {
-        include: { model: Group }
-    });
-
-    return res.json({
-        organized,
-        joined
     });
 });
 
