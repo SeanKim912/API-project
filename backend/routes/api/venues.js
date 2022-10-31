@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { Group, GroupImage, User, Membership, Venue, Event } = require('../../db/models');
+const { Group, GroupImage, User, Membership, Venue, Attendance } = require('../../db/models');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 
