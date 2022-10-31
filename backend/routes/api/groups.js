@@ -5,8 +5,10 @@ const { Group, GroupImage, User, Membership, Organizer, Venue } = require('../..
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 
+
+
 // Add an Image to a Group based on the Group's id
-router.post('/:groupId/images', async (req, res) => {
+router.post('/:groupId/images', async (req, res, next) => {
     const { url, preview } = req.body;
     const { groupId } = req.params;
 
@@ -17,7 +19,7 @@ router.post('/:groupId/images', async (req, res) => {
         err.status = 404;
 
         return next(err);
-        
+
     }
 
     const newGroupImage = await GroupImage.create({
@@ -33,21 +35,33 @@ router.post('/:groupId/images', async (req, res) => {
     });
 });
 
-// Return all groups joined/organized by Current User
-router.get('/current', async (req, res) => {
-    const organized = await Group.findAll({
-        where: { organizerId: req.user.id }
-    });
 
-    const joined = await User.findByPk(req.user.id, {
-        include: { model: Group }
-    });
 
-    return res.json({
-        organized,
-        joined
-    });
+// Get all Venues of a Group from its id
+router.get('/:groupId/venues', async (req, res) => {
+    const venues = await Venue.findAll({ where: { groupId: req.params.groupId } });
+
+    if (!venues) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    res.json({
+        Venues: {
+            id: venues.id,
+            groupId: venues.groupId,
+            address: venues.address,
+            city: venues.city,
+            state: venues.state,
+            lat: venues.lat,
+            lng: venues.lng
+        }
+    })
 });
+
+
 
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
@@ -64,8 +78,10 @@ router.get('/:groupId', async (req, res) => {
     });
 });
 
+
+
 // Edit a Group
-router.put('/:groupId', async (req, res) => {
+router.put('/:groupId', async (req, res, next) => {
     const { name, about, type, private, city, state } = req.body;
     const { groupId } = req.params;
 
@@ -96,9 +112,11 @@ router.put('/:groupId', async (req, res) => {
     })
 });
 
+
+
 // Delete a Group
 router.delete('/:groupId', async (req, res, next) => {
-    const group = await Group.findByPk(req.params.groupId);
+    const group = await Venue.findByPk(req.params.groupId);
 
     if (!group) {
         const err = new Error("Group couldn't be found");
@@ -115,6 +133,26 @@ router.delete('/:groupId', async (req, res, next) => {
     });
 });
 
+
+
+// Return all groups joined/organized by Current User
+router.get('/current', async (req, res) => {
+    const organized = await Group.findAll({
+        where: { organizerId: req.user.id }
+    });
+
+    const joined = await User.findByPk(req.user.id, {
+        include: { model: Group }
+    });
+
+    return res.json({
+        organized,
+        joined
+    });
+});
+
+
+
 // Return all groups
 router.get('/', async (req, res) => {
 
@@ -122,6 +160,8 @@ router.get('/', async (req, res) => {
 
     return res.json(groups)
 });
+
+
 
 // Create a Group
 router.post('/', async (req, res) => {
