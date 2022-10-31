@@ -83,7 +83,7 @@ router.post('/', async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const newGroup = await Group.create({ organizerId: req.user.id, name, about, type, private, city, state });
 
-    res.statusCode(201);
+    res.status(201);
     res.json({
         id: newGroup.id,
         organizerId: newGroup.organizerId,
