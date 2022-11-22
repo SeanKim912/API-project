@@ -4,6 +4,8 @@ const {
 } = require('sequelize');
 const Group = require('./group')
 const Venue = require('./venue');
+const EventImage = require('./eventimage')
+const User = require('./user')
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     /**
@@ -25,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         models.Venue,
         { foreignKey: 'venueId' }
       );
+      Event.belongsTo(
+        models.Group,
+        { foreignKey: 'groupId'}
+      )
     }
   }
   Event.init({
