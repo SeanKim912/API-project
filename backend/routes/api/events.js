@@ -121,31 +121,12 @@ router.delete('/:eventId', async (req, res, next) => {
 
 // Return all events
 router.get('/', async (req, res) => {
-    const events = await Event.findAll();
-    const groups = await Group.findByPk(events.groupId);
-    const venues = await Venue.findByPk(events.venueId);
+    const events = await Event.findAll({
+        include: [{ model: Group },
+                {model: Venue}]});
 
     return res.json({
-        Events: {
-            id: events.id,
-            groupId: events.groupId,
-            venueId: events.venueId,
-            name: events.name,
-            type: events.type,
-            startDate: events.startDate,
-            endDate: events.endDate,
-            Group: {
-                id: groups.id,
-                name: groups.name,
-                city: groups.city,
-                state: groups.state
-            },
-            Venue: {
-                id: venues.id,
-                city: venues.city,
-                state: venues.state
-            }
-        }
+        Events: { events }
     })
 });
 
