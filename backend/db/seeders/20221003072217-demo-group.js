@@ -1,9 +1,13 @@
 'use strict';
-
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+options.tableName = 'Groups'
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Groups', [
+    return queryInterface.bulkInsert(options, [
       {
         organizerId: 1,
         name: 'FGC Local',
@@ -36,7 +40,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete('Groups', {
+    return queryInterface.bulkDelete(options, {
       name: { [Op.in]: ['FGC Local', 'Book Club', 'Baking Club'] }
     }, {});
   }
