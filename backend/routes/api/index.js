@@ -20,7 +20,7 @@ router.use(restoreUser);
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/groups', groupsRouter);
-// router.use('/venues', venuesRouter);
+router.use('/venues', venuesRouter);
 // router.use('/events', eventsRouter);
 // router.use('/group-images', groupImagesRouter);
 // router.use('/event-images', eventImagesRouter);

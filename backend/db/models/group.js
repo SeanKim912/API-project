@@ -16,12 +16,13 @@ module.exports = (sequelize, DataTypes) => {
         models.Venue,
         { foreignKey: 'groupId' }
       );
-      Group.hasMany(models.GroupImage,
+      Group.hasMany(
+        models.GroupImage,
         { foreignKey: 'groupId', onDelete: 'CASCADE', hooks: true }
       );
-      Group.belongsToMany(
-        models.Venue,
-        { through: models.Event, foreignKey: 'groupId' }
+      Group.hasMany(
+        models.Event,
+        { foreignKey: 'groupId', onDelete: 'CASCADE', hooks: true }
       );
       Group.belongsToMany(
         models.User,
