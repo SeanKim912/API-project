@@ -84,17 +84,7 @@ router.get('/:groupId/venues', async (req, res, next) => {
         return next(err);
     };
 
-    res.json({
-        Venues: {
-            id: venues.id,
-            groupId: venues.groupId,
-            address: venues.address,
-            city: venues.city,
-            state: venues.state,
-            lat: venues.lat,
-            lng: venues.lng
-        }
-    });
+    res.json({ Venues: venues });
 });
 
 
