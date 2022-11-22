@@ -125,9 +125,7 @@ router.get('/', async (req, res) => {
         include: [{ model: Group }, { model: Venue }]
     });
 
-    return res.json({
-        Events: { events }
-    })
+    return res.json({ Events: events })
 });
 
 

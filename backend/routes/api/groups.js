@@ -133,9 +133,7 @@ router.get('/:groupId/events', async (req, res, next) => {
         return next(err);
     };
 
-    res.json({
-        Events: { events }
-    });
+    return res.json({ Events: events });
 });
 
 
