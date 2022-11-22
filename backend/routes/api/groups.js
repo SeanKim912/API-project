@@ -121,9 +121,10 @@ router.post('/:groupId/venues', async (req, res, next) => {
 // Get all Events of a Group from its id
 router.get('/:groupId/events', async (req, res, next) => {
     const { groupId } = req.params;
-    const events = await Event.findAll({ where: { groupId: groupId } });
-    const groups = await Group.findByPk(groupId);
-    const venues = await Venue.findByPk(events.venueId);
+    const events = await Event.findAll({
+        where: { groupId: groupId },
+        include: [{ model: Group }, { model: Venue }]
+    });
 
     if (!events) {
         const err = new Error("Group couldn't be found");
@@ -133,26 +134,7 @@ router.get('/:groupId/events', async (req, res, next) => {
     };
 
     res.json({
-        Events: {
-            id: events.id,
-            groupId: events.groupId,
-            venueId: events.venueId,
-            name: events.name,
-            type: events.type,
-            startDate: events.startDate,
-            endDate: events.endDate,
-            Group: {
-                id: groups.id,
-                name: groups.name,
-                city: groups.city,
-                state: groups.state
-            },
-            Venue: {
-                id: venues.id,
-                city: venues.city,
-                state: venues.state
-            }
-        }
+        Events: { events }
     });
 });
 

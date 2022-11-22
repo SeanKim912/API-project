@@ -122,8 +122,8 @@ router.delete('/:eventId', async (req, res, next) => {
 // Return all events
 router.get('/', async (req, res) => {
     const events = await Event.findAll({
-        include: [{ model: Group },
-                {model: Venue}]});
+        include: [{ model: Group }, { model: Venue }]
+    });
 
     return res.json({
         Events: { events }
