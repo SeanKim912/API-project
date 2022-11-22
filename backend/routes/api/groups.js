@@ -182,7 +182,7 @@ router.post('/:groupId/events', async (req, res, next) => {
         return next(err);
     }
 
-    const newEvent = await Venue.create({ groupId, venueId, name, type, capacity, price, description, startDate, endDate });
+    const newEvent = await Event.create({ groupId, venueId, name, type, capacity, price, description, startDate, endDate });
 
     res.json({
         id: newEvent.id,
