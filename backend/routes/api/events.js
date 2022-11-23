@@ -33,34 +33,22 @@ router.post('/:eventId/images', async (req, res, next) => {
 
 
 // Get details of an Event by its id
-router.get('/:eventId', async (req, res) => {
-    const details = await Event.findByPk(req.params.eventId);
-    const images = await EventImage.findAll({ where: { eventId: req.params.eventId } });
-    const groups = await Group.findByPk(details.groupId);
-    const venue = await Venue.findByPk(details.venueId);
+router.get('/:eventId', async (req, res, next) => {
+    const { eventId } = req.params;
+    const event = await Event.findOne({
+        where: { id: eventId },
+        include: [{ model: Group }, { model: Venue }, { model: EventImage }]
 
-    if (!details) {
+    });
+
+    if (!event) {
         const err = new Error("Event couldn't be found");
         err.status = 404;
 
         return next(err);
     };
 
-    res.json({
-        id: details.id,
-        groupId: details.groupId,
-        venueId: details.venueId,
-        name: details.name,
-        description: details.description,
-        type: details.type,
-        capacity: details.capacity,
-        price: details.price,
-        startDate: details.startDate,
-        endDate: details.endDate,
-        Group: groups,
-        Venue: venue,
-        EventImages: images
-    });
+    res.json(event);
 });
 
 

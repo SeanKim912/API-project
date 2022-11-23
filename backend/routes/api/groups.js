@@ -126,7 +126,7 @@ router.get('/:groupId/events', async (req, res, next) => {
         include: [{ model: Group }, { model: Venue }]
     });
 
-    if (!events) {
+    if (!events || events.length === 0) {
         const err = new Error("Group couldn't be found");
         err.status = 404;
 
