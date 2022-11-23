@@ -8,43 +8,40 @@ const { requireAuth } = require('../../utils/auth');
 
 
 
-// // Get all Members of a Group from its id
-// router.get('/:groupId/members', async (req, res, next) => {
-//     const { groupId } = req.params;
-//     const userId = req.user.id;
-//     const group = await Group.findByPk(groupId);
-//     const roster = await User.findAll({
-//             where: {
-//                 groupId: groupId
-//             },
-//             include: Membership
+// Get all Members of a Group from its id
+router.get('/:groupId/members', async (req, res, next) => {
+    const { groupId } = req.params;
+    const userId = req.user.id;
+    const group = await Group.findByPk(groupId);
+    const roster = await User.findAll({
+            where: { groupId: groupId },
+            include: Membership
+            });
 
-//             }
-//         })
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
 
-//     if (!group) {
-//         const err = new Error("Group couldn't be found");
-//         err.status = 404;
+        return next(err);
+    };
 
-//         return next(err);
-//     };
+    if (userId === group.organizerId) {
+        
+    }
 
-//     if (userId !== group.organizerId) {
+    res.json({
+        Members: {
+            id: venues.id,
+            groupId: venues.groupId,
+            address: venues.address,
+            city: venues.city,
+            state: venues.state,
+            lat: venues.lat,
+            lng: venues.lng
+        }
+    });
+});
 
-//     }
-
-//     res.json({
-//         Members: {
-//             id: venues.id,
-//             groupId: venues.groupId,
-//             address: venues.address,
-//             city: venues.city,
-//             state: venues.state,
-//             lat: venues.lat,
-//             lng: venues.lng
-//         }
-//     });
-// });
 
 
 
