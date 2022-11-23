@@ -59,6 +59,7 @@ router.put('/:eventId', async (req, res, next) => {
     const { eventId } = req.params;
 
     const event = await Event.findByPk(eventId);
+    const venue = await Venue.findByPk(venueId);
 
     if (!event) {
         const err = new Error("Event couldn't be found");
@@ -67,21 +68,18 @@ router.put('/:eventId', async (req, res, next) => {
         return next(err);
     };
 
+    if (!venue) {
+        const err = new Error("Venue couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
     const updatedEvent = await event.update({
         venueId, name, type, capacity, price, description, startDate, endDate
     });
 
-    res.json({
-        id: updatedEvent.id,
-        groupId: updatedEvent.groupId,
-        name: updatedEvent.name,
-        type: updatedEvent.type,
-        capacity: updatedEvent.capacity,
-        price: updatedEvent.price,
-        description: updatedEvent.description,
-        startDate: updatedEvent.startDate,
-        endDate: updatedEvent.endDate
-    })
+    res.json(updatedEvent)
 });
 
 
@@ -109,11 +107,11 @@ router.delete('/:eventId', async (req, res, next) => {
 
 // Return all events
 router.get('/', async (req, res) => {
-    const events = await Event.findAll({
+    const Events = await Event.findAll({
         include: [{ model: Group }, { model: Venue }]
     });
 
-    return res.json({ Events: events })
+    return res.json({ Events });
 });
 
 
