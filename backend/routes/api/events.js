@@ -231,7 +231,11 @@ router.delete('/:eventId', async (req, res, next) => {
 
 
 // Return all events
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
+    let query = {
+        where: {},
+        include: []
+    };
     const Events = await Event.findAll({
         include: [{ model: Group }, { model: Venue }]
     });

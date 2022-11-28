@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { Sequelize } = require('.');
 const Event = require('./event');
 const User = require('./user');
 module.exports = (sequelize, DataTypes) => {
@@ -18,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Attendance.init({
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true
+    },
     eventId: {
       type: DataTypes.INTEGER,
       allowNull: false
