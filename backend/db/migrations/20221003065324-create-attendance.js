@@ -14,19 +14,11 @@ module.exports = {
       },
       eventId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Events',
-          key: 'id'
-        }
+        allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
+        allowNull: false
       },
       status: {
         type: Sequelize.STRING,
