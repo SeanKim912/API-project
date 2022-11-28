@@ -7,7 +7,70 @@ const { requireAuth } = require('../../utils/auth');
 
 
 
-// Request Attendance to an Event
+// Get all Attendees of an Event by id
+router.get('/:eventId/attendees', async (req, res, next) => {
+    const { eventId } = req.params;
+    const userId = req.user.id;
+    const event = await Event.findByPk(eventId);
+    const membership = await Membership.findByPk(userId)
+    const roster = await Attendance.findAll({
+            include: { model: User.scope("viewMembership") },
+            where: { eventId: eventId }
+        });
+
+    if (!event) {
+        const err = new Error("Event couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    if (membership.status !== "co-host" || userId !== group.organizerId) {
+        const filteredRoster = await Attendance.findAll({
+            include: { model: User.scope("viewMembership") },
+            where: {
+                eventId: eventId,
+                [Op.not]: [{ status: ["pending"] }]
+            }
+        });
+
+        res.json({ Attendees: filteredRoster });
+    }
+
+    res.json({ Attendees: roster });
+});
+
+
+
+// Change Attendance status
+router.put('/:eventId/attendance', async (req, res, next) => {
+    const { userId, status } = req.body;
+    const { eventId } = req.params;
+    const event = await Event.findByPk(eventId);
+    const attendance = await Attendance.findOne({ where: { userId: userId } });
+
+    if (!event) {
+        const err = new Error("Event couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
+    if (!attendance) {
+        const err = new Error("Attendance between the user and the event does not exist");
+        err.status = 404;
+
+        return next(err);
+    }
+
+    const updatedAttendance = await attendance.update({ status });
+
+    res.json(updatedAttendance);
+});
+
+
+
+// Request Attendance to an Event by id
 router.post('/:eventId/attendance', async (req, res, next) => {
     const { eventId } = req.params;
     const userIdNumber = req.user.id;

@@ -18,7 +18,7 @@ router.get('/:groupId/members', async (req, res, next) => {
     const roster = await Membership.findAll({
             include: { model: User.scope("viewMembership") },
             where: { groupId: groupId },
-            });
+        });
 
     if (!group) {
         const err = new Error("Group couldn't be found");
@@ -59,7 +59,7 @@ router.put('/:groupId/membership', async (req, res, next) => {
     }
 
     if (!membership) {
-        const err = new Error("User couldn't be found");
+        const err = new Error("Membership does not exist for this User");
         err.status = 404;
 
         return next(err);
@@ -67,12 +67,12 @@ router.put('/:groupId/membership', async (req, res, next) => {
 
     const updatedMembership = await membership.update({ status });
 
-    res.json(updatedMembership)
+    res.json(updatedMembership);
 });
 
 
 
-// Request membership to a Group by id
+// Request Membership to a Group by id
 router.post('/:groupId/membership', async (req, res, next) => {
     const { groupId } = req.params;
     const userIdNumber = req.user.id;
