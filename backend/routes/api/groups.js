@@ -129,7 +129,7 @@ router.delete('/:groupId/membership', async (req, res, next) => {
 
         return next(err);
     };
-    
+
     await membership.destroy();
 
     res.json({
@@ -264,8 +264,9 @@ router.post('/:groupId/events', async (req, res, next) => {
 
 // Return all groups joined/organized by Current User
 router.get('/current', async (req, res) => {
+    const userId = req.user.id
     const organized = await Group.findAll({
-        where: { organizerId: req.user.id }
+        where: { organizerId: userId }
     });
 
     const joined = await User.findByPk(req.user.id, {

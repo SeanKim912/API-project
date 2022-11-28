@@ -90,6 +90,7 @@ router.post('/:eventId/attendance', async (req, res, next) => {
         status: "pending"
     });
 
+    console.log(attendanceRequest)
     res.json({
         id: attendanceRequest.id,
         userId: attendanceRequest.userId,
