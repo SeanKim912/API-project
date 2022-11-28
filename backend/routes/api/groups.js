@@ -100,6 +100,46 @@ router.post('/:groupId/membership', async (req, res, next) => {
 });
 
 
+
+// Delete a Membership
+router.delete('/:groupId/membership', async (req, res, next) => {
+    const { memberId } = req.body;
+    const { groupId } = req.params;
+    const group = await Group.findByPk(groupId);
+    const user = await User.findByPk(memberId);
+    const membership = await Membership.findOne({ where: { userId: memberId } });
+
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    if (!user) {
+        const err = new Error("User couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    if (!membership) {
+        const err = new Error("Membership does not exist for this User");
+        err.status = 404;
+
+        return next(err);
+    };
+    
+    await membership.destroy();
+
+    res.json({
+        "message": "Successfully deleted membership from group",
+        "statusCode": 200
+    });
+});
+
+
+
 // Add an Image to a Group based on the Group's id
 router.post('/:groupId/images', async (req, res, next) => {
     const { url, preview } = req.body;

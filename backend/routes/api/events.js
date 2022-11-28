@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { Sequelize, Op } = require('sequelize');
 
 const { Event, Group, User, Venue, EventImage, Membership, Attendance } = require('../../db/models');
 const user = require('../../db/models/user');
@@ -98,6 +99,37 @@ router.post('/:eventId/attendance', async (req, res, next) => {
 
 
 
+// Delete an Attendance
+router.delete('/:eventId/attendance', async (req, res, next) => {
+    const { memberId } = req.body;
+    const { eventId } = req.params;
+    const event = await Event.findByPk(eventId);
+    const attendance = await Attendance.findOne({ where: { userId: memberId } });
+
+    if (!event) {
+        const err = new Error("Event couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    if (!attendance) {
+        const err = new Error("Attendance does not exist for this User");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    await attendance.destroy();
+
+    res.json({
+        "message": "Successfully deleted attendance from event",
+        "statusCode": 200
+    });
+});
+
+
+
 // Add an Image to an Event from its id
 router.post('/:eventId/images', async (req, res, next) => {
     const { url, preview } = req.body;
@@ -177,7 +209,8 @@ router.put('/:eventId', async (req, res, next) => {
 
 // Delete an Event
 router.delete('/:eventId', async (req, res, next) => {
-    const event = await Event.findByPk(req.params.eventId);
+    const { eventId } = req.params;
+    const event = await Event.findByPk(eventId);
 
     if (!event) {
         const err = new Error("Event couldn't be found");
@@ -204,6 +237,7 @@ router.get('/', async (req, res) => {
 
     return res.json({ Events });
 });
+
 
 
 module.exports = router;
