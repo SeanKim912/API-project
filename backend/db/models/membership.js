@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 const User = require('./user');
-const Group = require('./group')
+const Group = require('./group');
 module.exports = (sequelize, DataTypes) => {
   class Membership extends Model {
     /**
@@ -13,18 +13,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Membership.belongsTo(models.User);
-      Membership.belongsTo(models.Group);
+      Membership.belongsTo(models.User, { foreignKey: 'userId' });
+      Membership.belongsTo(models.Group, { foreignKey: 'groupId' });
     }
   }
   Membership.init({
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: User,
-        key: 'id'
-      }
+      allowNull: false
     },
     groupId: {
       type: DataTypes.INTEGER,
@@ -39,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Membership',
+    modelName: 'Membership'
   });
   return Membership;
 };

@@ -2,7 +2,11 @@
 const {
   Model
 } = require('sequelize');
-const User = require('./user')
+const User = require('./user');
+const Membership = require('./membership');
+const Venue = require('./venue');
+const GroupImage = require('./groupimage');
+const Event = require('./event');
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
     /**
@@ -12,32 +16,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Group.hasMany(
-        models.Venue,
-        { foreignKey: 'groupId' }
-      );
-      Group.hasMany(
-        models.GroupImage,
-        { foreignKey: 'groupId', onDelete: 'CASCADE', hooks: true }
-      );
-      Group.hasMany(
-        models.Event,
-        { foreignKey: 'groupId', onDelete: 'CASCADE', hooks: true }
-      );
-      Group.belongsToMany(
-        models.User,
-        { through: models.Membership, foreignKey: 'groupId'}
-        );
+      Group.hasMany(models.Venue, { foreignKey: 'groupId' });
+      Group.hasMany(models.GroupImage, {
+        foreignKey: 'groupId',
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+      Group.hasMany(models.Event, {
+        foreignKey: 'groupId',
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+      Group.hasMany(models.Membership, {
+          foreignKey: 'groupId'
+      });
+      Group.belongsToMany(models.User, {
+        through: models.Membership,
+        foreignKey: 'groupId'
+      });
     }
   }
   Group.init({
     organizerId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: User,
-        key: 'id'
-      }
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING(255),

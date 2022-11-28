@@ -3,6 +3,7 @@ const router = express.Router();
 const { Sequelize, Op } = require('sequelize');
 
 const { Group, GroupImage, User, Membership, Venue, Event, Attendance } = require('../../db/models');
+const membership = require('../../db/models/membership');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 
@@ -13,9 +14,10 @@ router.get('/:groupId/members', async (req, res, next) => {
     const { groupId } = req.params;
     const userId = req.user.id;
     const group = await Group.findByPk(groupId);
-    const roster = await User.findAll({
+    const membership = await Membership.findByPk(userId)
+    const roster = await Membership.findAll({
+            include: { model: User.scope("viewMembership") },
             where: { groupId: groupId },
-            include: Membership
             });
 
     if (!group) {
@@ -25,24 +27,77 @@ router.get('/:groupId/members', async (req, res, next) => {
         return next(err);
     };
 
-    if (userId === group.organizerId) {
-        
+    if (membership.status !== "co-host" || userId !== group.organizerId) {
+        const filteredRoster = await Membership.findAll({
+            include: { model: User.scope("viewMembership") },
+            where: {
+                groupId: groupId,
+                [Op.not]: [{ status: ["pending"] }]
+            }
+        });
+
+        res.json({ Members: filteredRoster });
     }
 
-    res.json({
-        Members: {
-            id: venues.id,
-            groupId: venues.groupId,
-            address: venues.address,
-            city: venues.city,
-            state: venues.state,
-            lat: venues.lat,
-            lng: venues.lng
-        }
-    });
+    res.json({ Members: roster });
 });
 
 
+
+// Change Membership status
+router.put('/:groupId/membership', async (req, res, next) => {
+    const { memberId, status } = req.body;
+    const { groupId } = req.params;
+    const group = await Group.findByPk(groupId);
+    const membership = await Membership.findOne({ where: { userId: memberId } });
+
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
+    if (!membership) {
+        const err = new Error("User couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
+    const updatedMembership = await membership.update({ status });
+
+    res.json(updatedMembership)
+});
+
+
+
+// Request membership to a Group by id
+router.post('/:groupId/membership', async (req, res, next) => {
+    const { groupId } = req.params;
+    const userIdNumber = req.user.id;
+    const group = await Group.findByPk(groupId);
+
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
+    const membershipRequest = await Membership.create({
+        userId: userIdNumber,
+        groupId,
+        status: "pending"
+    });
+
+    console.log(membershipRequest)
+    res.json({
+        id: membershipRequest.id,
+        memberId: membershipRequest.userId,
+        status: membershipRequest.status
+    });
+});
 
 
 // Add an Image to a Group based on the Group's id

@@ -7,6 +7,34 @@ const { requireAuth } = require('../../utils/auth');
 
 
 
+// Request Attendance to an Event
+router.post('/:eventId/attendance', async (req, res, next) => {
+    const { eventId } = req.params;
+    const userIdNumber = req.user.id;
+    const event = await Event.findByPk(eventId);
+
+    if (!event) {
+        const err = new Error("Event couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
+    const attendanceRequest = await Attendance.create({
+        userId: userIdNumber,
+        eventId,
+        status: "pending"
+    });
+
+    res.json({
+        id: attendanceRequest.id,
+        userId: attendanceRequest.userId,
+        status: attendanceRequest.status
+    });
+});
+
+
+
 // Add an Image to an Event from its id
 router.post('/:eventId/images', async (req, res, next) => {
     const { url, preview } = req.body;

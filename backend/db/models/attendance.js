@@ -13,26 +13,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Attendance.belongsTo(models.User);
-      Attendance.belongsTo(models.Event);
+      Attendance.belongsTo(models.User, { foreignKey: 'userId' });
+      Attendance.belongsTo(models.Event, { foreignKey: 'eventId'});
     }
   }
   Attendance.init({
     eventId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Event,
-        key: 'id'
-      }
+      allowNull: false
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: User,
-        key: 'id'
-      }
+      allowNull: false
     },
     status: {
       type: DataTypes.STRING
