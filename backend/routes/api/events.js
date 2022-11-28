@@ -232,15 +232,41 @@ router.delete('/:eventId', async (req, res, next) => {
 
 // Return all events
 router.get('/', async (req, res, next) => {
-    let query = {
-        where: {},
-        include: []
+    let { page, size, name, type, startDate } = req.query;
+
+    if(!page) page = 1;
+    if(!size) size = 20;
+    if(page > 10) page = 10;
+    if(size < 1) size = 1;
+
+    page = parseInt(page);
+    size = parseInt(size);
+
+    const pagination = {};
+    if (page >= 1 && size >= 1) {
+        pagination.limit = size;
+        pagination.offset = size * (page - 1);
+    }
+
+    const where = {};
+
+    if (name && name !== '') {
+        where.name = name
     };
-    const Events = await Event.findAll({
-        include: [{ model: Group }, { model: Venue }]
+
+    if (type && type !== '') {
+        where.type = type
+    };
+
+    if (startDate && startDate !== '') {
+
+    }
+
+    const event = await Event.findAll({
+        where, ...pagination
     });
 
-    return res.json({ Events });
+    return res.json({ event, page, size });
 });
 
 
