@@ -34,20 +34,20 @@ const validateSignup = [
     handleValidationErrors
 ];
 
-router.post(
-    '/',
-    validateSignup,
-    async (req, res) => {
-        const { firstName, lastName, email, username, password } = req.body;
-        const user = await User.signup({ firstName, lastName, email, username, password });
+router.post('/', validateSignup, async (req, res) => {
+    const { firstName, lastName, email, username, password } = req.body;
+    const user = await User.signup({ firstName, lastName, email, username, password });
 
-        await setTokenCookie(res, user);
+    await setTokenCookie(res, user);
 
-        return res.json({
-            user
-        });
-    }
-);
+    return res.json({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        token: ""
+    });
+});
 
 
 
