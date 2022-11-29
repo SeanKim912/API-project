@@ -248,7 +248,16 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
         return next(err);
     }
 
-    const newEvent = await Event.create({ groupId, venueId, name, type, capacity, price, description, startDate, endDate });
+    const newEvent = await Event.create({
+        groupId,
+        venueId,
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate });
 
     res.json({
         id: newEvent.id,
