@@ -84,7 +84,12 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
 
     const updatedAttendance = await attendance.update({ status });
 
-    res.json(updatedAttendance);
+    res.json({
+        id: updatedAttendance.id,
+        eventId: updatedAttendance.eventId,
+        userId: updatedAttendance.userId,
+        status: updatedAttendance.status
+    });
 });
 
 
