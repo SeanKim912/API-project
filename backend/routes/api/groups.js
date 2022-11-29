@@ -355,7 +355,7 @@ router.get('/:groupId', async (req, res) => {
             attributes: ['id', 'firstName', 'lastName'],
             as: 'Organizer'
         }, {
-            model: Venue,
+            model: Venue
         }]
     });
 
@@ -367,7 +367,7 @@ router.get('/:groupId', async (req, res) => {
     }
 
     const members = await Membership.count({ where: { groupId: groupId } });
-    const image = await GroupImage.findOne({ where: { groupId: groupId, preview: true }});
+    const image = await GroupImage.findOne({ where: { groupId: groupId, preview: true } });
 
     group.dataValues.numMembers = members;
 
