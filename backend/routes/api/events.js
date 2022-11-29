@@ -7,6 +7,7 @@ const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 const { check, validationResult } = require('express-validator');
 const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation');
+const group = require('../../db/models/group');
 
 
 // Get all Attendees of an Event by id
@@ -175,10 +176,17 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
 // Get details of an Event by its id
 router.get('/:eventId', async (req, res, next) => {
     const { eventId } = req.params;
-    const event = await Event.findOne({
-        where: { id: eventId },
-        include: [{ model: Group }, { model: Venue }, { model: EventImage }]
 
+    const event = await Event.findByPk(eventId, {
+        include: [{
+            model: EventImage
+        }, {
+            model: Group,
+            attributes: ['id', 'name', 'city', 'state']
+        }, {
+            model: Venue,
+            attributes: ['id', 'city', 'state']
+        }]
     });
 
     if (!event) {
@@ -187,6 +195,17 @@ router.get('/:eventId', async (req, res, next) => {
 
         return next(err);
     };
+
+    const attendees = await Attendance.count({ where: { eventId: eventId }});
+    const image = await EventImage.findOne({ where: { eventId: eventId, preview: true } });
+
+    event.dataValues.numAttending = attendees;
+
+    if(image) {
+        event.dataValues.previewImage = image.dataValues.url;
+    } else {
+        event.dataValues.previewImage = null;
+    }
 
     res.json(event);
 });
