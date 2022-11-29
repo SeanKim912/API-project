@@ -327,6 +327,13 @@ router.get('/:groupId', async (req, res) => {
         }]
     });
 
+    if (!group) {
+        const err = new Error("Group couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    }
+
     const members = await Membership.count({ where: { groupId: groupId } });
     const image = await GroupImage.findOne({ where: { groupId: groupId, preview: true }});
 
