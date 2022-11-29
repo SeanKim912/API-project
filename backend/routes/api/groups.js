@@ -8,6 +8,8 @@ const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 const { check, validationResult } = require('express-validator');
 const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation');
+const group = require('../../db/models/group');
+
 
 
 
@@ -311,17 +313,32 @@ router.get('/current', async (req, res) => {
 
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
-    const details = await Group.findByPk(req.params.groupId);
-    const images = await GroupImage.findAll({ where: { groupId: req.params.groupId } });
-    const organizer = await User.findByPk(details.organizerId);
-    const venue = await Venue.findAll({ where: { groupId: req.params.groupId } });
+    const { groupId } = req.params;
 
-    res.json({
-        Groups: details,
-        GroupImages: images,
-        Organizer: organizer,
-        Venues: venue
+    const group = await Group.findByPk(groupId, {
+        include: [{
+            model: GroupImage
+        }, {
+            model: User,
+            attributes: ['id', 'firstName', 'lastName'],
+            as: 'Organizer'
+        }, {
+            model: Venue,
+        }]
     });
+
+    const members = await Membership.count({ where: { groupId: groupId } });
+    const image = await GroupImage.findOne({ where: { groupId: groupId, preview: true }});
+
+    group.dataValues.numMembers = members;
+
+    if (image) {
+        group.dataValues.previewImage = image.dataValues.url;
+    } else {
+        group.dataValues.previewImage = null;
+    }
+
+    res.json(group);
 });
 
 
