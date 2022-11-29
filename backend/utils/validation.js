@@ -11,12 +11,13 @@ const handleValidationErrors = (req, _res, next) => {
             .array()
             .map((error) => `${error.msg}`);
 
-        const err = Error('Bad request.');
+        const err = Error('Validation error');
+        err.title = 'Bad request.';
         err.errors = errors;
         err.status = 400;
-        err.title = 'Bad request.';
         next(err);
     }
+    
     next();
 };
 
@@ -43,7 +44,8 @@ const validateGroup = [
         .withMessage('City is required'),
     check('state')
         .exists({ checkFalsy: true })
-        .withMessage('State is required')
+        .withMessage('State is required'),
+    handleValidationErrors
 ];
 
 
@@ -65,7 +67,8 @@ const validateVenue = [
     check('lng')
         .exists({ checkFalsy: true })
         .isFloat()
-        .withMessage('Longitude is not valid')
+        .withMessage('Longitude is not valid'),
+    handleValidationErrors
 ];
 
 
@@ -101,7 +104,8 @@ const validateEvent = [
     check('endDate')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('End date is less than start date')
+        .withMessage('End date is less than start date'),
+    handleValidationErrors
 ];
 
 
