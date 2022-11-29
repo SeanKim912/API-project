@@ -20,8 +20,6 @@ const validateLogin = [
     handleValidationErrors
 ];
 
-
-
 // Log in
 router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body;
@@ -56,7 +54,7 @@ router.delete('/', (_req, res) => {
 
 
 
-// Get current User
+// Get Current User
 router.get('/', requireAuth, restoreUser, (req, res) => {
     const { user } = req;
     if (user) {

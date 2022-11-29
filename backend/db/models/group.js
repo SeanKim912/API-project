@@ -34,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Membership,
         foreignKey: 'groupId'
       });
+      Group.belongsTo(models.User, {
+        foreignKey: 'organizerId',
+        allowNull: false,
+        as: 'Organizer'
+      })
     }
   }
   Group.init({

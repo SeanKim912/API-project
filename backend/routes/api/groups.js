@@ -8,6 +8,8 @@ const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 const { check, validationResult } = require('express-validator');
 const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation');
+const group = require('../../db/models/group');
+
 
 
 
@@ -267,35 +269,76 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
 // Return all groups joined/organized by Current User
 router.get('/current', async (req, res) => {
     const userId = req.user.id
-    const organized = await Group.findAll({
-        where: { organizerId: userId }
+    const organized = await Group.findAll({ where: { organizerId: userId } });
+    const joined = await Group.findAll({
+        include: {
+            attributes: [],
+            model: Membership,
+            where: {
+                userId: userId
+            }
+        }
     });
 
-    const joined = await User.findByPk(req.user.id, {
-        include: { model: Group }
-    });
+    const total = [...organized, ...joined];
 
-    return res.json({
-        organized,
-        joined
-    });
+    for (let i = 0; i < total.length; i++) {
+        let members = await Membership.count({
+            where: {
+                groupId: total[i].dataValues.id
+            }
+        });
+
+        let image = await GroupImage.findOne({
+            where: {
+                groupId: total[i].dataValues.id,
+                preview: true
+            }
+        });
+
+        total[i].dataValues.numMembers = members;
+
+        if (image) {
+            total[i].dataValues.previewImage = image.dataValues.url
+        } else {
+            groups[i].dataValues.previewImage = null;
+        }
+    }
+
+
+    return res.json({ "Groups": total});
 });
 
 
 
 // Get details of a Group from its id
 router.get('/:groupId', async (req, res) => {
-    const details = await Group.findByPk(req.params.groupId);
-    const images = await GroupImage.findAll({ where: { groupId: req.params.groupId } });
-    const organizer = await User.findByPk(details.organizerId);
-    const venue = await Venue.findAll({ where: { groupId: req.params.groupId } });
+    const { groupId } = req.params;
 
-    res.json({
-        Groups: details,
-        GroupImages: images,
-        Organizer: organizer,
-        Venues: venue
+    const group = await Group.findByPk(groupId, {
+        include: [{
+            model: GroupImage
+        }, {
+            model: User,
+            attributes: ['id', 'firstName', 'lastName'],
+            as: 'Organizer'
+        }, {
+            model: Venue,
+        }]
     });
+
+    const members = await Membership.count({ where: { groupId: groupId } });
+    const image = await GroupImage.findOne({ where: { groupId: groupId, preview: true }});
+
+    group.dataValues.numMembers = members;
+
+    if (image) {
+        group.dataValues.previewImage = image.dataValues.url;
+    } else {
+        group.dataValues.previewImage = null;
+    }
+
+    res.json(group);
 });
 
 
@@ -316,18 +359,7 @@ router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
 
     const updatedGroup = await group.update({ name, about, type, private, city, state });
 
-    res.json({
-        id: updatedGroup.id,
-        organizerId: updatedGroup.organizerId,
-        name: updatedGroup.name,
-        about: updatedGroup.about,
-        type: updatedGroup.type,
-        private: updatedGroup.private,
-        city: updatedGroup.city,
-        state: updatedGroup.state,
-        createdAt: updatedGroup.createdAt,
-        updatedAt: updatedGroup.updatedAt
-    });
+    res.json(updatedGroup);
 });
 
 
@@ -355,10 +387,32 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
 
 // Return all groups
 router.get('/', async (req, res) => {
-
     const groups = await Group.findAll();
 
-    return res.json(groups);
+    for (let i = 0; i < groups.length; i++) {
+        let members = await Membership.count({
+            where: {
+                groupId: groups[i].dataValues.id
+            }
+        });
+
+        let image = await GroupImage.findOne({
+            where: {
+                groupId: groups[i].dataValues.id,
+                preview: true
+            }
+        });
+
+        groups[i].dataValues.numMembers = members;
+
+        if (image) {
+            groups[i].dataValues.previewImage = image.dataValues.url
+        } else {
+            groups[i].dataValues.previewImage = null;
+        }
+    }
+
+    return res.json({ "Groups": groups });
 });
 
 
@@ -369,18 +423,7 @@ router.post('/', validateGroup, requireAuth, async (req, res) => {
     const newGroup = await Group.create({ organizerId: req.user.id, name, about, type, private, city, state });
 
     res.status(201);
-    res.json({
-        id: newGroup.id,
-        organizerId: newGroup.organizerId,
-        name: newGroup.name,
-        about: newGroup.about,
-        type: newGroup.type,
-        private: newGroup.private,
-        city: newGroup.city,
-        state: newGroup.state,
-        createdAt: newGroup.createdAt,
-        updatedAt: newGroup.updatedAt
-    });
+    res.json(newGroup);
 });
 
 
