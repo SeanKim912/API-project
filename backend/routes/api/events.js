@@ -263,10 +263,18 @@ router.get('/', async (req, res, next) => {
     }
 
     const event = await Event.findAll({
-        where, ...pagination
+        include: [{
+            model: Group,
+            attributes: ['id', 'name', 'city', 'state']
+        }, {
+            model: Venue,
+            attributes: ['id', 'city', 'state']
+        }],
+        where,
+        ...pagination
     });
 
-    return res.json({ event, page, size });
+    return res.json({ Events: event });
 });
 
 
