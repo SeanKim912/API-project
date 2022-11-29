@@ -16,13 +16,8 @@ const group = require('../../db/models/group');
 // Get all Members of a Group from its id
 router.get('/:groupId/members', async (req, res, next) => {
     const { groupId } = req.params;
-    const userId = req.user.id;
+    const currUserId = req.user.id;
     const group = await Group.findByPk(groupId);
-    const membership = await Membership.findByPk(userId)
-    const roster = await Membership.findAll({
-            include: { model: User.scope("viewMembership") },
-            where: { groupId: groupId },
-        });
 
     if (!group) {
         const err = new Error("Group couldn't be found");
@@ -31,19 +26,28 @@ router.get('/:groupId/members', async (req, res, next) => {
         return next(err);
     };
 
-    if (membership.status !== "co-host" || userId !== group.organizerId) {
-        const filteredRoster = await Membership.findAll({
-            include: { model: User.scope("viewMembership") },
-            where: {
-                groupId: groupId,
-                [Op.not]: [{ status: ["pending"] }]
-            }
-        });
+    const where = {};
 
-        res.json({ Members: filteredRoster });
+    if (!currUserId || currUserId !== group.organizerId) {
+        where.status = { [Op.in]: ['co-host', 'member']}
     }
 
-    res.json({ Members: roster });
+    const members = await Group.findByPk(groupId, {
+        include: [{
+            model: User,
+            as: 'Member',
+            attributes: [ 'id', 'firstName', 'lastName'],
+            through: {
+                attributes: [ 'status' ],
+                where,
+                required: false
+            },
+            required: false
+        }],
+        attributes: []
+    });
+
+    res.json({ members });
 });
 
 
@@ -248,7 +252,16 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
         return next(err);
     }
 
-    const newEvent = await Event.create({ groupId, venueId, name, type, capacity, price, description, startDate, endDate });
+    const newEvent = await Event.create({
+        groupId,
+        venueId,
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate });
 
     res.json({
         id: newEvent.id,

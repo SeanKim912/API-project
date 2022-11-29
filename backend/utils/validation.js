@@ -17,7 +17,7 @@ const handleValidationErrors = (req, _res, next) => {
         err.status = 400;
         next(err);
     }
-    
+
     next();
 };
 
@@ -93,7 +93,7 @@ const validateEvent = [
         .exists({ checkFalsy: true })
         .isFloat()
         .withMessage('Price is invalid'),
-    check('about')
+    check('description')
         .exists({ checkFalsy: true })
         .notEmpty()
         .withMessage('Description is required'),

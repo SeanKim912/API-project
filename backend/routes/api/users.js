@@ -39,9 +39,6 @@ router.post(
     validateSignup,
     async (req, res) => {
         const { firstName, lastName, email, username, password } = req.body;
-        const user = await User.signup({ firstName, lastName, email, username, password });
-
-        await setTokenCookie(res, user);
 
         const validateEmail = await User.findOne({ where: { email: email } });
 
@@ -56,12 +53,19 @@ router.post(
             });
         };
 
+        const user = await User.signup({ email, username, password, firstName, lastName });
+
+        const token = await setTokenCookie(res, user);
+
+        const userRes = user.toSafeObject();
+        userRes.token = token;
+
         return res.json({
-            id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            token: ""
+            id: userRes.id,
+            firstName: userRes.firstName,
+            lastName: userRes.lastName,
+            email: userRes.email,
+            token: userRes.token
         });
     }
 );
