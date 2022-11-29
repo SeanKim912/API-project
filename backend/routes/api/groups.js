@@ -6,6 +6,7 @@ const { Group, GroupImage, User, Membership, Venue, Event, Attendance } = requir
 const membership = require('../../db/models/membership');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
+const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation')
 
 
 
@@ -362,7 +363,7 @@ router.get('/', async (req, res) => {
 
 
 // Create a Group
-router.post('/', async (req, res) => {
+router.post('/', validateGroup, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const newGroup = await Group.create({ organizerId: req.user.id, name, about, type, private, city, state });
 
