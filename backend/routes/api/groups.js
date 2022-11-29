@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { Sequelize, Op } = require('sequelize');
 
-const { Group, GroupImage, User, Membership, Venue, Event, Attendance } = require('../../db/models');
+const { Group, GroupImage, EventImage, User, Membership, Venue, Event, Attendance } = require('../../db/models');
 const membership = require('../../db/models/membership');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
 const { check, validationResult } = require('express-validator');
 const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation');
 const group = require('../../db/models/group');
+const eventimage = require('../../db/models/eventimage');
 
 
 
@@ -242,7 +243,13 @@ router.get('/:groupId/events', async (req, res, next) => {
     const { groupId } = req.params;
     const events = await Event.findAll({
         where: { groupId: groupId },
-        include: [{ model: Group }, { model: Venue }]
+        include: [{
+            model: Group,
+            attributes: [ 'id', 'name', 'city', 'state']
+        }, {
+            model: Venue,
+            attributes: [ 'id', 'city', 'state' ]
+        }]
     });
 
     if (!events || events.length === 0) {
@@ -252,7 +259,30 @@ router.get('/:groupId/events', async (req, res, next) => {
         return next(err);
     };
 
-    return res.json({ Events: events });
+    for (let i = 0; i < events.length; i++) {
+        let attendees = await Attendance.count({
+            where: {
+                eventId: events[i].dataValues.id,
+            }
+        });
+
+    let image = await EventImage.findOne({
+        where: {
+            eventId: events[i].dataValues.id,
+            preview: true
+        }
+    });
+
+    events[i].dataValues.numAttending = attendees;
+
+    if (image) {
+        events[i].dataValues.previewImage = image.dataValues.url
+    } else {
+        events[i].dataValues.previewIMage = null;
+    }
+    }
+
+    return res.json({ "Events": events });
 });
 
 
