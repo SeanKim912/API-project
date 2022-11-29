@@ -6,7 +6,8 @@ const { Group, GroupImage, User, Membership, Venue, Event, Attendance } = requir
 const membership = require('../../db/models/membership');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
-const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation')
+const { check, validationResult } = require('express-validator');
+const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation');
 
 
 
@@ -46,7 +47,7 @@ router.get('/:groupId/members', async (req, res, next) => {
 
 
 // Change Membership status
-router.put('/:groupId/membership', async (req, res, next) => {
+router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
     const { memberId, status } = req.body;
     const { groupId } = req.params;
     const group = await Group.findByPk(groupId);
@@ -74,7 +75,7 @@ router.put('/:groupId/membership', async (req, res, next) => {
 
 
 // Request Membership to a Group by id
-router.post('/:groupId/membership', async (req, res, next) => {
+router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
     const { groupId } = req.params;
     const userIdNumber = req.user.id;
     const group = await Group.findByPk(groupId);
@@ -92,6 +93,7 @@ router.post('/:groupId/membership', async (req, res, next) => {
         status: "pending"
     });
 
+
     res.json({
         id: membershipRequest.id,
         memberId: membershipRequest.userId,
@@ -102,7 +104,7 @@ router.post('/:groupId/membership', async (req, res, next) => {
 
 
 // Delete a Membership
-router.delete('/:groupId/membership', async (req, res, next) => {
+router.delete('/:groupId/membership', requireAuth, async (req, res, next) => {
     const { memberId } = req.body;
     const { groupId } = req.params;
     const group = await Group.findByPk(groupId);
@@ -141,7 +143,7 @@ router.delete('/:groupId/membership', async (req, res, next) => {
 
 
 // Add an Image to a Group based on the Group's id
-router.post('/:groupId/images', async (req, res, next) => {
+router.post('/:groupId/images', requireAuth, async (req, res, next) => {
     const { url, preview } = req.body;
     const { groupId } = req.params;
     const group = await Group.findByPk(groupId);
@@ -165,7 +167,7 @@ router.post('/:groupId/images', async (req, res, next) => {
 
 
 // Get all Venues of a Group from its id
-router.get('/:groupId/venues', async (req, res, next) => {
+router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
     const { groupId } = req.params;
     const venues = await Venue.findAll({ where: { groupId: groupId } });
 
@@ -182,7 +184,7 @@ router.get('/:groupId/venues', async (req, res, next) => {
 
 
 // Create a Venue for a Group based on its id
-router.post('/:groupId/venues', async (req, res, next) => {
+router.post('/:groupId/venues', requireAuth, validateVenue, async (req, res, next) => {
     const { address, city, state, lat, lng } = req.body;
     const { groupId } = req.params;
 
@@ -231,7 +233,7 @@ router.get('/:groupId/events', async (req, res, next) => {
 
 
 // Create an Event for a Group from its id
-router.post('/:groupId/events', async (req, res, next) => {
+router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, next) => {
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
     const { groupId } = req.params;
 
@@ -299,7 +301,7 @@ router.get('/:groupId', async (req, res) => {
 
 
 // Edit a Group by its id
-router.put('/:groupId', async (req, res, next) => {
+router.put('/:groupId', requireAuth, validateGroup, async (req, res, next) => {
     const { name, about, type, private, city, state } = req.body;
     const { groupId } = req.params;
 
@@ -331,7 +333,7 @@ router.put('/:groupId', async (req, res, next) => {
 
 
 // Delete a Group
-router.delete('/:groupId', async (req, res, next) => {
+router.delete('/:groupId', requireAuth, async (req, res, next) => {
     const group = await Group.findByPk(req.params.groupId);
 
     if (!group) {
@@ -362,7 +364,7 @@ router.get('/', async (req, res) => {
 
 
 // Create a Group
-router.post('/', validateGroup, async (req, res) => {
+router.post('/', validateGroup, requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const newGroup = await Group.create({ organizerId: req.user.id, name, about, type, private, city, state });
 

@@ -10,7 +10,7 @@ const { requireAuth } = require('../../utils/auth');
 
 
 // Delete an Image for a Group
-router.delete('/:imageId', async (req, res, next) => {
+router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const { imageId } = req.params;
     const image = await GroupImage.findByPk(imageId);
 

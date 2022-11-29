@@ -5,7 +5,8 @@ const { Sequelize, Op } = require('sequelize');
 const { Event, Group, User, Venue, EventImage, Membership, Attendance } = require('../../db/models');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
-
+const { check, validationResult } = require('express-validator');
+const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation');
 
 
 // Get all Attendees of an Event by id
@@ -44,7 +45,7 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
 
 // Change Attendance status
-router.put('/:eventId/attendance', async (req, res, next) => {
+router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
     const { userId, status } = req.body;
     const { eventId } = req.params;
     const event = await Event.findByPk(eventId);
@@ -72,7 +73,7 @@ router.put('/:eventId/attendance', async (req, res, next) => {
 
 
 // Request Attendance to an Event by id
-router.post('/:eventId/attendance', async (req, res, next) => {
+router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
     const { eventId } = req.params;
     const userIdNumber = req.user.id;
     const event = await Event.findByPk(eventId);
@@ -100,7 +101,7 @@ router.post('/:eventId/attendance', async (req, res, next) => {
 
 
 // Delete an Attendance
-router.delete('/:eventId/attendance', async (req, res, next) => {
+router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
     const { memberId } = req.body;
     const { eventId } = req.params;
     const event = await Event.findByPk(eventId);
@@ -131,7 +132,7 @@ router.delete('/:eventId/attendance', async (req, res, next) => {
 
 
 // Add an Image to an Event from its id
-router.post('/:eventId/images', async (req, res, next) => {
+router.post('/:eventId/images', requireAuth, async (req, res, next) => {
     const { url, preview } = req.body;
     const { eventId } = req.params;
 
@@ -177,7 +178,7 @@ router.get('/:eventId', async (req, res, next) => {
 
 
 // Edit an Event by its id
-router.put('/:eventId', async (req, res, next) => {
+router.put('/:eventId', requireAuth, validateEvent, async (req, res, next) => {
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
     const { eventId } = req.params;
 
@@ -208,7 +209,7 @@ router.put('/:eventId', async (req, res, next) => {
 
 
 // Delete an Event
-router.delete('/:eventId', async (req, res, next) => {
+router.delete('/:eventId', requireAuth, async (req, res, next) => {
     const { eventId } = req.params;
     const event = await Event.findByPk(eventId);
 
