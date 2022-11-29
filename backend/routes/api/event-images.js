@@ -9,7 +9,7 @@ const { requireAuth } = require('../../utils/auth');
 
 
 // Delete an Image for an Event
-router.delete('/:imageId', async (req, res, next) => {
+router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const { imageId } = req.params;
     const image = await EventImage.findByPk(imageId);
 

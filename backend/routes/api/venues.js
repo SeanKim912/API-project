@@ -4,11 +4,13 @@ const router = express.Router();
 const { Group, GroupImage, User, Membership, Venue, Attendance } = require('../../db/models');
 const user = require('../../db/models/user');
 const { requireAuth } = require('../../utils/auth');
+const { check, validationResult } = require('express-validator')
+const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = require('../../utils/validation');
 
 
 
 // Edit a Venue from its id
-router.put('/:venueId', async (req, res, next) => {
+router.put('/:venueId', requireAuth, validateVenue, async (req, res, next) => {
     const { address, city, state, lat, lng } = req.body;
     const { venueId } = req.params;
 
