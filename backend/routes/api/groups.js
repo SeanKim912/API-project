@@ -92,7 +92,6 @@ router.post('/:groupId/membership', async (req, res, next) => {
         status: "pending"
     });
 
-    console.log(membershipRequest)
     res.json({
         id: membershipRequest.id,
         memberId: membershipRequest.userId,
