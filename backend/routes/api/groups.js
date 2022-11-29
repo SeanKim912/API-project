@@ -29,13 +29,13 @@ router.get('/:groupId/members', async (req, res, next) => {
     const where = {};
 
     if (!currUserId || currUserId !== group.organizerId) {
-        where.status = { [Op.in]: ['co-host', 'member']}
+        where.status = { [Op.in]: ['co-host', 'member'] }
     }
 
     const members = await Group.findByPk(groupId, {
         include: [{
             model: User,
-            as: 'Member',
+            as: 'Members',
             attributes: [ 'id', 'firstName', 'lastName'],
             through: {
                 attributes: [ 'status' ],
@@ -47,7 +47,7 @@ router.get('/:groupId/members', async (req, res, next) => {
         attributes: []
     });
 
-    res.json({ members });
+    res.json(members);
 });
 
 
@@ -56,8 +56,17 @@ router.get('/:groupId/members', async (req, res, next) => {
 router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
     const { memberId, status } = req.body;
     const { groupId } = req.params;
+
+    if (status === 'pending') {
+        const err = new Error("Validation Error");
+        err.status = 400;
+        err.title = 'Status change failed';
+        err.errors = [ 'Cannot change a membership status to pending' ];
+
+        return next(err);
+    }
+
     const group = await Group.findByPk(groupId);
-    const membership = await Membership.findOne({ where: { userId: memberId } });
 
     if (!group) {
         const err = new Error("Group couldn't be found");
@@ -66,13 +75,23 @@ router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
+    const membership = await Membership.findOne({ where: { userId: memberId } });
+
     if (!membership) {
-        const err = new Error("Membership does not exist for this User");
+        const err = new Error("Membership between the user and the group does not exist");
         err.status = 404;
 
         return next(err);
     }
 
+    const user = await User.findOne({ where: { id: membership.userId } });
+
+    if (!user) {
+        const err = new Error("Validation Error");
+        err.status = 400;
+        err.title = 'Status change failed'
+        err.errors = [ "User couldn't be found" ]
+    }
     const updatedMembership = await membership.update({ status });
 
     res.json(updatedMembership);

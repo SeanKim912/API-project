@@ -12,13 +12,8 @@ const { handleValidationErrors, validateGroup, validateVenue, validateEvent } = 
 // Get all Attendees of an Event by id
 router.get('/:eventId/attendees', async (req, res, next) => {
     const { eventId } = req.params;
-    const userId = req.user.id;
+    const currUserId = req.user.id;
     const event = await Event.findByPk(eventId);
-    const membership = await Membership.findByPk(userId)
-    const roster = await Attendance.findAll({
-            include: { model: User.scope("viewMembership") },
-            where: { eventId: eventId }
-        });
 
     if (!event) {
         const err = new Error("Event couldn't be found");
@@ -27,19 +22,29 @@ router.get('/:eventId/attendees', async (req, res, next) => {
         return next(err);
     };
 
-    if (membership.status !== "co-host" || userId !== group.organizerId) {
-        const filteredRoster = await Attendance.findAll({
-            include: { model: User.scope("viewMembership") },
-            where: {
-                eventId: eventId,
-                [Op.not]: [{ status: ["pending"] }]
-            }
-        });
+    const group = await Group.findByPk(event.groupId);
 
-        res.json({ Attendees: filteredRoster });
+    const where = {};
+
+    if (!currUserId || currUserId !== group.organizerId) {
+        where.status = { [Op.in]: ['co-host', 'member'] }
     }
 
-    res.json({ Attendees: roster });
+    const attendees = await Event.findByPk(eventId, {
+        include: [{
+            model: User,
+            as: 'Attendees',
+            attributes: [ 'id', 'firstName', 'lastName' ],
+            through: {
+                attributes: [ 'status' ],
+                where,
+                required: false
+            },
+            required: false
+        }],
+        attributes: []
+    })
+    res.json( attendees );
 });
 
 
@@ -48,8 +53,17 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
     const { userId, status } = req.body;
     const { eventId } = req.params;
+
+    if (status === 'pending') {
+        const err = new Error("Validation Error");
+        err.status = 400;
+        err.title = 'Status change failed';
+        err.errors = [ 'Cannot change an attendance status to pending' ];
+
+        return next(err);
+    }
+
     const event = await Event.findByPk(eventId);
-    const attendance = await Attendance.findOne({ where: { userId: userId } });
 
     if (!event) {
         const err = new Error("Event couldn't be found");
@@ -57,6 +71,8 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
 
         return next(err);
     }
+
+    const attendance = await Attendance.findOne({ where: { userId: userId } });
 
     if (!attendance) {
         const err = new Error("Attendance between the user and the event does not exist");

@@ -49,7 +49,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.belongsToMany(models.Event, {
         through: models.Attendance,
-        foreignKey: 'userId'
+        foreignKey: 'userId',
+        as: 'Attendees'
       });
       User.belongsToMany(models.Group, {
         through: models.Membership,
