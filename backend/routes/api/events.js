@@ -84,7 +84,12 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
 
     const updatedAttendance = await attendance.update({ status });
 
-    res.json(updatedAttendance);
+    res.json({
+        id: updatedAttendance.id,
+        eventId: updatedAttendance.eventId,
+        userId: updatedAttendance.userId,
+        status: updatedAttendance.status
+    });
 });
 
 
@@ -297,7 +302,7 @@ router.get('/', async (req, res, next) => {
 
     }
 
-    const event = await Event.findAll({
+    const events = await Event.findAll({
         include: [{
             model: Group,
             attributes: ['id', 'name', 'city', 'state']
@@ -309,7 +314,30 @@ router.get('/', async (req, res, next) => {
         ...pagination
     });
 
-    return res.json({ Events: event });
+    for (let i = 0; i < events.length; i++) {
+        let attendees = await Attendance.count({
+            where: {
+                eventId: events[i].dataValues.id
+            }
+        });
+
+        let image = await EventImage.findOne({
+            where: {
+                eventId: events[i].dataValues.id,
+                preview: true
+            }
+        });
+
+        events[i].dataValues.numAttending = attendees;
+
+        if (image) {
+            events[i].dataValues.previewImage = image.dataValues.url
+        } else {
+            events[i].dataValues.previewImage = null;
+        }
+    }
+
+    return res.json({ "Events": events });
 });
 
 
