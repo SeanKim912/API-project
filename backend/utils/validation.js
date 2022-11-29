@@ -43,7 +43,8 @@ const validateGroup = [
         .withMessage('City is required'),
     check('state')
         .exists({ checkFalsy: true })
-        .withMessage('State is required')
+        .withMessage('State is required'),
+    handleValidationErrors
 ];
 
 
@@ -65,7 +66,8 @@ const validateVenue = [
     check('lng')
         .exists({ checkFalsy: true })
         .isFloat()
-        .withMessage('Longitude is not valid')
+        .withMessage('Longitude is not valid'),
+    handleValidationErrors
 ];
 
 
@@ -101,7 +103,8 @@ const validateEvent = [
     check('endDate')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('End date is less than start date')
+        .withMessage('End date is less than start date'),
+    handleValidationErrors
 ];
 
 

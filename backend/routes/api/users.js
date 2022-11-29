@@ -11,14 +11,14 @@ const { handleValidationErrors } = require('../../utils/validation');
 const validateSignup = [
     check('firstName')
         .exists({ checkFalsy: true })
-        .withMessage('Please provide a first name.'),
+        .withMessage('First Name is required'),
     check('lastName')
         .exists({ checkFalsy: true })
-        .withMessage('Please provide a last name'),
+        .withMessage('Last Name is required'),
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Please provide a valid email.'),
+        .withMessage('Invalid email'),
     check('username')
         .exists({ checkFalsy: true })
         .isLength({ min: 4 })
@@ -42,6 +42,19 @@ router.post(
         const user = await User.signup({ firstName, lastName, email, username, password });
 
         await setTokenCookie(res, user);
+
+        const validateEmail = await User.findOne({ where: { email: email } });
+
+        if (validateEmail) {
+            res.status(403);
+            return res.json({
+                "message": "User already exists",
+                "statusCode": 403,
+                "errors": {
+                    "email": "User with that email already exists"
+                }
+            });
+        };
 
         return res.json({
             id: user.id,
