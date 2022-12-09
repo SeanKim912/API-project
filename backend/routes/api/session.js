@@ -60,6 +60,7 @@ router.delete('/', (_req, res) => {
 // Get Current User
 router.get('/', requireAuth, restoreUser, (req, res) => {
     const { user } = req;
+    console.log(user);
     if (user) {
         return res.json(
             user.toSafeObject()
