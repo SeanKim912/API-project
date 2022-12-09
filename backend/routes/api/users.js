@@ -61,11 +61,13 @@ router.post(
         userRes.token = token;
 
         return res.json({
-            id: userRes.id,
-            firstName: userRes.firstName,
-            lastName: userRes.lastName,
-            email: userRes.email,
-            token: userRes.token
+            user: {
+                id: userRes.id,
+                firstName: userRes.firstName,
+                lastName: userRes.lastName,
+                email: userRes.email,
+                username: user.username
+            }
         });
     }
 );

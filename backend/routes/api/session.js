@@ -39,11 +39,13 @@ router.post('/', validateLogin, async (req, res, next) => {
     userRes.token = token;
 
     return res.json({
-        id: userRes.id,
-        firstName: userRes.firstName,
-        lastName: userRes.lastName,
-        email: userRes.email,
-        token: userRes.token
+        user: {
+            id: userRes.id,
+            firstName: userRes.firstName,
+            lastName: userRes.lastName,
+            email: userRes.email,
+            username: user.username
+        }
     });
 });
 
@@ -62,9 +64,15 @@ router.get('/', requireAuth, restoreUser, (req, res) => {
     const { user } = req;
     console.log(user);
     if (user) {
-        return res.json(
-            user.toSafeObject()
-        );
+        return res.json({
+            user: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                username: user.username
+            }
+        });
     } else return res.json({});
 });
 
