@@ -25,9 +25,6 @@ router.use('/events', eventsRouter);
 router.use('/group-images', groupImagesRouter);
 router.use('/event-images', eventImagesRouter);
 
-router.post('/test', function (req, res) {
-    res.json({ requestBody: req.body });
-});
 
 
 module.exports = router;
