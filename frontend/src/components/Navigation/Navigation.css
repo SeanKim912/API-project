@@ -1,0 +1,17 @@
+ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    justify-content: space-between;
+    line-height: 24px;
+    min-height: 64px;
+    tab-size: 4;
+    list-style: none;
+}
+
+li {
+    list-style: none;
+}
