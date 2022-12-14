@@ -16,7 +16,7 @@ function Navigation({ isLoaded }){
                 <ul>
                 </ul>
                 <li>
-                    <NavLink exact to="/group-start">Start a new group</NavLink>
+                    <NavLink exact to="/groups/start">Start a new group</NavLink>
                 </li>
                 <li>
                     <NavLink exact to="/chats">Chat</NavLink>

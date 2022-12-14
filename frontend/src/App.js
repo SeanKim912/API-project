@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import CreateGroupPage from "./components/CreateGroupPage";
 import UserHome from "./components/UserHome";
+import GroupList from "./components/GroupList";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,8 +19,11 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/group-start">
+          <Route path="/groups/start">
             <CreateGroupPage />
+          </Route>
+          <Route path="/groups">
+            <GroupList />
           </Route>
           <Route path="/chats">
           </Route>

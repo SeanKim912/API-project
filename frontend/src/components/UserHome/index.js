@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import './UserHome.css';
 
 function UserHome() {
@@ -29,7 +30,7 @@ function UserHome() {
                             <div className='infoHeader'>
                                 <h2>Your groups</h2>
                                 <div className='linkBlock'>
-                                    <a>See all your groups</a>
+                                    <NavLink exact to="/groups">See all your groups</NavLink>
                                 </div>
                             </div>
                             <div className='infoBody'>
