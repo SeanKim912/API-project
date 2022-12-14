@@ -6,7 +6,9 @@ import './GroupList.css'
 
 const GroupList = () => {
     const dispatch = useDispatch();
-    const groups = useSelector(state => state.groups);
+    const groupsObj = useSelector(state => state.groupState.allGroups);
+    const groups = Object.values(groupsObj);
+    console.log(groupsObj)
 
     useEffect(() => {
         dispatch(getAllGroups());
@@ -19,7 +21,7 @@ const GroupList = () => {
                 <div id="list">
                     {groups.map((group) => {
                         return (
-                        <NavLink>
+                        <NavLink exact to="/groups">
                             <div>
                                 <div className='preview'>{group.previewImage}</div>
                                 <div className='details'>

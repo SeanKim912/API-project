@@ -82,7 +82,7 @@ export const startGroup = (newGroup) => async(dispatch) => {
 }
 
 export const updateGroup = (group) => async(dispatch) => {
-    const response = await csrfFetch(`/api/groups/${groups.id}`, {
+    const response = await csrfFetch(`/api/groups/${group.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(group)
@@ -113,21 +113,31 @@ const initialState = {
 }
 
 const groupReducer = (state = initialState, action) => {
+    let newState;
     switch (action.type) {
-        case ALL_GROUPS:
-            let normalizedGroups = {};
-            action.groups.forEach((group) => {
-                normalizedGroups[group.id] = group;
+        case ALL_GROUPS: {
+            newState = { allGroups: {}, singleGroup: {} }
+            console.log(action.groups)
+            action.groups.Groups.forEach((group) => {
+                newState.allGroups[group.id] = group;
             });
-            return {
-                ...state,
-                ...normalizedGroups
-            }
-        case USER_GROUPS:
-            return [...state, action.group]
-        default:
+            return newState;
+        }
+        case USER_GROUPS: {
+            newState = { allGroups: {}, singleGroup: {} }
+            action.groups.Groups.forEach((group) => {
+                newState.allGroups[group.id] = group;
+            });
+            return newState;
+        }
+        case CREATE: {
+            newState = { ...state }
+        }
+        default: {
             return state;
+        }
     }
 }
+
 
 export default groupReducer;

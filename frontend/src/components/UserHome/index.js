@@ -30,11 +30,11 @@ function UserHome() {
                             <div className='infoHeader'>
                                 <h2>Your groups</h2>
                                 <div className='linkBlock'>
-                                    <NavLink exact to="/groups">See all your groups</NavLink>
+                                    <NavLink exact to="/groups/user">See all your groups</NavLink>
                                 </div>
                             </div>
                             <div className='infoBody'>
-                                <a>Discover groups</a>
+                                <NavLink exact to="/groups">Discover groups</NavLink>
                             </div>
                         </div>
                         <div className='yourInterests'>
@@ -51,9 +51,7 @@ function UserHome() {
                         </div>
                     </div>
                 </div>
-                <div className='suggested/upcoming'>
-
-                </div>
+                <div className='suggested/upcoming'></div>
             </div>
         </div>
     );

@@ -7,7 +7,7 @@ import groupReducer from './group';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
-    groups: groupReducer
+    groupState: groupReducer
 });
 
 let enhancer;

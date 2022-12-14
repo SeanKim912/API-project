@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import CreateGroupPage from "./components/CreateGroupPage";
 import UserHome from "./components/UserHome";
 import GroupList from "./components/GroupList";
+import UserGroupList from "./components/UserGroupList";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function App() {
         <Switch>
           <Route path="/groups/start">
             <CreateGroupPage />
+          </Route>
+          <Route path="/groups/user">
+            <UserGroupList />
           </Route>
           <Route path="/groups">
             <GroupList />
