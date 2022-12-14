@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import UserHome from '../UserHome';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -14,8 +13,10 @@ function Navigation({ isLoaded }){
                 <li>
                     <NavLink exact to="/">Home</NavLink>
                 </li>
+                <ul>
+                </ul>
                 <li>
-                    <NavLink exact to="/lp/how-to-group-start">Start a new group</NavLink>
+                    <NavLink exact to="/group-start">Start a new group</NavLink>
                 </li>
                 <li>
                     <NavLink exact to="/chats">Chat</NavLink>
@@ -24,12 +25,12 @@ function Navigation({ isLoaded }){
                     <NavLink exact to="/notifications">Notifications</NavLink>
                 </li>
                     {isLoaded && (
-                <li>
+                        <li>
                     <ProfileButton user={sessionUser} />
                 </li>
                     )}
+
             </ul>
-            <UserHome />
         </>
     );
 }

@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import CreateGroupPage from "./components/CreateGroupPage";
+import UserHome from "./components/UserHome";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,12 +18,15 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/lp/how-to-group-start">
+          <Route path="/group-start">
             <CreateGroupPage />
           </Route>
           <Route path="/chats">
           </Route>
           <Route path="/notifications">
+          </Route>
+          <Route path="/">
+            <UserHome />
           </Route>
         </Switch>
       )}

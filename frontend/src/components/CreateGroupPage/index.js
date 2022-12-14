@@ -5,19 +5,27 @@ function CreateGroupPage() {
     return (
         <form>
             <label>
-                Location
-                <input type="text" />
-            </label>
-            <label>
-                Interests
-                <input type="text" />
-            </label>
-            <label>
-                Group Name
+                Name
                 <input type="text" />
             </label>
             <label>
                 About
+                <input type="text" />
+            </label>
+            <label>
+                Type
+                <input type="text" />
+            </label>
+            <label>
+                Private
+                <input type="text" />
+            </label>
+            <label>
+                City
+                <input type="text" />
+            </label>
+            <label>
+                State
                 <input type="text" />
             </label>
             <button type="submit">Create Group</button>
