@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import CreateGroupPage from "./components/CreateGroupPage";
+import UserHome from "./components/UserHome";
+import GroupList from "./components/GroupList";
+import UserGroupList from "./components/UserGroupList";
+import GroupPage from "./components/GroupPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,6 +21,21 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path="/groups/start">
+            <CreateGroupPage />
+          </Route>
+          <Route path="/groups/user">
+            <UserGroupList />
+          </Route>
+          <Route path="/groups/:groupId">
+            <GroupPage />
+          </Route>
+          <Route path="/groups">
+            <GroupList />
+          </Route>
+          <Route path="/">
+            <UserHome />
+          </Route>
         </Switch>
       )}
     </>
