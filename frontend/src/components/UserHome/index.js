@@ -1,12 +1,14 @@
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './UserHome.css';
 
 function UserHome() {
+    const user = useSelector(state => state.session.user);
     return (
         <div>
             <div className='welcome'>
                 <div className='text'>
-                    <h2>Welcome, User 👋</h2>
+                    <h2>Welcome 👋</h2>
                     <p>Events from your groups</p>
                 </div>
             </div>

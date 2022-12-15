@@ -57,8 +57,8 @@ export const getUserGroups = () => async(dispatch) => {
     }
 }
 
-export const getGroup = (group) => async(dispatch) => {
-    const response = await csrfFetch(`/api/groups/${group.id}`);
+export const getGroup = (groupId) => async(dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}`);
 
     if (response.ok) {
         const details = await response.json();
@@ -116,22 +116,28 @@ const groupReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case ALL_GROUPS: {
-            newState = { allGroups: {}, singleGroup: {} }
-            console.log(action.groups)
+            newState = { allGroups: {}, singleGroup: {} };
             action.groups.Groups.forEach((group) => {
                 newState.allGroups[group.id] = group;
             });
             return newState;
         }
         case USER_GROUPS: {
-            newState = { allGroups: {}, singleGroup: {} }
+            newState = { allGroups: {}, singleGroup: {} };
             action.groups.Groups.forEach((group) => {
                 newState.allGroups[group.id] = group;
             });
             return newState;
         }
+        case LOAD_ONE: {
+            newState = { allGroups: {}, singleGroup: {}};
+            newState.singleGroup = { ...action.group };
+            return newState;
+        }
         case CREATE: {
-            newState = { ...state }
+            newState.allGroups[action.newGroup.id] = action.newGroup;
+            newState.singleGroup = action.newGroup;
+            return newState;
         }
         default: {
             return state;

@@ -7,6 +7,7 @@ import CreateGroupPage from "./components/CreateGroupPage";
 import UserHome from "./components/UserHome";
 import GroupList from "./components/GroupList";
 import UserGroupList from "./components/UserGroupList";
+import GroupPage from "./components/GroupPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,12 +27,11 @@ function App() {
           <Route path="/groups/user">
             <UserGroupList />
           </Route>
+          <Route path="/groups/:groupId">
+            <GroupPage />
+          </Route>
           <Route path="/groups">
             <GroupList />
-          </Route>
-          <Route path="/chats">
-          </Route>
-          <Route path="/notifications">
           </Route>
           <Route path="/">
             <UserHome />

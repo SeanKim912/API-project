@@ -18,14 +18,8 @@ function Navigation({ isLoaded }){
                 <li>
                     <NavLink exact to="/groups/start">Start a new group</NavLink>
                 </li>
-                <li>
-                    <NavLink exact to="/chats">Chat</NavLink>
-                </li>
-                <li>
-                    <NavLink exact to="/notifications">Notifications</NavLink>
-                </li>
-                    {isLoaded && (
-                        <li>
+                {isLoaded && (
+                    <li>
                     <ProfileButton user={sessionUser} />
                 </li>
                     )}
