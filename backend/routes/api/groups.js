@@ -495,6 +495,7 @@ router.get('/', async (req, res) => {
 router.post('/', validateGroup, requireAuth, async (req, res) => {
     const { name, about, type, private, city, state } = req.body;
     const newGroup = await Group.create({ organizerId: req.user.id, name, about, type, private, city, state });
+    await Membership.create({ userId: req.user.id, groupId: newGroup.id, status: 'member' });
 
     res.status(201);
     res.json(newGroup);

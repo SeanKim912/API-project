@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllGroups } from '../../store/group';
+import { getAllGroups, clearGroup } from '../../store/group';
 import { NavLink } from 'react-router-dom';
 import './GroupList.css'
 
@@ -12,6 +12,10 @@ const GroupList = () => {
     useEffect(() => {
         dispatch(getAllGroups());
     }, [dispatch]);
+
+    // useEffect(() => {
+    //     dispatch(clearGroup());
+    // }, [dispatch]);
 
     return (
         <div id="main">

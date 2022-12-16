@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { startGroup, addGroupImage } from "../../store/group";
-import './CreateGroupPage.css'
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { updateGroup } from "../../store/group";
+import './EditGroupPage.css'
 
-function CreateGroupPage() {
-    const user = useSelector(state => state.session.user);
-    const group = useSelector(state => state.groupState.singleGroup);
+function EditGroupPage() {
     const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
@@ -13,14 +12,14 @@ function CreateGroupPage() {
     const [isPrivate, setIsPrivate] = useState(true);
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
-    const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
-
+    const { groupId } = useParams();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const groupPayload = {
+            id: groupId,
             name,
             about,
             city,
@@ -29,23 +28,13 @@ function CreateGroupPage() {
             type
         }
 
-        if (user) {
-            setErrors([]);
-            return dispatch(startGroup(groupPayload))
-                .catch(async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
+        setErrors([]);
+
+        return dispatch(updateGroup(groupPayload))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
                 })
-        } else {
-            return setErrors(['Must be logged in to create a group']);
-        }
-
-        const imagePayload = {
-            url,
-            preview: true
-        }
-
-        dispatch(addGroupImage(group.id, imagePayload))
 
     };
 
@@ -113,18 +102,9 @@ function CreateGroupPage() {
                     required
                 />
             </label>
-            <label>
-                Group image
-                <input
-                    type="text"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="Image url here"
-                />
-            </label>
-            <button type="submit">Create Group</button>
+            <button type="submit">Edit Group</button>
         </form>
     );
 };
 
-export default CreateGroupPage;
+export default EditGroupPage;

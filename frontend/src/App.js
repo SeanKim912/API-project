@@ -8,6 +8,7 @@ import UserHome from "./components/UserHome";
 import GroupList from "./components/GroupList";
 import UserGroupList from "./components/UserGroupList";
 import GroupPage from "./components/GroupPage";
+import EditGroupPage from "./components/EditGroupPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path="/groups/:groupId/edit">
+            <EditGroupPage />
+          </Route>
           <Route path="/groups/start">
             <CreateGroupPage />
           </Route>
