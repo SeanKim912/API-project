@@ -9,6 +9,10 @@ import GroupList from "./components/GroupList";
 import UserGroupList from "./components/UserGroupList";
 import GroupPage from "./components/GroupPage";
 import EditGroupPage from "./components/EditGroupPage";
+import EventList from "./components/EventList";
+import EventPage from "./components/EventPage";
+import CreateEventPage from "./components/CreateEventPage";
+import EditEventPage from "./components/EditEventPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +29,12 @@ function App() {
           <Route path="/groups/:groupId/edit">
             <EditGroupPage />
           </Route>
+          <Route path='/groups/:groupId/events'>
+            <CreateEventPage />
+          </Route>
+          <Route path="/events/:eventId/edit">
+            <EditEventPage />
+          </Route>
           <Route path="/groups/start">
             <CreateGroupPage />
           </Route>
@@ -34,8 +44,14 @@ function App() {
           <Route path="/groups/:groupId">
             <GroupPage />
           </Route>
+          <Route path="/events/:eventId">
+            <EventPage />
+          </Route>
           <Route path="/groups">
             <GroupList />
+          </Route>
+          <Route path="/events">
+            <EventList />
           </Route>
           <Route path="/">
             <UserHome />

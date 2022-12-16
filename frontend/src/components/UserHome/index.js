@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import EventList from '../EventList';
 import './UserHome.css';
 
 function UserHome() {
@@ -53,7 +54,9 @@ function UserHome() {
                         </div>
                     </div>
                 </div>
-                <div className='suggested/upcoming'></div>
+                <div className='events'>
+                    <EventList />
+                </div>
             </div>
         </div>
     );

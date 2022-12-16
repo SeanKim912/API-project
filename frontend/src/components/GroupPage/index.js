@@ -30,10 +30,13 @@ const GroupPage = () => {
                 </div>
             </div>
             <div className='tabStripe'>
+                <NavLink exact to={`/groups/${group.id}/events`}>
+                    <button>Create an event</button>
+                </NavLink>
                 <NavLink exact to={`/groups/${group.id}/edit`}>
                     <button>Edit this group</button>
                 </NavLink>
-                    <button onClick={deleterFunc()}>Delete this group</button>
+                    <button onClick={deleterFunc}>Delete this group</button>
             </div>
             <div className='homeBody'>
                 <div className='aboutTab'>

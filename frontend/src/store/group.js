@@ -96,7 +96,7 @@ export const addGroupImage = (groupId, image) => async(dispatch) => {
 
     if (response.ok) {
         const groupImage = await response.json();
-        dispatch(getGroup(groupId));
+        dispatch(loadGroup(groupId));
         return groupImage;
     }
 }
