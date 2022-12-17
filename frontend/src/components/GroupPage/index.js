@@ -19,7 +19,7 @@ const GroupPage = () => {
         <div>
             <div className='homeHeader'>
                 <div className='bannerLeft'>
-                    <div>{group.previewImage}</div>
+                    <img className="preview" src={group.previewImage} alt="preview for group"/>
                 </div>
                 <div className='bannerRight'>
                     <h1>{group.name}</h1>

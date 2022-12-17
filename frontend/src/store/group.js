@@ -6,7 +6,7 @@ const LOAD_ONE = 'groups/one';
 const CREATE = 'groups/create';
 const EDIT = 'groups/edit';
 const DELETE = 'groups/delete';
-const CLEAR = 'groups/clear';
+// const CLEAR = 'groups/clear';
 
 const loadAllGroups = (groups) => ({
     type: ALL_GROUPS,
@@ -38,9 +38,9 @@ const deleteGroup = (group) => ({
     group
 });
 
-export const clearGroup = () => ({
-    type: CLEAR
-})
+// export const clearGroup = () => ({
+//     type: CLEAR
+// })
 
 export const getAllGroups = () => async(dispatch) => {
     const response = await csrfFetch('/api/groups');
@@ -178,9 +178,9 @@ const groupReducer = (state = initialState, action) => {
             delete newState[action.groupId];
             return newState;
         }
-        case CLEAR: {
-            return initialState;
-        }
+        // case CLEAR: {
+        //     return initialState;
+        // }
         default: {
             return state;
         }

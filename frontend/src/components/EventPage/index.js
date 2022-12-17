@@ -23,7 +23,7 @@ const EventPage = () => {
             <div className='eventBody'>
                 <div className="mainColumn">
                     <div className="imageContainer">
-                        <div>{event.previewImage}</div>
+                        <img className="preview" src={event.previewImage} alt="preview for event"/>
                     </div>
                     <div className="aboutContainer">
                         <div>

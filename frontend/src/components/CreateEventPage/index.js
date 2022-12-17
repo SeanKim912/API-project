@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { startEvent } from "../../store/event";
@@ -30,7 +30,7 @@ function CreateEventPage() {
             price,
             startDate,
             endDate,
-            venueId: null
+            venueId: 1
         };
 
         const imagePayload ={

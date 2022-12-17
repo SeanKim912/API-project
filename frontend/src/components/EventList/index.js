@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllEvents, clearEvent } from "../../store/event";
+import { getAllEvents } from "../../store/event";
 import { NavLink } from "react-router-dom";
 
 const EventList = () => {
@@ -25,7 +25,7 @@ const EventList = () => {
                         return (
                         <NavLink exact to={`/events/${event.id}`}>
                             <div>
-                                <div className='preview'>{event.previewImage}</div>
+                                <img className='preview' src={event.previewImage} alt="preview for event"/>
                                 <div className='details'>
                                     <div className='title'>
                                         <h3 className='time'>{event.startDate}</h3>

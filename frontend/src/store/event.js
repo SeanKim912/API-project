@@ -6,7 +6,7 @@ const LOAD_EVENT = 'events/one';
 const CREATE = 'events/create';
 const EDIT = 'groups/edit';
 const DELETE = 'groups/delete';
-const CLEAR = 'events/clear';
+// const CLEAR = 'events/clear';
 
 const loadAllEvents = (events) => ({
     type: ALL_EVENTS,
@@ -38,9 +38,9 @@ const deleteEvent = (event) => ({
     event
 });
 
-export const clearEvent = () => ({
-    type: CLEAR
-})
+// export const clearEvent = () => ({
+//     type: CLEAR
+// })
 
 export const getAllEvents = () => async(dispatch) => {
     const response = await csrfFetch('/api/events');
@@ -178,9 +178,9 @@ const eventReducer = (state = initialState, action) => {
             delete newState[action.eventId];
             return newState;
         }
-        case CLEAR: {
-            return initialState;
-        }
+        // case CLEAR: {
+        //     return initialState;
+        // }
         default: {
             return state;
         }
