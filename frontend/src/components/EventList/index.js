@@ -30,7 +30,7 @@ const EventList = () => {
                                     <div className='title'>
                                         <h3 className='time'>{event.startDate}</h3>
                                         <h3 className='name'>{event.name}</h3>
-                                        <h3 className='group'>{event.Group.name} . {event.Group.city}, {event.Group.state}</h3>
+                                        <h3 className='group'>{event.Group?.name} . {event.Group?.city}, {event.Group?.state}</h3>
                                         <div className='cardFooter'>
                                             <div className='attendees'>{event.numAttending} attendee(s)</div>
                                         </div>

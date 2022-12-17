@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { startEvent, addEventImage } from "../../store/event";
+import { startEvent } from "../../store/event";
 
 function CreateEventPage() {
     const user = useSelector(state => state.session.user);
@@ -31,11 +31,17 @@ function CreateEventPage() {
             startDate,
             endDate,
             venueId: null
-        }
+        };
+
+        const imagePayload ={
+            url,
+            preview: true
+        };
 
         if (user) {
             setErrors([]);
-            return dispatch(startEvent(groupId, eventPayload))
+            console.log(groupId);
+            return dispatch(startEvent(groupId, eventPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
@@ -43,14 +49,6 @@ function CreateEventPage() {
         } else {
             return setErrors(['Must be logged in to create an event']);
         }
-
-        const imagePayload = {
-            url,
-            preview: true
-        }
-
-        dispatch(addEventImage(event.id, imagePayload))
-
     };
 
     return (

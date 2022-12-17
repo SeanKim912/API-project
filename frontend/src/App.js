@@ -32,15 +32,15 @@ function App() {
           <Route path='/groups/:groupId/events'>
             <CreateEventPage />
           </Route>
-          <Route path="/events/:eventId/edit">
+          {/* <Route path="/events/:eventId/edit">
             <EditEventPage />
-          </Route>
+          </Route> */}
           <Route path="/groups/start">
             <CreateGroupPage />
           </Route>
-          <Route path="/groups/user">
+          {/* <Route path="/groups/user">
             <UserGroupList />
-          </Route>
+          </Route> */}
           <Route path="/groups/:groupId">
             <GroupPage />
           </Route>

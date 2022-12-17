@@ -72,34 +72,43 @@ export const getEvent = (eventId) => async(dispatch) => {
     }
 }
 
-export const startEvent = (groupId, newEvent) => async(dispatch) => {
+export const startEvent = (groupId, newEvent, newImage) => async(dispatch) => {
     const response = await csrfFetch(`/api/groups/${groupId}/events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newEvent)
     });
-
     if (response.ok) {
         const event = await response.json();
+        const imageResponse = await csrfFetch(`/api/events/${event.id}/images`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newImage)
+        });
+            if (imageResponse.ok) {
+                const eventImage = await imageResponse.json();
+                dispatch(getEvent(event.id));
+            return eventImage;
+            }
         dispatch(createEvent(event));
         return event;
     }
 }
 
-export const addEventImage = (eventId, image) => async(dispatch) => {
-    const response = await csrfFetch(`api/events/${eventId}/images`, {
+// export const addEventImage = (eventId, image) => async(dispatch) => {
+//     const response = await csrfFetch(`/api/events/${eventId}/images`, {
 
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(image)
-    });
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(image)
+//     });
 
-    if (response.ok) {
-        const eventImage = await response.json();
-        dispatch(getEvent(eventId));
-        return eventImage;
-    }
-}
+//     if (response.ok) {
+//         const eventImage = await response.json();
+//         dispatch(getEvent(eventId));
+//         return eventImage;
+//     }
+// }
 
 export const updateEvent = (event) => async(dispatch) => {
     const response = await csrfFetch(`/api/events/${event.id}`, {

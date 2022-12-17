@@ -9,7 +9,7 @@ function Navigation({ isLoaded }){
 
     return (
         <>
-            <ul>
+            <ul className='corners'>
                 <li>
                     <NavLink exact to="/">Home</NavLink>
                 </li>

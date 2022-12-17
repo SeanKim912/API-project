@@ -33,7 +33,8 @@ function UserHome() {
                             <div className='infoHeader'>
                                 <h2>Your groups</h2>
                                 <div className='linkBlock'>
-                                    <NavLink exact to="/groups/user">See all your groups</NavLink>
+                                    {/* <NavLink exact to="/groups/user">See all your groups</NavLink> */}
+                                    See all your groups
                                 </div>
                             </div>
                             <div className='infoBody'>

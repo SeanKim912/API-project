@@ -44,7 +44,6 @@ export const clearGroup = () => ({
 
 export const getAllGroups = () => async(dispatch) => {
     const response = await csrfFetch('/api/groups');
-
     if (response.ok) {
         const groups = await response.json();
         dispatch(loadAllGroups(groups));
@@ -72,7 +71,7 @@ export const getGroup = (groupId) => async(dispatch) => {
     }
 }
 
-export const startGroup = (newGroup) => async(dispatch) => {
+export const startGroup = (newGroup, newImage) => async(dispatch) => {
     const response = await csrfFetch('/api/groups', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -81,25 +80,35 @@ export const startGroup = (newGroup) => async(dispatch) => {
 
     if (response.ok) {
         const group = await response.json();
+        const imageResponse = await csrfFetch(`/api/groups/${group.id}/images`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newImage)
+        });
+            if (imageResponse.ok) {
+                const groupImage = await imageResponse.json();
+                dispatch(getGroup(group.id));
+                return groupImage;
+            }
         dispatch(createGroup(group));
         return group;
     }
 }
 
-export const addGroupImage = (groupId, image) => async(dispatch) => {
-    const response = await csrfFetch(`api/groups/${groupId}/images`, {
+// export const addGroupImage = (groupId, image) => async(dispatch) => {
+//     const response = await csrfFetch(`/api/groups/${groupId}/images`, {
 
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(image)
-    });
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(image)
+//     });
 
-    if (response.ok) {
-        const groupImage = await response.json();
-        dispatch(loadGroup(groupId));
-        return groupImage;
-    }
-}
+//     if (response.ok) {
+//         const groupImage = await response.json();
+//         dispatch(loadGroup(groupId));
+//         return groupImage;
+//     }
+// }
 
 export const updateGroup = (group) => async(dispatch) => {
     const response = await csrfFetch(`/api/groups/${group.id}`, {

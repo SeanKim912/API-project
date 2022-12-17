@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { startGroup, addGroupImage } from "../../store/group";
+import { startGroup } from "../../store/group";
 import './CreateGroupPage.css'
 
 function CreateGroupPage() {
@@ -29,9 +29,14 @@ function CreateGroupPage() {
             type
         }
 
+        const imagePayload = {
+            url,
+            preview: true
+        }
+
         if (user) {
             setErrors([]);
-            return dispatch(startGroup(groupPayload))
+            return dispatch(startGroup(groupPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
@@ -39,14 +44,6 @@ function CreateGroupPage() {
         } else {
             return setErrors(['Must be logged in to create a group']);
         }
-
-        const imagePayload = {
-            url,
-            preview: true
-        }
-
-        dispatch(addGroupImage(group.id, imagePayload))
-
     };
 
     return (
