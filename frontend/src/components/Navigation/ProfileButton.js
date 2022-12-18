@@ -38,9 +38,9 @@ function ProfileButton({ user }) {
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
     return (
-        <>
+        <div className="profileContainer">
             <button onClick={openMenu}>
-                <i className="fas fa-user-circle" />
+                <img className="profileIcon" src="https://imgs.search.brave.com/6-wm4BFl7N910tM2Y2nHnJuhIUl0oniR4Q1Dog1GQNU/rs:fit:980:980:1/g:ce/aHR0cDovL2Nkbi5v/bmxpbmV3ZWJmb250/cy5jb20vc3ZnL2lt/Z18yMDY5NzYucG5n" />
             </button>
             <ul className={ulClassName} ref={ulRef}>
                 {user && (
@@ -49,12 +49,12 @@ function ProfileButton({ user }) {
                         <li className="info">{user.firstName} {user.lastName}</li>
                         <li className="info">{user.email}</li>
                         <li className="info">
-                            <button onClick={logout}>Log Out</button>
+                            <button className="logoutButton" onClick={logout}>Log Out</button>
                         </li>
                     </div>
                 )}
             </ul>
-        </>
+        </div>
     );
 }
 

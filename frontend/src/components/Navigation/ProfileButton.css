@@ -3,7 +3,46 @@
 }
 
 .menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    inset: 72px 0px auto auto;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    min-width: 190px;
+    padding-bottom: 12px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin-right: 14px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(232, 222, 222);
+    border-radius: 5px;
+}
+
+.logoutButton {
+    padding-left: 0px;
+    margin-left: 0;
+    text-align: start;
+}
+
+.profileIcon {
+    width: 50px;
+    height: 50px;
+    background-color: rgb(241, 160, 128);
+    border-radius: 25px;
+    position: fixed;
+    inset: 7px 14px auto auto;
+}
+
+.profileContainer {
+    box-sizing: border-box;
+    display: block;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    margin-left: 20px;
+    margin-right: 0px;
 }

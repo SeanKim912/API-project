@@ -13,19 +13,19 @@ function Navigation({ isLoaded }){
     return (
         <>
             <ul className='corners'>
-                <li>
+                <li className='leftCorner'>
                     <NavLink exact to="/">
                         <img className='favicon' src='https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg'/>
                     </NavLink>
                 </li>
                 {sessionUser
-                ?   <ul>
-                        <li>
-                            <NavLink exact to="/groups/start">Start a new group</NavLink>
-                        </li>
-                        <li>
+                ?   <ul className='loggedInCorner'>
+                            <NavLink exact to="/groups/start">
+                                <button className='startButton'>
+                                    Start a new group
+                                </button>
+                            </NavLink>
                             <ProfileButton user={sessionUser} />
-                        </li>
                     </ul>
                 :   <ul className='rightCorner'>
                         <li className='language'>
