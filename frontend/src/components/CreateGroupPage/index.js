@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { csrfFetch } from "../../store/csrf";
 import { startGroup } from "../../store/group";
+import { useHistory } from "react-router-dom";
 import './CreateGroupPage.css'
 
 function CreateGroupPage() {
     const user = useSelector(state => state.session.user);
     const group = useSelector(state => state.groupState.singleGroup);
     const dispatch = useDispatch();
+    const history = useHistory();
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
     const [type, setType] = useState("");
@@ -16,8 +19,7 @@ function CreateGroupPage() {
     const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const groupPayload = {
@@ -34,12 +36,15 @@ function CreateGroupPage() {
             preview: true
         }
 
+
         if (user) {
             setErrors([]);
             return dispatch(startGroup(groupPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
+                    if (data && data.errors) {
+                        setErrors(data.errors);
+                    } else { history.push(`/groups/${data.id}`)}
                 })
         } else {
             return setErrors(['Must be logged in to create a group']);

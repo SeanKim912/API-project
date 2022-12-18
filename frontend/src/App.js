@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import CreateGroupPage from "./components/CreateGroupPage";
-import UserHome from "./components/UserHome";
 import GroupList from "./components/GroupList";
 import UserGroupList from "./components/UserGroupList";
 import GroupPage from "./components/GroupPage";
@@ -13,10 +12,12 @@ import EventList from "./components/EventList";
 import EventPage from "./components/EventPage";
 import CreateEventPage from "./components/CreateEventPage";
 import EditEventPage from "./components/EditEventPage";
+import SplashPage from "./components/SplashPage";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -54,7 +55,7 @@ function App() {
             <EventList />
           </Route>
           <Route path="/">
-            <UserHome />
+            <SplashPage />
           </Route>
         </Switch>
       )}

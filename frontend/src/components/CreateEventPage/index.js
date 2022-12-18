@@ -31,7 +31,7 @@ function CreateEventPage() {
             capacity,
             price,
             startDate,
-            endDate,
+            endDate
         };
 
         const imagePayload ={
@@ -41,7 +41,6 @@ function CreateEventPage() {
 
         if (user) {
             setErrors([]);
-            console.log(groupId);
             return dispatch(startEvent(groupId, eventPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();

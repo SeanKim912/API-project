@@ -9,7 +9,7 @@ function UserHome() {
         <div>
             <div className='welcome'>
                 <div className='text'>
-                    <h2>Welcome 👋</h2>
+                    <h2>Welcome {user.firstName} 👋</h2>
                     <p>Events from your groups</p>
                 </div>
             </div>
