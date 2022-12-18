@@ -13,6 +13,7 @@ import EventPage from "./components/EventPage";
 import CreateEventPage from "./components/CreateEventPage";
 import EditEventPage from "./components/EditEventPage";
 import SplashPage from "./components/SplashPage";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }

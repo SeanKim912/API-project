@@ -14,7 +14,9 @@ function Navigation({ isLoaded }){
         <>
             <ul className='corners'>
                 <li>
-                    <NavLink exact to="/">Home</NavLink>
+                    <NavLink exact to="/">
+                        <img className='favicon' src='https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg'/>
+                    </NavLink>
                 </li>
                 {sessionUser
                 ?   <ul>
@@ -25,7 +27,11 @@ function Navigation({ isLoaded }){
                             <ProfileButton user={sessionUser} />
                         </li>
                     </ul>
-                :   <ul>
+                :   <ul className='rightCorner'>
+                        <li className='language'>
+                            <img className="langIcon" src='https://imgs.search.brave.com/dTp9jyBC3hlJxON3vzuuuaebjAIr7DsPcLaiA1gMPAY/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9jZG4x/Lmljb25maW5kZXIu/Y29tL2RhdGEvaWNv/bnMvZXNzZW50aWFs/cy10aGljay1saW5l/cy8xMjgvd29ybGQt/Z2xvYmUtbGFuZ3Vh/Z2UtaW50ZXJuYXRp/b25hbC01MTIucG5n'></img>
+                            <div className='english'>English</div>
+                        </li>
                         <li>
                             <OpenModalButton
                                 buttonText="Login"

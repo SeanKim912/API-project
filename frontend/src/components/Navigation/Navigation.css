@@ -1,3 +1,8 @@
+.favicon {
+    width: 95px;
+    height: 35px;
+}
+
 ul {
     align-items: center;
     display: flex;
@@ -13,9 +18,46 @@ ul {
 }
 
 .corners {
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.rightCorner {
+    display: flex;
+    flex-direction: row;
 }
 
 li {
     list-style: none;
+}
+
+.language {
+    display: flex;
+    flex-direction: row;
+    cursor: default;
+}
+
+.english {
+    box-sizing: border-box;
+    background-color: white;
+    border-width: 0px;
+    color: rgb(33, 33, 33);
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+    tab-size: 4;
+    text-decoration-thickness: auto;
+    text-size-adjust: 100%;
+}
+
+.langIcon {
+    height: 20px;
+    width: 20px;
 }
