@@ -17,12 +17,14 @@ function CreateEventPage() {
     const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
     const { groupId } = useParams();
+    const venueId = 1;
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const eventPayload = {
+            venueId,
             name,
             description,
             type,
@@ -30,7 +32,6 @@ function CreateEventPage() {
             price,
             startDate,
             endDate,
-            venueId: 1
         };
 
         const imagePayload ={
