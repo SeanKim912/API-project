@@ -1,0 +1,227 @@
+h1 {
+    box-sizing: border-box;
+    display: block;
+    /* font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif; */
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 48px;
+    margin-block: 0px;
+    margin-inline: 0px;
+    tab-size: 4;
+}
+
+.splashBody {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.splashTop {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 64px;
+    margin-top: 96px;
+}
+
+.splashText {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    line-height: 24px;
+    margin-bottom: 0px;
+    margin-right: 80px;
+    width: 520px;
+}
+
+.splashCaption {
+    box-sizing: border-box;
+    display: block;
+    /* font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif; */
+    font-size: 16px;
+    line-height: 24px;
+    margin-block-end: 0px;
+    margin-block-start: 24px;
+    margin-bottom: 0px;
+    margin-inline: 0px;
+    margin-top: 24px;
+    tab-size: 4;
+}
+
+.mainImage {
+    width: 520px;
+}
+
+.splashFeatures {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    grid-template-columns: 360px 360px 360px;
+    line-height: 24px;
+    margin-top: 20px;
+    margin-bottom: 48px;
+    tab-size: 4;
+    width: 1120px;
+}
+
+.feature {
+    box-sizing: border-box;
+    display: block;
+    font-size: 16px;
+    height: 230px;
+    line-height: 24px;
+    tab-size: 4;
+}
+
+.featureImage {
+    border-radius: 10px;
+    width: 360px;
+    height: 200px;
+}
+
+.featureText {
+    align-items: center;
+    box-sizing: border-box;
+    color: rgb(0, 130, 148);
+    display: flex;
+    flex-direction: row;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    tab-size: 4;
+    text-align: left;
+    margin-top: 8px;
+}
+
+.arrow {
+    width: 18px;
+    height: 18px;
+    margin-left: 8px;
+}
+
+.splashSuggestions {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0px;
+    tab-size: 4;
+    min-width: max-content;
+    line-height: 24px;
+    height: 54px;
+    width: 1120px;
+}
+
+.suggestion {
+    background-color: rgb(0, 130, 148);
+    box-sizing: border-box;
+    color: white;
+    fill: white;
+    font-size: 14px;
+    line-height: 14px;
+    height: 46px;
+    padding: 16px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    max-height: 48px;
+    min-width: max-content;
+    tab-size: 4;
+    border-radius: 25px;
+}
+
+.quickGuide {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    tab-size: 4;
+    text-align: center;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    width: 1120px;
+}
+
+.titleCaption {
+    box-sizing: border-box;
+    display: block;
+    font-size: 16px;
+    line-height: 16px;
+    margin-block-end: 40px;
+    margin-block-start: 0px;
+    margin-bottom: 40px;
+    margin-inline-end: 280px;
+    margin-inline-start: 280px;
+    margin-left: 280px;
+    margin-right: 280px;
+    tab-size: 4;
+    text-align: center;
+    width: 560px;
+}
+
+.steps {
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 16px;
+    line-height: 24px;
+    tab-size: 4;
+
+    margin-bottom: 80px;
+}
+
+.stepCard {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    tab-size: 4;
+    text-align: center;
+    width: 375px;
+}
+
+.stepIcon {
+    height: 160px;
+    width: 160px;
+}
+
+.stepText {
+    box-sizing: border-box;
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    text-align: center;
+    tab-size: 4;
+    line-height: 24px;
+}
+
+.stepTitle {
+    box-sizing: border-box;
+    color:rgb(0, 130, 148);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    tab-size: 4;
+    text-align: center;
+
+}
+
+.stepCaption {
+    box-sizing: border-box;
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+    margin-inline-end: 0px;
+    margin-inline-start: 0px;
+    text-align: center;
+}

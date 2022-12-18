@@ -1,4 +1,4 @@
-form {
+/* form {
     box-sizing: border-box;
     display: block;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
@@ -8,9 +8,9 @@ form {
     tab-size: 4;
     text-size-adjust: 100%;
     width: 344px;
-}
+} */
 
-button {
+/* button {
     align-items: flex-start;
     appearance: button;
     background-color: rgb(246, 88, 88);
@@ -43,4 +43,4 @@ button {
     width: 344px;
     word-spacing: 0px;
     writing-mode: horizontal-tb;
-}
+} */

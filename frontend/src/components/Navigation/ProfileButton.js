@@ -43,7 +43,7 @@ function ProfileButton({ user }) {
                 <i className="fas fa-user-circle" />
             </button>
             <ul className={ulClassName} ref={ulRef}>
-                {user ? (
+                {user && (
                     <div className="menu">
                         <li className="info">{user.username}</li>
                         <li className="info">{user.firstName} {user.lastName}</li>
@@ -52,21 +52,6 @@ function ProfileButton({ user }) {
                             <button onClick={logout}>Log Out</button>
                         </li>
                     </div>
-                ) : (
-                    <>
-                        <li>
-                            <OpenModalButton
-                                buttonText="Log In"
-                                modalComponent={<LoginFormModal />}
-                            />
-                        </li>
-                        <li>
-                            <OpenModalButton
-                                buttonText="Sign Up"
-                                modalComponent={<SignupFormModal />}
-                            />
-                        </li>
-                    </>
                 )}
             </ul>
         </>

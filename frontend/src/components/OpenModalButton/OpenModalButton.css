@@ -1,0 +1,21 @@
+button {
+    box-sizing: border-box;
+    background-color: white;
+    border-width: 0px;
+    color: rgb(33, 33, 33);
+    cursor: pointer;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: 20px;
+    margin-left: 20px;
+    margin-right: 0px;
+    tab-size: 4;
+    text-decoration-thickness: auto;
+    text-size-adjust: 100%;
+}
+
+button:hover {
+    color: #0070f3
+}
