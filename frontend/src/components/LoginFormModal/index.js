@@ -25,35 +25,40 @@ function LoginFormModal() {
     };
 
     return (
-        <>
-            <h1>Log In</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="formBody">
+            <img className="modalIcon" src="https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg"/>
+            <h1 className="modalHeader">Log In</h1>
+            <form className="inputField" onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
-                <label>
-                    Username or Email
-                    <input
-                        type="text"
-                        value={credential}
-                        onChange={(e) => setCredential(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Password
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                <button type="submit">Log In</button>
+                <div className="fieldLabel">
+                    <label>
+                        Username or Email
+                    </label>
+                </div>
+                <input
+                    type="text"
+                    value={credential}
+                    onChange={(e) => setCredential(e.target.value)}
+                    required
+                />
+                <div className="fieldLabel">
+                    <label>
+                        Password
+                    </label>
+                </div>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+                <button className="formButton" type="submit">Log In</button>
             </form>
-        </>
+        </div>
     );
 }
 

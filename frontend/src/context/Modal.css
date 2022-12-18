@@ -19,6 +19,21 @@
 }
 
 #modal-content {
-    position: absolute;
+    align-items: center;
+    box-sizing: border-box;
+    display: block;
+    max-width: 720px;
+    min-width: 485px;
+    opacity: 1;
+    overflow-y: auto;
+    padding-bottom: 32px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 36px;
+    justify-content: center;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    position: relative;
     background-color:white;
+    border-radius: 10px;
+    margin: 0px;
 }
