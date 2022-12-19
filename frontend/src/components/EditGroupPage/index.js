@@ -117,7 +117,7 @@ function EditGroupPage() {
                     onChange={(e) => setState(e.target.value)}
                     required
                 />
-                <button className="formButton" type="submit">Create Group</button>
+                <button className="formButton" type="submit">Edit Group</button>
             </form>
         </div>
     );
