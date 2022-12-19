@@ -5,7 +5,7 @@ function Footer() {
         <>
             <div className='footerContainer'>
                 <div className='footerBody'>
-                    <div className='footerTitle'>Create your own Meetup group.
+                    <div className='footerTitle'>Create your own Meetupz group.
                         <div className='fakeButton'>Get Started</div>
                     </div>
                     <div className='footerCategories'>
@@ -30,11 +30,11 @@ function Footer() {
                             </ul>
                         </div>
                         <div className='footerOption'>
-                            <span>Meetup</span>
+                            <span>Meetupz</span>
                             <ul>
                                 <li>About</li>
                                 <li>Blog</li>
-                                <li>Meetup Pro</li>
+                                <li>Meetupz Pro</li>
                                 <li>Careers</li>
                                 <li>Apps</li>
                                 <li>Podcast</li>

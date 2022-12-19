@@ -12,12 +12,8 @@ function LoginFormModal() {
     const { closeModal } = useModal();
 
     const demoInput = () => {
-        setEmail("demo@email.com");
-        setUsername("DemoUser");
-        setFirstName("Demo");
-        setLastName("User");
+        setCredential("DemoUser");
         setPassword("password");
-        setConfirmPassword("password");
     }
 
     const handleSubmit = (e) => {

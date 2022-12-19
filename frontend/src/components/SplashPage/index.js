@@ -12,9 +12,9 @@ function SplashPage() {
                 : <div className="splashBody">
                     <div className="splashTop">
                         <div className="splashText">
-                                <h1>Celebrating 20 years of real connections on Meetup</h1>
-                                <p className="splashCaption">Whatever you’re looking to do this year, Meetup can help.
-                                    For 20 years, people have turned to Meetup to meet
+                                <h1>Celebrating 20 years of real connections on Meetupz</h1>
+                                <p className="splashCaption">Whatever you’re looking to do this year, Meetupz can help.
+                                    For 20 years, people have turned to Meetupz to meet
                                     people, make friends, find support, grow a business, and
                                     explore their interests. Thousands of events are
                                     happening every day—join the fun.</p>
@@ -53,7 +53,7 @@ function SplashPage() {
                         <div className="suggestion">Hone your craft</div>
                     </div>
                     <div className="quickGuide">
-                        <h2>How Meetup Works</h2>
+                        <h2>How Meetupz Works</h2>
                         <p className="titleCaption">Meet new people who share your interests through online and in-person events. It’s free to create an account.</p>
                         <div className="steps">
                             <div className="stepCard">
