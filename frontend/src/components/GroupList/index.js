@@ -8,6 +8,13 @@ const GroupList = () => {
     const dispatch = useDispatch();
     const groupsObj = useSelector(state => state.groupState.allGroups);
     const groups = Object.values(groupsObj);
+    function isPrivate(status) {
+        if (status === true) {
+            return "Private"
+        } else {
+            return "Public"
+        }
+    }
 
     useEffect(() => {
         dispatch(getAllGroups());
@@ -25,15 +32,13 @@ const GroupList = () => {
                     {groups.map((group) => {
                         return (
                         <NavLink exact to={`/groups/${group.id}`}>
-                            <div>
+                            <div className="groupCard">
                                 <img className='preview' src={group.previewImage} alt="preview for group"/>
                                 <div className='details'>
-                                    <div className='title'>
-                                        <h3 className='name'>{group.name}</h3>
-                                        <h3 className='location'>{group.city}, {group.state}</h3>
-                                    </div>
-                                    <p>{group.about}</p>
-                                    <div className='stats'>{group.numMembers} . {group.private}</div>
+                                    <h3 className='name'>{group.name}</h3>
+                                    <h3 className='location'>{group.city}, {group.state}</h3>
+                                    <p className='about'>{group.about}</p>
+                                    <div className='stats'>{group.numMembers} member(s) . {isPrivate(group.private)}</div>
                                 </div>
                             </div>
                         </NavLink>

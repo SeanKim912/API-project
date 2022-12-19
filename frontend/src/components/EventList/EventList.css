@@ -1,4 +1,4 @@
-.groupCard {
+.eventCard {
     display: flex;
     flex-direction: row;
     background-color: white;
@@ -22,7 +22,7 @@
     vertical-align: top;
 }
 
-.location {
+.time {
     box-sizing: border-box;
     color: rgb(135, 116, 87);
     font-size: 14px;
@@ -37,8 +37,8 @@
 .name {
     box-sizing: border-box;
     color: rgb(33, 33, 33);
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     line-height: 24px;
     margin-block-end: 0px;
     margin-block-start: 0px;
@@ -48,24 +48,14 @@
     padding-top: 0px;
 }
 
-.about {
-    display: -webkit-box;
+.group {
     color: rgb(117, 117, 117);
     font-size: 14px;
     line-height: 20px;
-    margin-block-end: 0px;
-    margin-block-start: 0px;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    max-height: 40px;
-    padding-bottom: 4px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+
 }
 
-.stats {
+.attendees {
     font-size: 14px;
     line-height: 20px;
     color: rgb(117, 117, 117);

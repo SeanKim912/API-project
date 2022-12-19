@@ -44,7 +44,7 @@ function CreateGroupPage() {
                     const data = await res.json();
                     if (data && data.errors) {
                         setErrors(data.errors);
-                    } else { history.push(`/groups/${data.id}`)}
+                    } else { history.push(`/groups/${data.id}`) }
                 })
         } else {
             return setErrors(['Must be logged in to create a group']);
@@ -52,30 +52,40 @@ function CreateGroupPage() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label>
-                Name
+        <div className="pageContainer">
+            <img className="modalIcon" src="https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg" />
+            <h1 className="formHeader">Create Group</h1>
+            <form className="inputField" onSubmit={handleSubmit}>
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
+                <div className="fieldLabel">
+                    <label>
+                        Name
+                    </label>
+                </div>
                 <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                About
+                <div className="fieldLabel">
+                    <label>
+                        About
+                    </label>
+                </div>
                 <textarea
                     value={about}
                     placeholder="Describe your group in at least 50 characters"
                     onChange={(e) => setAbout(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                Type
+                <div className="fieldLabel">
+                    <label>
+                        Type
+                    </label>
+                </div>
                 <select
                     value={type}
                     onChange={(e) => setType(e.target.value)}
@@ -85,9 +95,11 @@ function CreateGroupPage() {
                     <option value={"In person"}>In person</option>
                     <option value={"Online"}>Online</option>
                 </select>
-            </label>
-            <label>
-                Private/Public
+                <div className="fieldLabel">
+                    <label>
+                        Private/Public
+                    </label>
+                </div>
                 <select
                     value={isPrivate}
                     onChange={(e) => setIsPrivate(e.target.value)}
@@ -96,36 +108,42 @@ function CreateGroupPage() {
                     <option value={true} defaultValue>Private</option>
                     <option value={false}>Public</option>
                 </select>
-            </label>
-            <label>
-                City
+                <div className="fieldLabel">
+                    <label>
+                        City
+                    </label>
+                </div>
                 <input
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                State
+                <div className="fieldLabel">
+                    <label>
+                        State
+                    </label>
+                </div>
                 <input
                     type="text"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                Group image
+                <div className="fieldLabel">
+                    <label>
+                        Group image
+                    </label>
+                </div>
                 <input
                     type="text"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="Image url here"
                 />
-            </label>
-            <button type="submit">Create Group</button>
-        </form>
+                <button className="formButton" type="submit">Create Group</button>
+            </form>
+        </div>
     );
 };
 

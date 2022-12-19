@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { startEvent } from "../../store/event";
+import './CreateEventPage.css'
 
 function CreateEventPage() {
     const user = useSelector(state => state.session.user);
@@ -22,7 +23,6 @@ function CreateEventPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const eventPayload = {
             venueId,
             name,
@@ -33,12 +33,10 @@ function CreateEventPage() {
             startDate,
             endDate
         };
-
-        const imagePayload ={
+        const imagePayload = {
             url,
             preview: true
         };
-
         if (user) {
             setErrors([]);
             return dispatch(startEvent(groupId, eventPayload, imagePayload))
@@ -50,32 +48,41 @@ function CreateEventPage() {
             return setErrors(['Must be logged in to create an event']);
         }
     };
-
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label>
-                Name
+        <div className="pageContainer">
+            <img className="modalIcon" src="https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg" />
+            <h1 className="formHeader">Create Event</h1>
+            <form className="inputField" onSubmit={handleSubmit}>
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
+                <div className="fieldLabel">
+                    <label>
+                        Name
+                    </label>
+                </div>
                 <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                Description
+                <div className="fieldLabel">
+                    <label>
+                        Description
+                    </label>
+                </div>
                 <textarea
                     value={description}
                     placeholder="Describe your event"
                     onChange={(e) => setDescription(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                Type
+                <div className="fieldLabel">
+                    <label>
+                        Type
+                    </label>
+                </div>
                 <select
                     value={type}
                     onChange={(e) => setType(e.target.value)}
@@ -85,53 +92,63 @@ function CreateEventPage() {
                     <option value={"In person"}>In person</option>
                     <option value={"Online"}>Online</option>
                 </select>
-            </label>
-            <label>
-                Capacity
+                <div className="fieldLabel">
+                    <label>
+                        Capacity
+                    </label>
+                </div>
                 <input
                     value={capacity}
                     onChange={(e) => setCapacity(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                Price
+                <div className="fieldLabel">
+                    <label>
+                        Price
+                    </label>
+                </div>
                 <input
                     type="text"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                Start Date
+                <div className="fieldLabel">
+                    <label>
+                        Start Date
+                    </label>
+                </div>
                 <input
                     type="datetime-local"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                End Date
+                <div className="fieldLabel">
+                    <label>
+                        End Date
+                    </label>
+                </div>
                 <input
                     type="datetime-local"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
                     required
                 />
-            </label>
-            <label>
-                Group image
+                <div className="fieldLabel">
+                    <label>
+                        Group image
+                    </label>
+                </div>
                 <input
                     type="text"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="Image url here"
                 />
-            </label>
-            <button type="submit">Create Event</button>
-        </form>
+                <button className="formButton" type="submit">Create Event</button>
+            </form>
+        </div>
     );
 };
 
