@@ -28,10 +28,10 @@ const EventList = () => {
                             <div className="eventCard">
                                 <img className='preview' src={event.previewImage} alt="preview for event"/>
                                 <div className='details'>
-                                    <h3 className='time'>{event.startDate}</h3>
-                                    <h3 className='name'>{event.name}</h3>
-                                    <h3 className='group'>{event.Group?.name} . {event.Group?.city}, {event.Group?.state}</h3>
-                                    <div className='attendees'>{event.numAttending} attendee(s)</div>
+                                    <h3 className='eventListTime'>{event.startDate}</h3>
+                                    <h3 className='eventListName'>{event.name}</h3>
+                                    <h3 className='eventListGroup'>{event.Group?.name} . {event.Group?.city}, {event.Group?.state}</h3>
+                                    <div className='eventListAttendees'>{event.numAttending} attendee(s)</div>
                                 </div>
                             </div>
                         </NavLink>

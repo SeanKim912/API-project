@@ -12,6 +12,7 @@
     height: 95px;
     width: 168px;
     margin-right: 12px;
+    border-radius: 5px;
 }
 
 .details {
@@ -20,21 +21,22 @@
     overflow-wrap: break-word;
     text-decoration: none;
     vertical-align: top;
+    text-decoration-line: none;
 }
 
-.location {
+.groupCardLocation {
     box-sizing: border-box;
     color: rgb(135, 116, 87);
     font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.35px;
     line-height: 20px;
-    padding: 4px 0px 4px 0px;
-    text-decoration: none;
+    padding: 0px 0px 16px 0px;
+    text-decoration-line: none;
     margin: 0;
 }
 
-.name {
+.groupCardName {
     box-sizing: border-box;
     color: rgb(33, 33, 33);
     font-size: 20px;
@@ -44,11 +46,12 @@
     margin-block-start: 0px;
     margin-inline-end: 0px;
     margin-inline-start: 0px;
-    padding-bottom: 4px;
+    padding-bottom: 0px;
     padding-top: 0px;
+    text-decoration-line: none;
 }
 
-.about {
+.groupCardAbout {
     display: -webkit-box;
     color: rgb(117, 117, 117);
     font-size: 14px;
@@ -63,10 +66,13 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    text-decoration-line: none;
 }
 
-.stats {
+.groupCardStats {
     font-size: 14px;
     line-height: 20px;
     color: rgb(117, 117, 117);
+    text-decoration-line: none;
+    padding-top: 24px;
 }

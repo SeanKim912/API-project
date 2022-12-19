@@ -49,9 +49,7 @@ function UserHome() {
                                     See all your groups
                                 </div>
                             </div>
-                            <div className='discover'>
-                                <NavLink exact to="/groups">Discover groups</NavLink>
-                            </div>
+                            <div className='discover'>Discover groups</div>
                         </div>
                         <div className='yourInterests'>
                             <div className='infoHeader'>

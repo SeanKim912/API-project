@@ -35,10 +35,10 @@ const GroupList = () => {
                             <div className="groupCard">
                                 <img className='preview' src={group.previewImage} alt="preview for group"/>
                                 <div className='details'>
-                                    <h3 className='name'>{group.name}</h3>
-                                    <h3 className='location'>{group.city}, {group.state}</h3>
-                                    <p className='about'>{group.about}</p>
-                                    <div className='stats'>{group.numMembers} member(s) . {isPrivate(group.private)}</div>
+                                    <h3 className='groupCardName'>{group.name}</h3>
+                                    <h3 className='groupCardLocation'>{group.city}, {group.state}</h3>
+                                    <p className='groupCardAbout'>{group.about}</p>
+                                    <div className='groupCardStats'>{group.numMembers} member(s) . {isPrivate(group.private)}</div>
                                 </div>
                             </div>
                         </NavLink>

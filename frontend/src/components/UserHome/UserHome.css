@@ -116,3 +116,30 @@
     margin-top: 16px;
     text-align: center;
 }
+
+.tab {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    line-height: 24px;
+    padding-bottom: 12px;
+}
+
+.picked {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 0px;
+    margin-right: 16px;
+    padding: 0px;
+    color: rgb(0, 130, 148);
+    border-bottom:rgb(0, 130, 148) solid 4px;
+}
+
+.unpicked {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 0px;
+    margin-right: 16px;
+    padding: 0px;
+    color: rgb(117, 117, 117)
+}

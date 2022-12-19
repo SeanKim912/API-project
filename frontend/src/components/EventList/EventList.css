@@ -12,9 +12,10 @@
     height: 95px;
     width: 168px;
     margin-right: 12px;
+    border-radius: 5px;
 }
 
-.details {
+.eventListDetails {
     box-sizing: border-box;
     cursor: pointer;
     overflow-wrap: break-word;
@@ -22,7 +23,7 @@
     vertical-align: top;
 }
 
-.time {
+.eventListTime {
     box-sizing: border-box;
     color: rgb(135, 116, 87);
     font-size: 14px;
@@ -34,7 +35,7 @@
     margin: 0;
 }
 
-.name {
+.eventListName {
     box-sizing: border-box;
     color: rgb(33, 33, 33);
     font-size: 16px;
@@ -48,15 +49,17 @@
     padding-top: 0px;
 }
 
-.group {
+.eventListGroup {
     color: rgb(117, 117, 117);
     font-size: 14px;
     line-height: 20px;
-
+    margin-top: 0px;
+    margin-bottom: 16px;
 }
 
-.attendees {
+.eventListAttendees {
     font-size: 14px;
     line-height: 20px;
     color: rgb(117, 117, 117);
+    margin-top: 40px;
 }

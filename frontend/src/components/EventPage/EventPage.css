@@ -1,0 +1,99 @@
+.eventPageBody {
+    margin-top: 68px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    background-color: rgb(246, 247, 248);
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.eventHeader {
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    background-color: rgb(246, 247, 248);
+    border-bottom: 1px solid rgb(208, 200, 200);
+    padding: 24px 20px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.eventHeaderText {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.eventBannerImage {
+    width: 675px;
+    height: 375px;
+    border-radius: 10px;
+}
+
+.eventBody {
+    display: flex;
+    flex-direction: row;
+}
+
+.sideColumn {
+    margin-left: 112px;
+}
+
+.miniEventCard {
+    background-color: white;
+    border-radius: 16px;
+    box-sizing: border-box;
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 20px;
+
+}
+
+.miniEventDetail {
+    font-size: 14px;
+}
+
+.eventPageButton {
+    align-items: flex-start;
+    appearance: button;
+    background-color: rgb(246, 88, 88);
+    border-color: rgb(246, 88, 88);
+    border-style: solid;
+    border-width: 0px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    box-sizing: border-box;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    fill:rgb(255, 255, 255);
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-stretch: 100%;
+    font-weight: 500;
+    height: 42px;
+    line-height: 24px;
+    margin-top: 16px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 8px;
+    tab-size: 4;
+    text-align: center;
+    text-indent: 0px;
+    width: 142px;
+    word-spacing: 0px;
+    writing-mode: horizontal-tb;
+    border-radius: 10px;
+}
+
+.eventPageButton:hover {
+    color:rgb(255, 255, 255);
+    background-color: #f77070;
+}

@@ -1,0 +1,147 @@
+.pageContainer {
+    margin-top: 68px;
+    display: block;
+}
+
+.homeHeader {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    justify-content: center;
+
+}
+
+.bannerLeft {
+    padding-right: 12px;
+}
+
+.bannerImage {
+    width: 600px;
+    height: 338px;
+    border-radius: 10px;
+}
+
+.bannerRight {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-left: 24px;
+    width: 415px;
+}
+
+.groupTitle {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38px;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+    margin-inline-end: 0px;
+    margin-inline-start: 0px;
+}
+
+.detailBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(137, 132, 132);
+}
+
+.detailItem {
+    margin-top: 5px;
+}
+
+.tabStripe {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    line-height: 24px;
+    border-top: rgb(221, 211, 211) 1px solid;
+    width: 1100px;
+}
+
+.infoTab {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    margin-top: 16px;
+}
+
+#blueTab {
+    color: rgb(0, 162, 199);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    margin-top: 16px;
+}
+
+.groupButton {
+    align-items: flex-start;
+    appearance: button;
+    background-color: rgb(246, 88, 88);
+    border-color: rgb(246, 88, 88);
+    border-style: solid;
+    border-width: 0px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-width: 1;
+    box-sizing: border-box;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    fill:rgb(255, 255, 255);
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-stretch: 100%;
+    font-weight: 500;
+    height: 42px;
+    line-height: 24px;
+    margin-top: 16px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 8px;
+    tab-size: 4;
+    text-align: center;
+    text-indent: 0px;
+    width: 142px;
+    word-spacing: 0px;
+    writing-mode: horizontal-tb;
+    border-radius: 10px;
+}
+
+.groupButton:hover {
+    color:rgb(255, 255, 255);
+    background-color: #f77070;
+}
+
+.homeBody {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-basis: 0;
+    flex-grow: 3;
+    padding-top: 40px;
+    width: 1100px;
+}
+
+.aboutTab {
+    font-size: 20px;
+    font-weight: 500px;
+}
+
+.aboutText {
+    font-size: 16px;
+    font-weight: 400px;
+    color: rgb(33, 33, 33);
+}
