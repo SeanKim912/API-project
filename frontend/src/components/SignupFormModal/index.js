@@ -15,6 +15,14 @@ function SignupFormModal() {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
 
+    const demoInput = () => {
+        setEmail("demo@email.com");
+        setUsername("DemoUser");
+        setFirstName("Demo");
+        setLastName("User");
+        setPassword("password");
+        setConfirmPassword("password");
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -101,6 +109,7 @@ function SignupFormModal() {
                     onChange={(e) => setConfirmPassword(e.target.value)}                        required
                 />
                 <button className="formButton" type="submit">Sign Up</button>
+                <button className="formButton" onClick={demoInput}>Demo User</button>
             </form>
         </div>
     );
