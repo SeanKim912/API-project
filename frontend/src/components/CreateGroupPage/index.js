@@ -36,11 +36,11 @@ function CreateGroupPage() {
             preview: true
         }
 
+        const newGroup = dispatch(startGroup(groupPayload, imagePayload));
 
         if (user) {
             setErrors([]);
-            return dispatch(startGroup(groupPayload, imagePayload))
-                .then(async (res) => {
+                await newGroup.then(async (res) => {
                     const data = await res.json();
                     if (data) {
                         return <Redirect to={`/groups/${data.id}`} />
