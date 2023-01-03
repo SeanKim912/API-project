@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { csrfFetch } from "../../store/csrf";
 import { startGroup } from "../../store/group";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import './CreateGroupPage.css'
 
 function CreateGroupPage() {
@@ -40,12 +40,16 @@ function CreateGroupPage() {
         if (user) {
             setErrors([]);
             return dispatch(startGroup(groupPayload, imagePayload))
+                .then(async (res) => {
+                    const data = await res.json();
+                    if (data) {
+                        return <Redirect to={`/groups/${data.id}`} />
+                    }
+                })
                 .catch(async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) {
-                        setErrors(data.errors);
-                    } else { history.push(`/groups/${data.id}`) }
-                })
+                    if (data && data.errors) setErrors(data.errors);
+                });
         } else {
             return setErrors(['Must be logged in to create a group']);
         }
