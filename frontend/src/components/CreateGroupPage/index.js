@@ -9,7 +9,6 @@ function CreateGroupPage() {
     const user = useSelector(state => state.session.user);
     const group = useSelector(state => state.groupState.singleGroup);
     const dispatch = useDispatch();
-    const history = useHistory();
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
     const [type, setType] = useState("");
@@ -18,6 +17,7 @@ function CreateGroupPage() {
     const [state, setState] = useState("");
     const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,15 +36,13 @@ function CreateGroupPage() {
             preview: true
         }
 
-        const newGroup = dispatch(startGroup(groupPayload, imagePayload));
 
         if (user) {
             setErrors([]);
-                await newGroup.then(async (res) => {
-                    const data = await res.json();
-                    if (data) {
-                        return <Redirect to={`/groups/${data.id}`} />
-                    }
+                return dispatch(startGroup(groupPayload, imagePayload))
+                .then(async (res) => {
+                    {console.log(group)}
+                    <Redirect to={`/groups/${group.id}`} />
                 })
                 .catch(async (res) => {
                     const data = await res.json();
