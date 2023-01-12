@@ -17,6 +17,7 @@ function CreateGroupPage() {
     const [state, setState] = useState("");
     const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
+    const history = useHistory();
 
 
     const handleSubmit = async (e) => {
@@ -39,15 +40,13 @@ function CreateGroupPage() {
 
         if (user) {
             setErrors([]);
-                return dispatch(startGroup(groupPayload, imagePayload))
-                .then(async (res) => {
-                    {console.log(group)}
-                    <Redirect to={`/groups/${group.id}`} />
-                })
+            const newGroup = await dispatch(startGroup(groupPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
                 });
+
+            if (newGroup) history.push(`/groups/${newGroup.id}`)
         } else {
             return setErrors(['Must be logged in to create a group']);
         }
