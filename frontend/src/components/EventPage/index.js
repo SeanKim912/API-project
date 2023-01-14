@@ -1,18 +1,21 @@
 import { useEffect } from "react";
-import { csrfFetch } from "../../store/csrf";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvent, removeEvent } from "../../store/event";
 import './EventPage.css';
 
 const EventPage = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const event = useSelector(state => state.eventState.singleEvent);
     const group = useSelector(state => state.eventState.singleEvent.Group);
     const organizer = useSelector(state => state.eventState.singleEvent.Organizer);
     const { eventId } = useParams();
 
-    const deleterFunc = () => { dispatch(removeEvent(eventId))}
+    const deleterFunc = () => {
+        dispatch(removeEvent(eventId))
+        history.push('/')
+    }
 
     useEffect(() => {
         dispatch(getEvent(eventId));
