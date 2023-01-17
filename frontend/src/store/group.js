@@ -6,7 +6,7 @@ const LOAD_ONE = 'groups/one';
 const CREATE = 'groups/create';
 const EDIT = 'groups/edit';
 const DELETE = 'groups/delete';
-// const CLEAR = 'groups/clear';
+
 
 const loadAllGroups = (groups) => ({
     type: ALL_GROUPS,
@@ -38,9 +38,6 @@ const deleteGroup = (group) => ({
     group
 });
 
-// export const clearGroup = () => ({
-//     type: CLEAR
-// })
 
 export const getAllGroups = () => async(dispatch) => {
     const response = await csrfFetch('/api/groups');
@@ -95,21 +92,6 @@ export const startGroup = (newGroup, newImage) => async(dispatch) => {
     }
 }
 
-// export const addGroupImage = (groupId, image) => async(dispatch) => {
-//     const response = await csrfFetch(`/api/groups/${groupId}/images`, {
-
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(image)
-//     });
-
-//     if (response.ok) {
-//         const groupImage = await response.json();
-//         dispatch(loadGroup(groupId));
-//         return groupImage;
-//     }
-// }
-
 export const updateGroup = (group) => async(dispatch) => {
     const response = await csrfFetch(`/api/groups/${group.id}`, {
         method: 'PUT',
@@ -132,7 +114,6 @@ export const removeGroup = (groupId) => async(dispatch) => {
     if (response.ok) {
         const removedGroup = await response.json();
         dispatch(deleteGroup(removedGroup));
-        return removedGroup;
     }
 }
 
@@ -176,6 +157,7 @@ const groupReducer = (state = initialState, action) => {
         case DELETE: {
             newState = { ...state };
             delete newState[action.groupId];
+            newState.singleGroup = {};
             return newState;
         }
         // case CLEAR: {

@@ -35,7 +35,7 @@ const EventList = () => {
                                 </div>
                             </div>
                         </NavLink>
-                        );
+                        )
                     })}
                 </div>
             </div>

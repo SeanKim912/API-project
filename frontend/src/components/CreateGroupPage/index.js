@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { csrfFetch } from "../../store/csrf";
 import { startGroup } from "../../store/group";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import './CreateGroupPage.css'
 
 function CreateGroupPage() {
     const user = useSelector(state => state.session.user);
-    const group = useSelector(state => state.groupState.singleGroup);
+    // const group = useSelector(state => state.groupState.singleGroup);
     const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
@@ -17,6 +16,7 @@ function CreateGroupPage() {
     const [state, setState] = useState("");
     const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
+    const history = useHistory();
 
 
     const handleSubmit = async (e) => {
@@ -39,15 +39,13 @@ function CreateGroupPage() {
 
         if (user) {
             setErrors([]);
-                return dispatch(startGroup(groupPayload, imagePayload))
-                .then(async (res) => {
-                    {console.log(group)}
-                    <Redirect to={`/groups/${group.id}`} />
-                })
+            const newGroup = dispatch(startGroup(groupPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
                 });
+
+            if (newGroup) history.push(`/groups/${newGroup.id}`);
         } else {
             return setErrors(['Must be logged in to create a group']);
         }
@@ -134,7 +132,7 @@ function CreateGroupPage() {
                 />
                 <div className="fieldLabel">
                     <label>
-                        Group image
+                        Group Image
                     </label>
                 </div>
                 <input

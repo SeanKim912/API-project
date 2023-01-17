@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { startEvent } from "../../store/event";
 import './CreateEventPage.css'
 
 function CreateEventPage() {
     const user = useSelector(state => state.session.user);
-    const event = useSelector(state => state.eventState.singleEvent);
+    // const event = useSelector(state => state.eventState.singleEvent);
     const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -17,12 +17,14 @@ function CreateEventPage() {
     const [endDate, setEndDate] = useState("");
     const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
+    const history = useHistory();
     const { groupId } = useParams();
     const venueId = 1;
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const eventPayload = {
             venueId,
             name,
@@ -33,21 +35,27 @@ function CreateEventPage() {
             startDate,
             endDate
         };
+
         const imagePayload = {
             url,
             preview: true
         };
+
+
         if (user) {
             setErrors([]);
-            return dispatch(startEvent(groupId, eventPayload, imagePayload))
+            const newEvent = dispatch(startEvent(groupId, eventPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
-                })
+                });
+
+            if (newEvent) history.push(`/events/${newEvent.id}`);
         } else {
             return setErrors(['Must be logged in to create an event']);
         }
     };
+
     return (
         <div className="pageContainer">
             <img className="modalIcon" src="https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg" />
@@ -137,7 +145,7 @@ function CreateEventPage() {
                 />
                 <div className="fieldLabel">
                     <label>
-                        Group image
+                        Event Image
                     </label>
                 </div>
                 <input

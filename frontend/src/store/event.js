@@ -88,7 +88,7 @@ export const startEvent = (groupId, newEvent, newImage) => async(dispatch) => {
             if (imageResponse.ok) {
                 const eventImage = await imageResponse.json();
                 dispatch(getEvent(event.id));
-            return eventImage;
+                return eventImage;
             }
         dispatch(createEvent(event));
         return event;
