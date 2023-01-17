@@ -25,7 +25,7 @@ const GroupPage = () => {
 
     useEffect(() => {
         dispatch(getGroup(groupId));
-    }, [dispatch, group]);
+    }, [dispatch]);
 
     return (
         <div className='pageContainer'>

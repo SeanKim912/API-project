@@ -31,13 +31,16 @@ function EditGroupPage() {
 
         setErrors([]);
 
-        const updatedGroup = dispatch(updateGroup(groupPayload))
+        dispatch(updateGroup(groupPayload))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
-            });
-        console.log(updatedGroup)
-        if (updatedGroup) history.push(`/groups/${updatedGroup.id}`);
+            })
+            .then(async (res) => {
+                const data = await res;
+                console.log(data)
+                history.push(`/groups/${data.id}`);
+            })
     };
 
     return (

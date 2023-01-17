@@ -50,7 +50,8 @@ function CreateEventPage() {
                     if (data && data.errors) setErrors(data.errors);
                 });
 
-            if (newEvent) history.push(`/events/${newEvent.id}`);
+            if (newEvent.id) history.push(`/events/${newEvent.id}`);
+
         } else {
             return setErrors(['Must be logged in to create an event']);
         }

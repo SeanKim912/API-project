@@ -8,6 +8,7 @@ function CreateGroupPage() {
     const user = useSelector(state => state.session.user);
     // const group = useSelector(state => state.groupState.singleGroup);
     const dispatch = useDispatch();
+    const history = useHistory();
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
     const [type, setType] = useState("");
@@ -16,7 +17,7 @@ function CreateGroupPage() {
     const [state, setState] = useState("");
     const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
-    const history = useHistory();
+
 
 
     const handleSubmit = async (e) => {
@@ -27,7 +28,7 @@ function CreateGroupPage() {
             about,
             city,
             state,
-            private: isPrivate,react
+            private: isPrivate,
             type
         }
 
@@ -39,13 +40,16 @@ function CreateGroupPage() {
 
         if (user) {
             setErrors([]);
-            const newGroup = dispatch(startGroup(groupPayload, imagePayload))
+            
+            dispatch(startGroup(groupPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
+                })
+                .then(async (res) => {
+                    const data = await res;
+                    history.push(`/groups/${data.id}`);
                 });
-
-            if (newGroup) history.push(`/groups/${newGroup.id}`);
         } else {
             return setErrors(['Must be logged in to create a group']);
         }

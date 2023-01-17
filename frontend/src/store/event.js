@@ -95,21 +95,6 @@ export const startEvent = (groupId, newEvent, newImage) => async(dispatch) => {
     }
 }
 
-// export const addEventImage = (eventId, image) => async(dispatch) => {
-//     const response = await csrfFetch(`/api/events/${eventId}/images`, {
-
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(image)
-//     });
-
-//     if (response.ok) {
-//         const eventImage = await response.json();
-//         dispatch(getEvent(eventId));
-//         return eventImage;
-//     }
-// }
-
 export const updateEvent = (event) => async(dispatch) => {
     const response = await csrfFetch(`/api/events/${event.id}`, {
         method: 'PUT',
@@ -132,7 +117,6 @@ export const removeEvent = (eventId) => async(dispatch) => {
     if (response.ok) {
         const removedEvent = await response.json();
         dispatch(deleteEvent(removedEvent));
-        return removedEvent;
     }
 }
 
@@ -176,6 +160,7 @@ const eventReducer = (state = initialState, action) => {
         case DELETE: {
             newState = { ...state };
             delete newState[action.eventId];
+            newState.singleEvent = {};
             return newState;
         }
         // case CLEAR: {
