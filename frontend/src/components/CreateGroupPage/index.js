@@ -27,7 +27,7 @@ function CreateGroupPage() {
             about,
             city,
             state,
-            private: isPrivate,
+            private: isPrivate,react
             type
         }
 
