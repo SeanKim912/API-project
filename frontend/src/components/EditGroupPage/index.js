@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { updateGroup } from "../../store/group";
 import './EditGroupPage.css'
@@ -35,10 +35,9 @@ function EditGroupPage() {
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
-                })
-
+            });
+        console.log(updatedGroup)
         if (updatedGroup) history.push(`/groups/${updatedGroup.id}`);
-
     };
 
     return (

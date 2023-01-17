@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroup, removeGroup } from '../../store/group';
 import './GroupPage.css'
 
 const GroupPage = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const group = useSelector(state => state.groupState.singleGroup);
     const { groupId } = useParams();
 
-    const deleterFunc = () => { dispatch(removeGroup(groupId))}
+    const deleterFunc = () => {
+        dispatch(removeGroup(groupId));
+        history.push('/');
+    }
 
     function isPrivate(status) {
         if (status === true) {
@@ -21,7 +25,7 @@ const GroupPage = () => {
 
     useEffect(() => {
         dispatch(getGroup(groupId));
-    }, [dispatch]);
+    }, [dispatch, group]);
 
     return (
         <div className='pageContainer'>
