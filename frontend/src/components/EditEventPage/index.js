@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { updateEvent } from "../../store/event";
 
 function EditEventPage() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
@@ -33,11 +34,15 @@ function EditEventPage() {
 
             setErrors([]);
 
-            return dispatch(updateEvent(eventPayload))
+            dispatch(updateEvent(eventPayload))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
                 })
+                .then(async (res) => {
+                    const data = await res;
+                    history.push(`/events/${data.id}`);
+                });
     };
 
     return (
