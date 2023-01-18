@@ -160,8 +160,12 @@ const eventReducer = (state = initialState, action) => {
             return newState;
         }
         case DELETE: {
+            // newState = { ...state };
+            // delete newState[action.eventId];
+            // newState.singleEvent = {};
+            // return newState;
             newState = { ...state };
-            delete newState[action.eventId];
+            delete newState.allEvents[action.eventId];
             newState.singleEvent = {};
             return newState;
         }
