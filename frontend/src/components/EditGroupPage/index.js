@@ -9,12 +9,12 @@ function EditGroupPage() {
     const group = useSelector(state => state.groupState.singleGroup)
     const dispatch = useDispatch();
     const history = useHistory();
-    const [name, setName] = useState("");
-    const [about, setAbout] = useState("");
+    const [name, setName] = useState(group.name);
+    const [about, setAbout] = useState(group.about);
     const [type, setType] = useState("");
     const [isPrivate, setIsPrivate] = useState(true);
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
+    const [city, setCity] = useState(group.city);
+    const [state, setState] = useState(group.state);
     const [errors, setErrors] = useState([]);
     const { groupId } = useParams();
 

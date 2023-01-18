@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvent, removeEvent } from "../../store/event";
 import './EventPage.css';
@@ -14,11 +14,13 @@ const EventPage = () => {
 
     const deleterFunc = () => {
         dispatch(removeEvent(eventId))
-        history.push('/')
+            .then(async (res) => {
+                history.push('/')
+            });
     }
 
     useEffect(() => {
-        dispatch(getEvent(eventId));
+        dispatch(getEvent(eventId))
     }, [dispatch]);
 
     return (
@@ -47,6 +49,9 @@ const EventPage = () => {
                         <div className="miniEventDetail">Admission: ${event.price}</div>
                     </div>
                     <div className="crudButtons">
+                        {/* <NavLink exact to={`/events/${event.id}/edit`}>
+                            <button className="eventPageButton">Edit this event</button>
+                        </NavLink> */}
                         <button className="eventPageButton" onClick={deleterFunc}>Delete this event</button>
                     </div>
                     <div className="dateInfo"></div>

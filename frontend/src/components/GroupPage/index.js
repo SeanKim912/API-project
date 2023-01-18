@@ -11,8 +11,10 @@ const GroupPage = () => {
     const { groupId } = useParams();
 
     const deleterFunc = () => {
-        dispatch(removeGroup(groupId));
-        history.push('/');
+        dispatch(removeGroup(groupId))
+            .then(async (res) => {
+                history.push('/');
+            });
     }
 
     function isPrivate(status) {

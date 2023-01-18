@@ -34,9 +34,9 @@ function App() {
           <Route path='/groups/:groupId/events'>
             <CreateEventPage />
           </Route>
-          {/* <Route path="/events/:eventId/edit">
+          <Route path="/events/:eventId/edit">
             <EditEventPage />
-          </Route> */}
+          </Route>
           <Route path="/groups/start">
             <CreateGroupPage />
           </Route>
