@@ -6,7 +6,6 @@ import './CreateGroupPage.css'
 
 function CreateGroupPage() {
     const user = useSelector(state => state.session.user);
-    // const group = useSelector(state => state.groupState.singleGroup);
     const dispatch = useDispatch();
     const history = useHistory();
     const [name, setName] = useState("");
@@ -17,7 +16,6 @@ function CreateGroupPage() {
     const [state, setState] = useState("");
     const [url, setUrl] = useState("");
     const [errors, setErrors] = useState([]);
-
 
 
     const handleSubmit = async (e) => {
@@ -40,7 +38,7 @@ function CreateGroupPage() {
 
         if (user) {
             setErrors([]);
-            
+
             dispatch(startGroup(groupPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();

@@ -140,16 +140,19 @@ const groupReducer = (state = initialState, action) => {
             return newState;
         }
         case LOAD_ONE: {
-            newState = { allGroups: {}, singleGroup: {}};
+            // newState = { allGroups: {}, singleGroup: {}};
+            newState = { ...state, singleGroup: {}};
             newState.singleGroup = { ...action.group };
             return newState;
         }
         case CREATE: {
+            newState = { allGroups: { ...state.allGroups }, singleGroup: {}};
             newState.allGroups[action.newGroup.id] = action.newGroup;
             newState.singleGroup = action.newGroup;
             return newState;
         }
         case EDIT: {
+            newState = { ...state, singleGroup: {}};
             newState.allGroups[action.group.id] = action.group;
             newState.singleGroup = action.group;
             return newState;

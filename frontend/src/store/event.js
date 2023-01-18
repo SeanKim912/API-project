@@ -4,8 +4,8 @@ const ALL_EVENTS = 'events/all';
 const USER_EVENTS = 'events/user';
 const LOAD_EVENT = 'events/one';
 const CREATE = 'events/create';
-const EDIT = 'groups/edit';
-const DELETE = 'groups/delete';
+const EDIT = 'events/edit';
+const DELETE = 'events/delete';
 // const CLEAR = 'events/clear';
 
 const loadAllEvents = (events) => ({
@@ -143,16 +143,18 @@ const eventReducer = (state = initialState, action) => {
             return newState;
         }
         case LOAD_EVENT: {
-            newState = { allEvents: {}, singleEvent: {}};
+            newState = { ...state, singleEvent: {}};
             newState.singleEvent = { ...action.event };
             return newState;
         }
         case CREATE: {
+            newState = { allEvents: { ...state.allEvents }, singleEvent: {}};
             newState.allEvents[action.newEvent.id] = action.newEvent;
             newState.singleEvent = action.newEvent;
             return newState;
         }
         case EDIT: {
+            newState = { ...state, singleEvent: {}};
             newState.allEvents[action.event.id] = action.event;
             newState.singleEvent = action.event;
             return newState;

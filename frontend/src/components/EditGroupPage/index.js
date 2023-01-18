@@ -5,6 +5,8 @@ import { updateGroup } from "../../store/group";
 import './EditGroupPage.css'
 
 function EditGroupPage() {
+    const user = useSelector(state => state.session.user);
+    const group = useSelector(state => state.groupState.singleGroup)
     const dispatch = useDispatch();
     const history = useHistory();
     const [name, setName] = useState("");
@@ -15,6 +17,7 @@ function EditGroupPage() {
     const [state, setState] = useState("");
     const [errors, setErrors] = useState([]);
     const { groupId } = useParams();
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,18 +32,21 @@ function EditGroupPage() {
             type
         }
 
-        setErrors([]);
+        if (user.id === group.organizerId) {
+            setErrors([]);
 
-        dispatch(updateGroup(groupPayload))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            })
-            .then(async (res) => {
-                const data = await res;
-                console.log(data)
-                history.push(`/groups/${data.id}`);
-            })
+            dispatch(updateGroup(groupPayload))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                })
+                .then(async (res) => {
+                    const data = await res;
+                    history.push(`/groups/${data.id}`);
+                });
+        } else {
+            return setErrors(['Must be logged in as organizer to edit a group']);
+        }
     };
 
     return (

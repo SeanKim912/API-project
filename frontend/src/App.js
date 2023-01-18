@@ -28,7 +28,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/groups/:groupId/edit">
+          <Route exact path="/groups/:groupId/edit">
             <EditGroupPage />
           </Route>
           <Route path='/groups/:groupId/events'>
@@ -43,7 +43,7 @@ function App() {
           {/* <Route path="/groups/user">
             <UserGroupList />
           </Route> */}
-          <Route path="/groups/:groupId">
+          <Route exact path="/groups/:groupId">
             <GroupPage />
           </Route>
           <Route path="/events/:eventId">

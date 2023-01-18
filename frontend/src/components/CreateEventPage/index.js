@@ -44,14 +44,16 @@ function CreateEventPage() {
 
         if (user) {
             setErrors([]);
-            const newEvent = dispatch(startEvent(groupId, eventPayload, imagePayload))
+            
+            dispatch(startEvent(groupId, eventPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
+                })
+                .then(async (res) => {
+                    const data = await res;
+                    history.push(`/events/${data.id}`);
                 });
-
-            if (newEvent.id) history.push(`/events/${newEvent.id}`);
-
         } else {
             return setErrors(['Must be logged in to create an event']);
         }
