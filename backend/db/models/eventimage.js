@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     url: {
-      type: DataTypes.STRING(255)
+      type: DataTypes.TEXT
     },
     preview: {
       type: DataTypes.BOOLEAN
