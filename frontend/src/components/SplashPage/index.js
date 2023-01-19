@@ -26,24 +26,24 @@ function SplashPage() {
                     <div className="splashFeatures">
                         <div className="feature">
                             <img className="featureImage" src="https://secure.meetupstatic.com/next/images/indexPage/category1.webp?w=1920"/>
-                            <div className="featureText">Make new friends
+                            <div className="featureText" title="Feature in development">Make new friends
                                 <img className="arrow" src="https://secure.meetupstatic.com/next/images/shared/right-arrow.svg?w=32"/>
                             </div>
                         </div>
                         <div className="feature">
                             <img className="featureImage" src="https://secure.meetupstatic.com/next/images/indexPage/category2.webp?w=1920"/>
-                            <div className="featureText">Explore the outdoors
+                            <div className="featureText" title="Feature in development">Explore the outdoors
                                 <img className="arrow" src="https://secure.meetupstatic.com/next/images/shared/right-arrow.svg?w=32"/>
                             </div>
                         </div>
                         <div className="feature">
                             <img className="featureImage" src="https://secure.meetupstatic.com/next/images/indexPage/category3.webp?w=1920"/>
-                            <div className="featureText">Connect over tech
+                            <div className="featureText" title="Feature in development">Connect over tech
                                 <img className="arrow" src="https://secure.meetupstatic.com/next/images/shared/right-arrow.svg?w=32"/>
                             </div>
                         </div>
                     </div>
-                    <div className="splashSuggestions">
+                    <div className="splashSuggestions" title="Feature in development">
                         <div className="suggestion">Boost your career</div>
                         <div className="suggestion">Find your zen</div>
                         <div className="suggestion">Get moving</div>
@@ -59,21 +59,21 @@ function SplashPage() {
                             <div className="stepCard">
                                 <img className="stepIcon" src="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=256"/>
                                 <div className="stepText">
-                                    <div className="stepTitle">Join a group</div>
+                                    <div className="stepTitle" title="Feature in development">Join a group</div>
                                     <div className="stepCaption">Do what you love, meet others who love it, find your community. The rest is history!</div>
                                 </div>
                             </div>
                             <div className="stepCard">
                                 <img className="stepIcon" src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=256"/>
                                 <div className="stepText">
-                                    <div className="stepTitle">Find an event</div>
+                                    <div className="stepTitle" title="Feature in development">Find an event</div>
                                     <div className="stepCaption">Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking.</div>
                                 </div>
                             </div>
                             <div className="stepCard">
                                 <img className="stepIcon" src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=256"/>
                                 <div className="stepText">
-                                    <div className="stepTitle">Start a group</div>
+                                    <div className="stepTitle" title="Feature in development">Start a group</div>
                                     <div className="stepCaption">You don’t have to be an expert to gather people together and explore shared interests.</div>
                                 </div>
                             </div>

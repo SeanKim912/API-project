@@ -44,7 +44,7 @@ function CreateEventPage() {
 
         if (user) {
             setErrors([]);
-            
+
             dispatch(startEvent(groupId, eventPayload, imagePayload))
                 .catch(async (res) => {
                     const data = await res.json();
@@ -156,6 +156,7 @@ function CreateEventPage() {
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="Image url here"
+                    required
                 />
                 <button className="formButton" type="submit">Create Event</button>
             </form>

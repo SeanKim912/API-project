@@ -29,7 +29,7 @@ function UserHome() {
                 <div className='generalInfo'>
                     <div className='calendar'></div>
                     <div className='timeframeFilter'></div>
-                    <div className='yourInfo'>
+                    <div title="Feature in development" className='yourInfo'>
                         <div className='yourEvents'>
                             <div className='infoHeader'>
                                 <h2 className='your'>Your next event</h2>
@@ -83,11 +83,11 @@ function UserHome() {
                             </div>
                             <GroupList />
                         </>
-                    )};
+                    )}
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default UserHome;

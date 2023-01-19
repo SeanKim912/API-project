@@ -4,7 +4,7 @@ function Footer() {
     return (
         <>
             <div className='footerContainer'>
-                <div className='footerBody'>
+                <div title="Feature in development" className='footerBody'>
                     <div className='footerTitle'>Create your own Meetupz group.
                         <div className='fakeButton'>Get Started</div>
                     </div>
@@ -41,7 +41,7 @@ function Footer() {
                             </ul>
                         </div>
                     </div>
-                    <div className='footerLegal'>
+                    <div title="Feature in development" className='footerLegal'>
                         <div className='copyright'>2022 Meetup Unofficial Clone</div>
                         <div className='legal'>Terms of Service</div>
                         <div className='legal'>Privacy Policy</div>

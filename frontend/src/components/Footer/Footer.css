@@ -89,7 +89,7 @@ li {
     padding-bottom: 0px;
     margin-top: 4px;
     margin-bottom: 4px;
-    cursor: default;
+    cursor: not-allowed;
 }
 
 span {
@@ -113,4 +113,5 @@ span {
 .legal {
     color: rgb(197, 196, 196);
     margin-left: 24px;
+    cursor: not-allowed;
 }
