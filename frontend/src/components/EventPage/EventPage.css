@@ -75,6 +75,7 @@
     font-stretch: 100%;
     font-weight: 500;
     height: 42px;
+    width: 154px;
     line-height: 24px;
     margin-top: 16px;
     margin-left: 0px;
@@ -87,7 +88,6 @@
     tab-size: 4;
     text-align: center;
     text-indent: 0px;
-    width: 142px;
     word-spacing: 0px;
     writing-mode: horizontal-tb;
     border-radius: 10px;
@@ -96,4 +96,10 @@
 .eventPageButton:hover {
     color:rgb(255, 255, 255);
     background-color: #f77070;
+}
+
+.crudButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

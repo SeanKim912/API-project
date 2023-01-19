@@ -1,7 +1,11 @@
-.favicon {
+.logo {
     width: 125px;
     height: 50px;
     margin-top: 10px;
+}
+
+a {
+    text-decoration-line: none;
 }
 
 ul {
@@ -97,7 +101,6 @@ li {
     text-decoration-color:rgb(0, 130, 148);
     text-decoration-line: none;
     text-decoration-style: solid;
-    text-decoration-thickness: auto;
 }
 
 .startButton:hover {

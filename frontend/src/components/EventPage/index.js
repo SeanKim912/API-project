@@ -49,9 +49,10 @@ const EventPage = () => {
                         <div className="miniEventDetail">Admission: ${event.price}</div>
                     </div>
                     <div className="crudButtons">
-                        {/* <NavLink exact to={`/events/${event.id}/edit`}>
+                        {/* <button className="eventPageButton" disabled>RSVP</button> */}
+                        <NavLink exact to={`/events/${event.id}/edit`}>
                             <button className="eventPageButton">Edit this event</button>
-                        </NavLink> */}
+                        </NavLink>
                         <button className="eventPageButton" onClick={deleterFunc}>Delete this event</button>
                     </div>
                     <div className="dateInfo"></div>

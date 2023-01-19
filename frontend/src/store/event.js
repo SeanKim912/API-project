@@ -78,6 +78,7 @@ export const startEvent = (groupId, newEvent, newImage) => async(dispatch) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newEvent)
     });
+    
     if (response.ok) {
         const event = await response.json();
         const imageResponse = await csrfFetch(`/api/events/${event.id}/images`, {

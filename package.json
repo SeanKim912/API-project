@@ -13,15 +13,7 @@
     "start": "npm start --prefix backend",
     "build": "npm run build --prefix backend"
   },
-
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SeanKim912/API-project/issues"
-  },
-  "homepage": "https://github.com/SeanKim912/API-project#readme"
+  "license": "ISC"
 }
-
-
-

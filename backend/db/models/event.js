@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     price: {
-      type: DataTypes.DECIMAL
+      type: DataTypes.NUMBER
     },
     startDate: {
       type: DataTypes.DATE

@@ -15,7 +15,7 @@ function Navigation({ isLoaded }){
             <ul className='corners'>
                 <li className='leftCorner'>
                     <NavLink exact to="/">
-                        <img className='favicon' src='https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg'/>
+                        <img className='logo' src='https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg'/>
                     </NavLink>
                 </li>
                 {sessionUser

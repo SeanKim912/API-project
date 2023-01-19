@@ -6,7 +6,7 @@ import './EditGroupPage.css'
 
 function EditGroupPage() {
     const user = useSelector(state => state.session.user);
-    const group = useSelector(state => state.groupState.singleGroup)
+    const group = useSelector(state => state.groupState.singleGroup);
     const dispatch = useDispatch();
     const history = useHistory();
     const [name, setName] = useState(group.name);
