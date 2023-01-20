@@ -7,10 +7,13 @@ import './EventPage.css';
 const EventPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const user = useSelector(state => state.session.user);
     const event = useSelector(state => state.eventState.singleEvent);
-    const group = useSelector(state => state.eventState.singleEvent.Group);
-    const organizer = useSelector(state => state.eventState.singleEvent.Organizer);
+    console.log(event);
     const { eventId } = useParams();
+
+    const start = new Date(event.startDate);
+    const end = new Date(event.endDate);
 
     const deleterFunc = () => {
         dispatch(removeEvent(eventId))
@@ -31,7 +34,7 @@ const EventPage = () => {
             <div className='eventBody'>
                 <div className="mainColumn">
                     <div className="imageContainer">
-                        <img className="eventBannerImage" src={event.previewImage} alt="preview for event"/>
+                        <img className="eventBannerImage" src={event.previewImage} alt="preview for event" />
                     </div>
                     <div className="aboutContainer">
                         <div>
@@ -42,18 +45,26 @@ const EventPage = () => {
                 </div>
                 <div className="sideColumn">
                     <div className="miniEventCard">
-                        <div className="miniEventDetail">Begins: {event.startDate}</div>
-                        <div className="miniEventDetail">Ends: {event.endDate}</div>
+                        <div className="miniEventDetail">Begins: {start.toUTCString().slice(0, 22)}</div>
+                        <div className="miniEventDetail">Ends: {end.toUTCString().slice(0, 22)}</div>
                         <div className="miniEventDetail">{event.type}</div>
                         <div className="miniEventDetail">Max Capacity: {event.capacity} People</div>
                         <div className="miniEventDetail">Admission: ${event.price}</div>
                     </div>
                     <div className="crudButtons">
-                        {/* <button className="eventPageButton" disabled>RSVP</button> */}
-                        <NavLink exact to={`/events/${event.id}/edit`}>
-                            <button className="eventPageButton">Edit this event</button>
-                        </NavLink>
-                        <button className="eventPageButton" onClick={deleterFunc}>Delete this event</button>
+                        {user.id
+                            ? (
+                                <>
+                                    <NavLink exact to={`/events/${event.id}/edit`}>
+                                        <button className="eventPageButton">Edit this event</button>
+                                    </NavLink>
+                                    <button className="eventPageButton" onClick={deleterFunc}>Delete this event</button>
+                                </>
+                            )
+                            : (
+                                <>
+                                </>
+                            )}
                     </div>
                     <div className="dateInfo"></div>
                 </div>

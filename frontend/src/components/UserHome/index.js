@@ -66,24 +66,24 @@ function UserHome() {
                 </div>
                 <div className='listDisplay'>
                     {isEvent
-                    ? (
-                        <>
-                            <div className='tab'>
-                                <button className='picked' onClick={eventSwitch}>Events</button>
-                                <button className='unpicked' onClick={groupSwitch}>Groups</button>
-                            </div>
-                            <EventList />
-                        </>
-                    )
-                    : (
-                        <>
-                            <div className='tab'>
-                                <button className="unpicked" onClick={eventSwitch}>Events</button>
-                                <button className="picked" onClick={groupSwitch}>Groups</button>
-                            </div>
-                            <GroupList />
-                        </>
-                    )}
+                        ? (
+                            <>
+                                <div className='tab'>
+                                    <button className='picked' onClick={eventSwitch}>Events</button>
+                                    <button className='unpicked' onClick={groupSwitch}>Groups</button>
+                                </div>
+                                <EventList />
+                            </>
+                        )
+                        : (
+                            <>
+                                <div className='tab'>
+                                    <button className="unpicked" onClick={eventSwitch}>Events</button>
+                                    <button className="picked" onClick={groupSwitch}>Groups</button>
+                                </div>
+                                <GroupList />
+                            </>
+                        )}
                 </div>
             </div>
         </div>

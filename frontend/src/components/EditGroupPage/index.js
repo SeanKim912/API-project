@@ -11,7 +11,7 @@ function EditGroupPage() {
     const history = useHistory();
     const [name, setName] = useState(group.name);
     const [about, setAbout] = useState(group.about);
-    const [type, setType] = useState("");
+    const [type, setType] = useState(group.type);
     const [isPrivate, setIsPrivate] = useState(true);
     const [city, setCity] = useState(group.city);
     const [state, setState] = useState(group.state);

@@ -166,7 +166,7 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
 
         return next(err);
     }
-    
+
     const newEventImage = await EventImage.create({ eventId, url, preview });
 
     res.json({
@@ -187,7 +187,7 @@ router.get('/:eventId', async (req, res, next) => {
             model: EventImage
         }, {
             model: Group,
-            attributes: ['id', 'name', 'city', 'state']
+            attributes: ['id', 'name', 'city', 'state', 'organizerId']
         }, {
             model: Venue,
             attributes: ['id', 'city', 'state']

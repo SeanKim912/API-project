@@ -3,6 +3,8 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    height: 80vh;
+    overflow-y: auto;
 }
 
 .modalHeader {
