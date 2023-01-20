@@ -5,12 +5,14 @@ import { getEvent, removeEvent } from "../../store/event";
 import './EventPage.css';
 
 const EventPage = () => {
+    const { eventId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector(state => state.session.user);
     const event = useSelector(state => state.eventState.singleEvent);
-    console.log(event);
-    const { eventId } = useParams();
+    // const targetEvent = useSelector(state => state.eventState.allEvents[eventId]);
+    console.log("asldkfjal;ksdjfkl;asj", event);
+    // const organizer = event.Group.organizerId
 
     const start = new Date(event.startDate);
     const end = new Date(event.endDate);
@@ -23,9 +25,11 @@ const EventPage = () => {
     }
 
     useEffect(() => {
-        dispatch(getEvent(eventId))
+        dispatch(getEvent(eventId));
     }, [dispatch]);
 
+    if (!event.Group) return null
+    
     return (
         <div className="eventPageBody">
             <div className='eventHeader'>
@@ -52,7 +56,7 @@ const EventPage = () => {
                         <div className="miniEventDetail">Admission: ${event.price}</div>
                     </div>
                     <div className="crudButtons">
-                        {user.id
+                        {user.id === event.Group.organizerId
                             ? (
                                 <>
                                     <NavLink exact to={`/events/${event.id}/edit`}>
