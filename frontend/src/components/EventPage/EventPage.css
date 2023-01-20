@@ -35,6 +35,10 @@
     flex-direction: row;
 }
 
+.mainColumn {
+    width: 675px;
+}
+
 .sideColumn {
     margin-left: 112px;
 }

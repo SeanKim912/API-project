@@ -100,11 +100,25 @@ const validateEvent = [
     check('startDate')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Start date must be in the future'),
+        .withMessage('Start date is required'),
     check('endDate')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('End date is less than start date'),
+        .withMessage('End date is required'),
+    check('endDate').toDate(),
+    check('startDate').toDate().custom((start, { req }) => {
+        if (start.getTime() > req.body.endDate.getTime()) {
+            throw new Error('Start date must be before end date');
+        }
+        return true;
+    }),
+    check('startDate').toDate().custom((start) => {
+        const current = new Date();
+        if (start.getTime() < current.getTime()) {
+            throw new Error('Start date must be in the future');
+        }
+        return true;
+    }),
     handleValidationErrors
 ];
 
