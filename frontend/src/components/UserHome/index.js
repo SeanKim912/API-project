@@ -29,7 +29,7 @@ function UserHome() {
                 <div className='generalInfo'>
                     <div className='calendar'></div>
                     <div className='timeframeFilter'></div>
-                    <div className='yourInfo'>
+                    <div title="Feature in development" className='yourInfo'>
                         <div className='yourEvents'>
                             <div className='infoHeader'>
                                 <h2 className='your'>Your next event</h2>
@@ -66,28 +66,28 @@ function UserHome() {
                 </div>
                 <div className='listDisplay'>
                     {isEvent
-                    ? (
-                        <>
-                            <div className='tab'>
-                                <button className='picked' onClick={eventSwitch}>Events</button>
-                                <button className='unpicked' onClick={groupSwitch}>Groups</button>
-                            </div>
-                            <EventList />
-                        </>
-                    )
-                    : (
-                        <>
-                            <div className='tab'>
-                                <button className="unpicked" onClick={eventSwitch}>Events</button>
-                                <button className="picked" onClick={groupSwitch}>Groups</button>
-                            </div>
-                            <GroupList />
-                        </>
-                    )};
+                        ? (
+                            <>
+                                <div className='tab'>
+                                    <button className='picked' onClick={eventSwitch}>Events</button>
+                                    <button className='unpicked' onClick={groupSwitch}>Groups</button>
+                                </div>
+                                <EventList />
+                            </>
+                        )
+                        : (
+                            <>
+                                <div className='tab'>
+                                    <button className="unpicked" onClick={eventSwitch}>Events</button>
+                                    <button className="picked" onClick={groupSwitch}>Groups</button>
+                                </div>
+                                <GroupList />
+                            </>
+                        )}
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default UserHome;

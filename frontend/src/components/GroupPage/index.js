@@ -7,6 +7,7 @@ import './GroupPage.css'
 const GroupPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const user = useSelector(state => state.session.user);
     const group = useSelector(state => state.groupState.singleGroup);
     const { groupId } = useParams();
 
@@ -33,7 +34,7 @@ const GroupPage = () => {
         <div className='pageContainer'>
             <div className='homeHeader'>
                 <div className='bannerLeft'>
-                    <img className="bannerImage" src={group.previewImage} alt="preview for group"/>
+                    <img className="bannerImage" src={group.previewImage} alt="preview for group" />
                 </div>
                 <div className='bannerRight'>
                     <h1 className='groupTitle'>{group.name}</h1>
@@ -45,16 +46,25 @@ const GroupPage = () => {
             </div>
             <div className='tabStripe'>
                 <div id='blueTab'>About</div>
-                <div className='infoTab'>Events</div>
-                <div className='infoTab'>Members</div>
-                <div className='infoTab'>Photos</div>
-                <NavLink exact to={`/groups/${group.id}/events`}>
-                    <button className='groupButton'>Create an event</button>
-                </NavLink>
-                <NavLink exact to={`/groups/${group.id}/edit`}>
-                    <button className='groupButton'>Edit this group</button>
-                </NavLink>
-                    <button className='groupButton' onClick={deleterFunc}>Delete this group</button>
+                <div className='infoTab' title='Feature in development'>Events</div>
+                <div className='infoTab' title='Feature in development'>Members</div>
+                <div className='infoTab' title='Feature in development'>Photos</div>
+                {user.id === group.organizerId
+                    ? (
+                        <>
+                            <NavLink exact to={`/groups/${group.id}/events`}>
+                                <button className='groupButton'>Create an event</button>
+                            </NavLink>
+                            <NavLink exact to={`/groups/${group.id}/edit`}>
+                                <button className='groupButton'>Edit this group</button>
+                            </NavLink>
+                            <button className='groupButton' onClick={deleterFunc}>Delete this group</button>
+                        </>
+                    )
+                    : (
+                        <>
+                        </>
+                    )}
             </div>
             <div className='homeBody'>
                 <div className='aboutTab'>

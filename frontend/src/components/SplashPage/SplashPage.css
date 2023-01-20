@@ -95,6 +95,7 @@ h1 {
     tab-size: 4;
     text-align: left;
     margin-top: 8px;
+    cursor: not-allowed;
 }
 
 .arrow {
@@ -114,6 +115,7 @@ h1 {
     line-height: 24px;
     height: 54px;
     width: 1120px;
+    cursor: not-allowed;
 }
 
 .suggestion {
@@ -210,7 +212,7 @@ h1 {
     line-height: 24px;
     tab-size: 4;
     text-align: center;
-
+    cursor: not-allowed;
 }
 
 .stepCaption {

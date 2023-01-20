@@ -1,13 +1,21 @@
-.formBody {
+.pageContainer {
+    margin-top: 68px;
+    margin-bottom: 68px;
+    padding: 36px;
     align-items: center;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 80vh;
-    overflow-y: auto;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
 }
 
-.modalHeader {
+.modalIcon {
+    height: 50px;
+    width: 100px;
+    margin-bottom: 8px;
+}
+
+.formHeader {
     box-sizing: border-box;
     display: block;
     font-size: 28px;
@@ -47,6 +55,38 @@ input {
     font-style: normal;
     font-weight: 400;
     height: 40px;
+    line-height: 24px;
+    margin: 0px;
+    outline-offset: 2px;
+    border-width: 1px;
+    tab-size: 4;
+    text-align: start;
+    word-spacing: 0px;
+    writing-mode: horizontal-tb;
+    border-radius: 10px;
+}
+
+select {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    height: 40px;
+    line-height: 24px;
+    margin: 0px;
+    outline-offset: 2px;
+    border-width: 1px;
+    tab-size: 4;
+    text-align: start;
+    word-spacing: 0px;
+    writing-mode: horizontal-tb;
+    border-radius: 10px;
+}
+
+textarea {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    height: 80px;
     line-height: 24px;
     margin: 0px;
     outline-offset: 2px;
@@ -100,10 +140,4 @@ input {
 .formButton:hover {
     color:rgb(255, 255, 255);
     background-color: #f77070;
-}
-
-.modalIcon {
-    height: 50px;
-    width: 100px;
-    margin-bottom: 8px;
 }

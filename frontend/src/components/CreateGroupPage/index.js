@@ -142,6 +142,7 @@ function CreateGroupPage() {
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="Image url here"
+                    required
                 />
                 <button className="formButton" type="submit">Create Group</button>
             </form>
