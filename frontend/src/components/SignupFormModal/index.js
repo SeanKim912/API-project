@@ -76,7 +76,8 @@ function SignupFormModal() {
                 <input
                     type="text"
                     value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}                        required
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
                 />
                 <div className="fieldLabel">
                     <label>
@@ -86,7 +87,8 @@ function SignupFormModal() {
                 <input
                     type="text"
                     value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}                        required
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
                 />
                 <div className="fieldLabel">
                     <label>
@@ -96,7 +98,8 @@ function SignupFormModal() {
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}                        required
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                 />
                 <div className="fieldLabel">
                     <label>
@@ -106,7 +109,8 @@ function SignupFormModal() {
                 <input
                     type="password"
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}                        required
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
                 />
                 <button className="formButton" type="submit">Sign Up</button>
                 <button className="formButton" onClick={demoInput}>Demo User</button>
