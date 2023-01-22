@@ -54,7 +54,7 @@ function EditGroupPage() {
             <img className="modalIcon" src="https://1000marcas.net/wp-content/uploads/2021/07/Meetup-logo-2048x1152.jpg" />
             <h1 className="formHeader">Edit Group</h1>
             <form className="inputField" onSubmit={handleSubmit}>
-                <ul>
+                <ul className="errorField">
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <div className="fieldLabel">
