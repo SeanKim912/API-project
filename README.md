@@ -6,10 +6,10 @@ Live site: [Meetupz](https://meetup-project-wf68.onrender.com)
 
 ## Wiki Links
 
-- Feature List
-- API Routes
-- Database Schema
-- Redux Store State Shape
+- [Feature List](https://github.com/SeanKim912/API-project/wiki/Features-List)
+- [API Routes](https://github.com/SeanKim912/API-project/wiki/API-Routes)
+- [Database Schema](https://github.com/SeanKim912/API-project/wiki/Database-Schema)
+- [Redux Store State Shape](https://github.com/SeanKim912/API-project/wiki/Meetup-Store-Shape)
 
 ## Tech Stack
 
