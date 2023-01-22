@@ -38,6 +38,10 @@
     width: 344px;
 }
 
+.errorField {
+    color: red;
+}
+
 .fieldLabel {
     align-items: baseline;
     line-height: 24px;
