@@ -10,9 +10,6 @@ const EventPage = () => {
     const history = useHistory();
     const user = useSelector(state => state.session.user);
     const event = useSelector(state => state.eventState.singleEvent);
-    // const targetEvent = useSelector(state => state.eventState.allEvents[eventId]);
-    console.log("asldkfjal;ksdjfkl;asj", event);
-    // const organizer = event.Group.organizerId
 
     const start = new Date(event.startDate);
     const end = new Date(event.endDate);
@@ -29,7 +26,7 @@ const EventPage = () => {
     }, [dispatch]);
 
     if (!event.Group) return null
-    
+
     return (
         <div className="eventPageBody">
             <div className='eventHeader'>

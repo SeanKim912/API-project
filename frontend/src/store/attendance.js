@@ -48,7 +48,8 @@ const rsvpReducer = (state = initialState, action) => {
     switch (action.type) {
         // case REQUEST: {
         //     newState = { allAttendances: { ...state.allAttendances }, singleAttendance: {}};
-        //     newState.allAttendances[action.eventId] = action.
+        //     newState.allAttendances[action.attendance.id] = action.attendance;
+        //     return newState;
         // }
         default: {
             return state;

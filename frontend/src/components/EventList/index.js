@@ -24,7 +24,6 @@ const EventList = () => {
                 <div id="list">
                     {events.map((event) => {
                         const start = new Date(event.startDate);
-                        console.log(start)
                         return (
                         <NavLink exact to={`/events/${event.id}`}>
                             <div className="eventCard">
