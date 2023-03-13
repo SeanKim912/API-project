@@ -37,7 +37,7 @@ module.exports = {
         allowNull: false
       },
       price: {
-        type: Sequelize.NUMBER
+        type: Sequelize.DECIMAL
       },
       startDate: {
         type: Sequelize.DATE,
