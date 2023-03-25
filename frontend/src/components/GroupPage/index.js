@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroup, removeGroup } from '../../store/group';
+import { membershipRequest } from '../../store/membership';
 import './GroupPage.css'
 
 const GroupPage = () => {
@@ -16,6 +17,10 @@ const GroupPage = () => {
             .then(async (res) => {
                 history.push('/');
             });
+    }
+
+    const requestFunc = () => {
+        dispatch(membershipRequest)
     }
 
     function isPrivate(status) {
@@ -63,6 +68,7 @@ const GroupPage = () => {
                     )
                     : (
                         <>
+                            <button className='groupButton' onClick={requestFunc}>Join this group</button>
                         </>
                     )}
             </div>
