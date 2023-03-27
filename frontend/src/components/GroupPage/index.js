@@ -2,15 +2,24 @@ import { useEffect } from 'react';
 import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroup, removeGroup } from '../../store/group';
-import { membershipRequest } from '../../store/membership';
+import { membershipRequest, groupMemberships } from '../../store/membership';
 import './GroupPage.css'
 
 const GroupPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { groupId } = useParams();
     const user = useSelector(state => state.session.user);
     const group = useSelector(state => state.groupState.singleGroup);
-    const { groupId } = useParams();
+    const allMembers = useSelector(state => state.membershipState.groupMemberships);
+    const membership =  {}
+    for (const member in allMembers) {
+        if (member.id === user.id) {
+            membership = member;
+        }
+    }
+    console.log("MEMBERS", allMembers, membership)
+
 
     const deleterFunc = () => {
         dispatch(removeGroup(groupId))
@@ -20,7 +29,7 @@ const GroupPage = () => {
     }
 
     const requestFunc = () => {
-        dispatch(membershipRequest)
+        dispatch(membershipRequest(groupId));
     }
 
     function isPrivate(status) {
@@ -33,6 +42,7 @@ const GroupPage = () => {
 
     useEffect(() => {
         dispatch(getGroup(groupId));
+        dispatch(groupMemberships(groupId));
     }, [dispatch]);
 
     return (

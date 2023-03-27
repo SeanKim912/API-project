@@ -11,17 +11,17 @@ module.exports = {
       {
         userId: 1,
         groupId: 1,
-        status: 'active'
+        status: 'member'
       },
       {
         userId: 2,
         groupId: 2,
-        status: 'active'
+        status: 'member'
       },
       {
         userId: 3,
         groupId: 3,
-        status: 'active'
+        status: 'member'
       }
     ], {});
   },

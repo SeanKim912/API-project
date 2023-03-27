@@ -44,7 +44,7 @@ const initialState = {
 const membershipReducer = (state = initialState, action) => {
     let newState;
     switch(action.type) {
-        case groupMemberships: {
+        case GROUP_MEMBERSHIPS: {
             newState = { groupMemberships: {}, singleMembership: {} };
             action.memberships.Members.forEach((member) => {
                 newState.groupMemberships[member.id] = member;
