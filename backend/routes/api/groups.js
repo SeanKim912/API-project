@@ -30,7 +30,7 @@ router.get('/:groupId/members', async (req, res, next) => {
     const where = {};
 
     if (!currUserId || currUserId !== group.organizerId) {
-        where.status = { [Op.in]: ['co-host', 'member'] }
+        where.status = { [Op.in]: ['co-host', 'member', 'pending'] }
     }
 
     const members = await Group.findByPk(groupId, {

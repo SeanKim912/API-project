@@ -5,7 +5,6 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import CreateGroupPage from "./components/CreateGroupPage";
 import GroupList from "./components/GroupList";
-import UserGroupList from "./components/UserGroupList";
 import GroupPage from "./components/GroupPage";
 import EditGroupPage from "./components/EditGroupPage";
 import EventList from "./components/EventList";
@@ -14,6 +13,7 @@ import CreateEventPage from "./components/CreateEventPage";
 import EditEventPage from "./components/EditEventPage";
 import SplashPage from "./components/SplashPage";
 import Footer from "./components/Footer";
+import MembershipPage from "./components/MembershipPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,14 +40,14 @@ function App() {
           <Route path="/groups/start">
             <CreateGroupPage />
           </Route>
-          {/* <Route path="/groups/user">
-            <UserGroupList />
-          </Route> */}
           <Route exact path="/groups/:groupId">
             <GroupPage />
           </Route>
           <Route path="/events/:eventId">
             <EventPage />
+          </Route>
+          <Route path="/memberships/:groupId">
+            <MembershipPage />
           </Route>
           <Route path="/groups">
             <GroupList />

@@ -13,10 +13,6 @@ const EventList = () => {
         dispatch(getAllEvents());
     }, [dispatch]);
 
-    // useEffect(() => {
-    //     dispatch(clearGroup());
-    // }, [dispatch]);
-
     return (
         <div id="main">
             <div>

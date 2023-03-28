@@ -12,13 +12,20 @@ const GroupPage = () => {
     const user = useSelector(state => state.session.user);
     const group = useSelector(state => state.groupState.singleGroup);
     const allMembers = useSelector(state => state.membershipState.groupMemberships);
-    const membership =  {}
-    for (const member in allMembers) {
-        if (member.id === user.id) {
-            membership = member;
+    const membersArr = Object.values(allMembers);
+    const membership = membersArr.find(member => member.id === user.id);
+    const pendingText = () => {
+        if (membership?.Membership.status === 'pending') {
+            return <button className='groupButton'>Pending...</button>
+        } else if (membership?.Membership.status === 'member') {
+            return <button className='groupButton'>Leave this group</button>
+        } else {
+            return <button className='groupButton' onClick={requestFunc}>Join this group</button>
         }
     }
-    console.log("MEMBERS", allMembers, membership)
+    const numPending = membersArr.filter(member => member.Membership.status === 'pending')
+    console.log("MEMBERS", membersArr)
+    console.log("MEMBERSHIP", membership)
 
 
     const deleterFunc = () => {
@@ -62,11 +69,13 @@ const GroupPage = () => {
             <div className='tabStripe'>
                 <div id='blueTab'>About</div>
                 <div className='infoTab' title='Feature in development'>Events</div>
-                <div className='infoTab' title='Feature in development'>Members</div>
                 <div className='infoTab' title='Feature in development'>Photos</div>
                 {user.id === group.organizerId
                     ? (
                         <>
+                            <NavLink exact to={`/memberships/${group.id}`}>
+                                <button className='groupButton'>Memberships ({numPending.length})</button>
+                            </NavLink>
                             <NavLink exact to={`/groups/${group.id}/events`}>
                                 <button className='groupButton'>Create an event</button>
                             </NavLink>
@@ -75,10 +84,9 @@ const GroupPage = () => {
                             </NavLink>
                             <button className='groupButton' onClick={deleterFunc}>Delete this group</button>
                         </>
-                    )
-                    : (
+                    ) : (
                         <>
-                            <button className='groupButton' onClick={requestFunc}>Join this group</button>
+                            {pendingText()}
                         </>
                     )}
             </div>

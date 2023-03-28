@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GROUP_MEMBERSHIPS = 'memberships/group';
 const REQUEST = 'memberships/request';
+const APPROVE = 'memberships/approve';
 
 const loadGroupMemberships = (memberships) => ({
     type: GROUP_MEMBERSHIPS,
@@ -12,6 +13,11 @@ const requestMembership = (membership) => ({
     type: REQUEST,
     membership
 });
+
+const approveMembership = (membership) => ({
+    type: APPROVE,
+    membership
+})
 
 export const groupMemberships = (groupId) => async(dispatch) => {
     const response = await csrfFetch(`/api/groups/${groupId}/members`)
@@ -32,6 +38,20 @@ export const membershipRequest = (groupId) => async(dispatch) => {
     if (response.ok) {
         const membership = await response.json();
         dispatch(requestMembership(membership));
+        return membership;
+    }
+}
+
+export const membershipApproval = (groupId, membership) => async(dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}/membership`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(membership)
+    });
+
+    if (response.ok) {
+        const membership = await response.json();
+        dispatch(approveMembership(membership));
         return membership;
     }
 }
