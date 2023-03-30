@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroup, removeGroup } from '../../store/group';
-import { membershipRequest, groupMemberships } from '../../store/membership';
+import { membershipRequest, groupMemberships, membershipDelete } from '../../store/membership';
 import './GroupPage.css'
 
 const GroupPage = () => {
@@ -18,12 +18,13 @@ const GroupPage = () => {
         if (membership?.Membership.status === 'pending') {
             return <button className='groupButton'>Pending...</button>
         } else if (membership?.Membership.status === 'member') {
-            return <button className='groupButton'>Leave this group</button>
+            return <button className='groupButton' onClick={leaveFunc}>Leave this group</button>
         } else {
             return <button className='groupButton' onClick={requestFunc}>Join this group</button>
         }
     }
-    const numPending = membersArr.filter(member => member.Membership.status === 'pending')
+    const numPending = membersArr.filter(member => member.Membership?.status === 'pending');
+    const [pend, setPend] = useState(true)
     console.log("MEMBERS", membersArr)
     console.log("MEMBERSHIP", membership)
 
@@ -36,7 +37,16 @@ const GroupPage = () => {
     }
 
     const requestFunc = () => {
-        dispatch(membershipRequest(groupId));
+        dispatch(membershipRequest(groupId))
+            .then(setPend(!pend));
+    }
+
+    const leaveFunc = () => {
+        const membershipPayload = {
+            memberId: user.id
+        }
+        dispatch(membershipDelete(groupId, membershipPayload))
+            .then(setPend(!pend));
     }
 
     function isPrivate(status) {
@@ -50,7 +60,7 @@ const GroupPage = () => {
     useEffect(() => {
         dispatch(getGroup(groupId));
         dispatch(groupMemberships(groupId));
-    }, [dispatch]);
+    }, [dispatch, pend]);
 
     return (
         <div className='pageContainer'>

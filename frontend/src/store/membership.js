@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GROUP_MEMBERSHIPS = 'memberships/group';
 const REQUEST = 'memberships/request';
 const APPROVE = 'memberships/approve';
+const DELETE = 'memberships/delete';
 
 const loadGroupMemberships = (memberships) => ({
     type: GROUP_MEMBERSHIPS,
@@ -16,6 +17,11 @@ const requestMembership = (membership) => ({
 
 const approveMembership = (membership) => ({
     type: APPROVE,
+    membership
+});
+
+const deleteMembership = (membership) => ({
+    type: DELETE,
     membership
 })
 
@@ -56,6 +62,19 @@ export const membershipApproval = (groupId, membership) => async(dispatch) => {
     }
 }
 
+export const membershipDelete = (groupId, membership) => async(dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}/membership`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(membership)
+    });
+
+    if (response.ok) {
+        const membership = await response.json();
+        dispatch(deleteMembership(membership));
+    }
+}
+
 const initialState = {
     groupMemberships: {},
     singleMembership: {}
@@ -72,9 +91,21 @@ const membershipReducer = (state = initialState, action) => {
             return newState;
         }
         case REQUEST: {
-            newState = { groupMemberships: { ...state.groupMemberships}, singleMembership: {}};
+            newState = { groupMemberships: { ...state.groupMemberships }, singleMembership: {}};
             newState.groupMemberships[action.membership.id] = action.membership;
             newState.singleMembership = action.membership;
+            return newState;
+        }
+        case APPROVE: {
+            newState = { ...state, singleMembership: {}};
+            newState.groupMemberships[action.membership.id] = action.membership;
+            newState.singleMembership = action.membership;
+            return newState;
+        }
+        case DELETE: {
+            newState = { ...state };
+            delete newState.groupMemberships[action.membership];
+            newState.singleMembership = {};
             return newState;
         }
         default: {

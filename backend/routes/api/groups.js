@@ -76,7 +76,7 @@ router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-    const membership = await Membership.findOne({ where: { userId: memberId } });
+    const membership = await Membership.findOne({ where: { userId: memberId, groupId: groupId } });
 
     if (!membership) {
         const err = new Error("Membership between the user and the group does not exist");
@@ -93,7 +93,9 @@ router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
         err.title = 'Status change failed'
         err.errors = [ "User couldn't be found" ]
     }
+
     const updatedMembership = await membership.update({ status });
+    console.log('UPDATED', updatedMembership)
 
     res.json({
         id: updatedMembership.id,

@@ -163,9 +163,6 @@ const groupReducer = (state = initialState, action) => {
             newState.singleGroup = {};
             return newState;
         }
-        // case CLEAR: {
-        //     return initialState;
-        // }
         default: {
             return state;
         }
