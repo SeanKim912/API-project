@@ -28,7 +28,7 @@ router.get('/:eventId/attendees', async (req, res, next) => {
     const where = {};
 
     if (!currUserId || currUserId !== group.organizerId) {
-        where.status = { [Op.in]: ['co-host', 'member'] }
+        where.status = { [Op.in]: ['attending', 'maybe'] }
     }
 
     const attendees = await Event.findByPk(eventId, {
@@ -110,7 +110,7 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
     const attendanceRequest = await Attendance.create({
         userId: userIdNumber,
         eventId,
-        status: "pending"
+        status: "attending"
     });
 
     res.json({

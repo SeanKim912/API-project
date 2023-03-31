@@ -25,11 +25,11 @@ const MembershipPage = () => {
                     <div>
                         <div className='membersCard'>{member.firstName} {member.lastName} {member.Membership.status}</div>
                         <button className='groupButton' onClick={() => {
-                            console.log('MEMBER', member)
                             const membershipPayload = {
                                 memberId: member.id,
                                 status: 'member'
                             }
+                            
                             dispatch(membershipApproval(groupId, membershipPayload))
                                 .then(async (res) => {
                                     const data = await res;

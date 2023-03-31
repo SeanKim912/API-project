@@ -105,7 +105,6 @@ const membershipReducer = (state = initialState, action) => {
         }
         case DELETE: {
             newState = { ...state };
-            console.log("ACTION?", action)
             delete newState.groupMemberships[action.membership.id];
             newState.singleMembership = {};
             return newState;

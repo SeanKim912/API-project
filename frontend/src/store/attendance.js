@@ -2,7 +2,6 @@ import { csrfFetch } from "./csrf";
 
 const ALL_ATTENDEES = 'attendees/all';
 const REQUEST = 'attendees/request';
-const APPROVE = 'attendees/approve';
 const DELETE = 'attendees/delete';
 
 const loadAllAttendees = (attendees) => ({
@@ -15,21 +14,25 @@ const requestAttendance = (attendee) => ({
     attendee
 });
 
-const approveAttendance = (attendee) => ({
-    type: APPROVE,
-    attendee
-});
-
 const deleteAttendance = (attendee) => ({
     type: DELETE,
     attendee
 });
 
-export const rsvpEvent = (eventId, rsvp) => async(dispatch) => {
+export const getAttendees = (eventId) => async(dispatch) => {
+    const response = await csrfFetch(`/api/events/${eventId}/attendees`)
+
+    if (response.ok) {
+        const attendees = await response.json();
+        dispatch(loadAllAttendees(attendees));
+        return attendees;
+    }
+}
+
+export const rsvpEvent = (eventId) => async(dispatch) => {
     const response = await  csrfFetch(`/api/${eventId}/attendance`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify(rsvp)
+        headers: { 'Content-Type': 'application/json'}
     });
 
     if (response.ok) {
@@ -46,6 +49,14 @@ const initialState = {
 const rsvpReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
+        case ALL_ATTENDEES: {
+            newState = { allAttendances: {}, singleAttendance: {} };
+            console.log("ATTEND ACTION", action.attendees);
+            action.attendees.Attendees.forEach((attendee) => {
+                newState.allAttendances[attendee.id] = attendee;
+            });
+            return newState;
+        }
         case REQUEST: {
             newState = { allAttendances: { ...state.allAttendances }, singleAttendance: {}};
             newState.allAttendances[action.attendance.id] = action.attendance;

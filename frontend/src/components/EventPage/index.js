@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvent, removeEvent } from "../../store/event";
+import { groupMemberships } from "../../store/membership";
+import { getAttendees } from "../../store/attendance";
 import './EventPage.css';
 
 const EventPage = () => {
@@ -10,6 +12,10 @@ const EventPage = () => {
     const history = useHistory();
     const user = useSelector(state => state.session.user);
     const event = useSelector(state => state.eventState.singleEvent);
+    const allMembers = useSelector(state => state.membershipState.groupMemberships);
+    const membersArr = Object.values(allMembers);
+    
+    const [isMember, setIsMember] = useState(false);
 
     const start = new Date(event.startDate);
     const end = new Date(event.endDate);
@@ -21,8 +27,12 @@ const EventPage = () => {
             });
     }
 
+
+
     useEffect(() => {
         dispatch(getEvent(eventId));
+        dispatch(groupMemberships(event.groupId));
+        dispatch(getAttendees(eventId));
     }, [dispatch]);
 
     if (!event.Group) return null
@@ -53,8 +63,10 @@ const EventPage = () => {
                         <div className="miniEventDetail">Admission: ${event.price}</div>
                     </div>
                     <div className="crudButtons">
-                        {user.id === event.Group.organizerId
-                            ? (
+                        {
+
+                        }
+                        {user.id === event.Group.organizerId && (
                                 <>
                                     <NavLink exact to={`/events/${event.id}/edit`}>
                                         <button className="eventPageButton">Edit this event</button>
@@ -62,10 +74,7 @@ const EventPage = () => {
                                     <button className="eventPageButton" onClick={deleterFunc}>Delete this event</button>
                                 </>
                             )
-                            : (
-                                <>
-                                </>
-                            )}
+                        }
                     </div>
                     <div className="dateInfo"></div>
                 </div>

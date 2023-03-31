@@ -95,7 +95,6 @@ router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
     }
 
     const updatedMembership = await membership.update({ status });
-    console.log('UPDATED', updatedMembership)
 
     res.json({
         id: updatedMembership.id,
