@@ -70,8 +70,9 @@ export const membershipDelete = (groupId, membership) => async(dispatch) => {
     });
 
     if (response.ok) {
-        const membership = await response.json();
-        dispatch(deleteMembership(membership));
+        const deletedMembership = await response.json();
+        dispatch(deleteMembership(deletedMembership));
+        return deletedMembership;
     }
 }
 
@@ -104,7 +105,8 @@ const membershipReducer = (state = initialState, action) => {
         }
         case DELETE: {
             newState = { ...state };
-            delete newState.groupMemberships[action.membership];
+            console.log("ACTION?", action)
+            delete newState.groupMemberships[action.membership.id];
             newState.singleMembership = {};
             return newState;
         }

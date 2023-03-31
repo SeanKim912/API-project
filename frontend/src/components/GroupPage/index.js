@@ -27,6 +27,7 @@ const GroupPage = () => {
     const [pend, setPend] = useState(true)
     console.log("MEMBERS", membersArr)
     console.log("MEMBERSHIP", membership)
+    console.log("GROUP ID", groupId)
 
 
     const deleterFunc = () => {
