@@ -3,7 +3,7 @@ import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvent, removeEvent } from "../../store/event";
 import { groupMemberships } from "../../store/membership";
-import { getAttendees } from "../../store/attendance";
+import { getAttendees, rsvpEvent } from "../../store/attendance";
 import './EventPage.css';
 
 const EventPage = () => {
@@ -14,8 +14,7 @@ const EventPage = () => {
     const event = useSelector(state => state.eventState.singleEvent);
     const allMembers = useSelector(state => state.membershipState.groupMemberships);
     const membersArr = Object.values(allMembers);
-    
-    const [isMember, setIsMember] = useState(false);
+    const membership = membersArr.find(member => member.id === user.id);
 
     const start = new Date(event.startDate);
     const end = new Date(event.endDate);
@@ -25,6 +24,10 @@ const EventPage = () => {
             .then(async (res) => {
                 history.push('/')
             });
+    }
+
+    const rsvpFunc = () => {
+        dispatch(rsvpEvent(eventId));
     }
 
 
@@ -63,8 +66,9 @@ const EventPage = () => {
                         <div className="miniEventDetail">Admission: ${event.price}</div>
                     </div>
                     <div className="crudButtons">
-                        {
-
+                        {membership && (
+                                <button className="eventPageButton">Attend this event</button>
+                            )
                         }
                         {user.id === event.Group.organizerId && (
                                 <>
