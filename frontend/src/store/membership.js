@@ -1,6 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const GROUP_MEMBERSHIPS = 'memberships/group';
+const CONFIRM_MEMBERSHIP = 'memberships/confirm';
 const REQUEST = 'memberships/request';
 const APPROVE = 'memberships/approve';
 const DELETE = 'memberships/delete';
@@ -9,6 +10,11 @@ const loadGroupMemberships = (memberships) => ({
     type: GROUP_MEMBERSHIPS,
     memberships
 });
+
+const isAMember = (membership) => ({
+    type: CONFIRM_MEMBERSHIP,
+    membership
+})
 
 const requestMembership = (membership) => ({
     type: REQUEST,
@@ -26,12 +32,22 @@ const deleteMembership = (membership) => ({
 })
 
 export const groupMemberships = (groupId) => async(dispatch) => {
-    const response = await csrfFetch(`/api/groups/${groupId}/members`)
+    const response = await csrfFetch(`/api/groups/${groupId}/members`);
 
     if (response.ok) {
         const memberships = await response.json();
         dispatch(loadGroupMemberships(memberships));
         return memberships;
+    }
+}
+
+export const confirmMembership = (eventId) => async(dispatch) => {
+    const response = await csrfFetch(`/api/groups/${eventId}/ismember`);
+
+    if (response.ok) {
+        const membership = await response.json();
+        dispatch(isAMember(membership));
+        return membership;
     }
 }
 
@@ -73,6 +89,8 @@ export const membershipDelete = (groupId, membership) => async(dispatch) => {
         const deletedMembership = await response.json();
         dispatch(deleteMembership(deletedMembership));
         return deletedMembership;
+    } else {
+        return {}
     }
 }
 
@@ -89,6 +107,12 @@ const membershipReducer = (state = initialState, action) => {
             action.memberships.Members.forEach((member) => {
                 newState.groupMemberships[member.id] = member;
             });
+            return newState;
+        }
+        case CONFIRM_MEMBERSHIP: {
+            newState = { groupMemberships: {}, singleMembership: {}};
+            console.log("ACTION", action.membership)
+            newState.singleMembership = action.membership;
             return newState;
         }
         case REQUEST: {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvent, removeEvent } from "../../store/event";
-import { groupMemberships } from "../../store/membership";
+import { confirmMembership } from "../../store/membership";
 import { getAttendees, rsvpEvent } from "../../store/attendance";
 import './EventPage.css';
 
@@ -12,9 +12,12 @@ const EventPage = () => {
     const history = useHistory();
     const user = useSelector(state => state.session.user);
     const event = useSelector(state => state.eventState.singleEvent);
-    const allMembers = useSelector(state => state.membershipState.groupMemberships);
-    const membersArr = Object.values(allMembers);
-    const membership = membersArr.find(member => member.id === user.id);
+    const membership = useSelector(state => state.membershipState.singleMembership);
+    console.log('EVENT', event)
+    // const allMembers = useSelector(state => state.membershipState.groupMemberships);
+    // const membersArr = Object.values(allMembers);
+    // const membership = membersArr.find(member => member.firstName === user.firstName && member.lastName === user.lastName);
+    // console.log("EVENT", event, membersArr)
 
     const start = new Date(event.startDate);
     const end = new Date(event.endDate);
@@ -34,7 +37,7 @@ const EventPage = () => {
 
     useEffect(() => {
         dispatch(getEvent(eventId));
-        dispatch(groupMemberships(event.groupId));
+        dispatch(confirmMembership(eventId));
         dispatch(getAttendees(eventId));
     }, [dispatch]);
 

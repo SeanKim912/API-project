@@ -51,7 +51,6 @@ const rsvpReducer = (state = initialState, action) => {
     switch (action.type) {
         case ALL_ATTENDEES: {
             newState = { allAttendances: {}, singleAttendance: {} };
-            console.log("ATTEND ACTION", action.attendees);
             action.attendees.Attendees.forEach((attendee) => {
                 newState.allAttendances[attendee.id] = attendee;
             });
