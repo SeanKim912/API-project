@@ -52,13 +52,13 @@ router.get('/:groupId/members', async (req, res, next) => {
 });
 
 
-// Confirm if current user is a member of a group by its id
+// Confirm if current user is a member of a group for a particular event
 router.get('/:eventId/ismember', async(req, res, next) => {
     const { eventId } = req.params;
     const currUserId = req.user.id;
     const event = await Event.findByPk(eventId);
 
-    const member = await Membership.findOne({
+    let member = await Membership.findOne({
         where: {
             groupId: event.groupId,
             userId: currUserId,
@@ -66,11 +66,15 @@ router.get('/:eventId/ismember', async(req, res, next) => {
         }
     });
 
-    if (!member) {
-        const err = new Error("Membership couldn't be found");
-        err.status = 404;
+    // if (!member) {
+    //     const err = new Error("Membership couldn't be found");
+    //     err.status = 404;
 
-        return next(err);
+    //     return next(err);
+    // }
+
+    if (!member) {
+        member = {}
     }
 
     res.json(member)

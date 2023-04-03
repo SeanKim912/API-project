@@ -111,7 +111,6 @@ const membershipReducer = (state = initialState, action) => {
         }
         case CONFIRM_MEMBERSHIP: {
             newState = { groupMemberships: {}, singleMembership: {}};
-            console.log("ACTION", action.membership)
             newState.singleMembership = action.membership;
             return newState;
         }

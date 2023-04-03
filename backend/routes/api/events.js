@@ -49,6 +49,33 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 });
 
 
+// Confirm if current user is attending an event by the event's id
+router.get('/:eventId/attending', async (req, res, next) => {
+    const { eventId } = req.params;
+    const currUserId = req.user.id;
+    const event = await Event.findByPk(eventId);
+
+    if (!event) {
+        const err = new Error("Event couldn't be found");
+        err.status = 404;
+
+        return next(err);
+    };
+
+    let attendee = await Attendance.findOne({
+        where: {
+            eventId: eventId,
+            userId: currUserId
+        }
+    });
+
+    if (!attendee) {
+        attendee = {}
+    }
+
+    res.json(attendee)
+});
+
 
 // Change Attendance status
 router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {

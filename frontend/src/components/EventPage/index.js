@@ -3,7 +3,7 @@ import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvent, removeEvent } from "../../store/event";
 import { confirmMembership } from "../../store/membership";
-import { getAttendees, rsvpEvent } from "../../store/attendance";
+import { getAttendees, confirmAttendee, rsvpEvent } from "../../store/attendance";
 import './EventPage.css';
 
 const EventPage = () => {
@@ -13,14 +13,24 @@ const EventPage = () => {
     const user = useSelector(state => state.session.user);
     const event = useSelector(state => state.eventState.singleEvent);
     const membership = useSelector(state => state.membershipState.singleMembership);
-    console.log('EVENT', event)
-    // const allMembers = useSelector(state => state.membershipState.groupMemberships);
-    // const membersArr = Object.values(allMembers);
-    // const membership = membersArr.find(member => member.firstName === user.firstName && member.lastName === user.lastName);
-    // console.log("EVENT", event, membersArr)
-
+    const attendances = useSelector(state => state.attendanceState.allAttendances);
+    const attendanceArr = Object.values(attendances);
+    const attendee = useSelector(state => state.attendanceState.singleAttendance);
+    console.log("ATTENDEE", attendee);
     const start = new Date(event.startDate);
     const end = new Date(event.endDate);
+    const [rsvp, setRSVP] = useState(true);
+    let status = "notMember"
+
+    if (!membership.id) {
+        status = "notMember"
+    } else if (membership.id && !attendee.id) {
+        status = "notResponded"
+    } else if (membership.id && attendee.id) {
+        status = "responded"
+    }
+
+    console.log("ATTEND STATUS", status)
 
     const deleterFunc = () => {
         dispatch(removeEvent(eventId))
@@ -30,16 +40,16 @@ const EventPage = () => {
     }
 
     const rsvpFunc = () => {
-        dispatch(rsvpEvent(eventId));
+        dispatch(rsvpEvent(eventId))
+            .then(setRSVP(!rsvp));
     }
-
-
 
     useEffect(() => {
         dispatch(getEvent(eventId));
         dispatch(confirmMembership(eventId));
         dispatch(getAttendees(eventId));
-    }, [dispatch]);
+        dispatch(confirmAttendee(eventId));
+    }, [dispatch, rsvp]);
 
     if (!event.Group) return null
 
@@ -69,10 +79,15 @@ const EventPage = () => {
                         <div className="miniEventDetail">Admission: ${event.price}</div>
                     </div>
                     <div className="crudButtons">
-                        {membership && (
-                                <button className="eventPageButton">Attend this event</button>
-                            )
-                        }
+                        {status === "notMember" && (
+                            <div>Only members can RSVP</div>
+                        )}
+                        {status === "notResponded" && (
+                            <button className="eventPageButton" onClick={rsvpFunc}>Attend this event</button>
+                        )}
+                        {status === "responded" && (
+                            <div>{attendee.status.toUpperCase()}</div>
+                        )}
                         {user.id === event.Group.organizerId && (
                                 <>
                                     <NavLink exact to={`/events/${event.id}/edit`}>

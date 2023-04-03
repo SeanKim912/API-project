@@ -24,7 +24,7 @@ const GroupPage = () => {
         }
     }
     const numPending = membersArr.filter(member => member.Membership?.status === 'pending');
-    const [pend, setPend] = useState(true)
+    const [pend, setPend] = useState(true);
 
     const deleterFunc = () => {
         dispatch(removeGroup(groupId))
