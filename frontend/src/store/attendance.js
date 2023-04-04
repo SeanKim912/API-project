@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const ALL_ATTENDEES = 'attendees/all';
 const REQUEST = 'attendees/request';
-const DELETE = 'attendees/delete';
+const UPDATE = 'attendees/update';
 const CONFIRM_ATTENDANCE = 'attendees/confirm'
 
 const loadAllAttendees = (attendees) => ({
@@ -20,8 +20,8 @@ const requestAttendance = (attendee) => ({
     attendee
 });
 
-const deleteAttendance = (attendee) => ({
-    type: DELETE,
+const updateAttendance = (attendee) => ({
+    type: UPDATE,
     attendee
 });
 
@@ -46,7 +46,7 @@ export const confirmAttendee = (eventId) => async(dispatch) => {
 }
 
 export const rsvpEvent = (eventId) => async(dispatch) => {
-    const response = await  csrfFetch(`/api/events/${eventId}/attendance`, {
+    const response = await csrfFetch(`/api/events/${eventId}/attendance`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json'}
     });
@@ -54,6 +54,21 @@ export const rsvpEvent = (eventId) => async(dispatch) => {
     if (response.ok) {
         const attendance = await response.json();
         dispatch(requestAttendance(attendance));
+        return attendance;
+    }
+}
+
+export const rsvpUpdate = (eventId, rsvp) => async(dispatch) => {
+    const response = await csrfFetch(`/api/events/${eventId}/attendance`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(rsvp)
+    });
+
+    if (response.ok) {
+        const attendance = await response.json();
+        dispatch(updateAttendance(attendance));
+        return attendance;
     }
 }
 
@@ -77,8 +92,14 @@ const rsvpReducer = (state = initialState, action) => {
             newState.singleAttendance = action.attendee;
             return newState;
         }
+        case UPDATE: {
+            newState = { allAttendances: { ...state.allAttendances }, singleAttendance: {} };
+            newState.allAttendances[action.attendance.id] = action.attendance;
+            newState.singleAttendance = action.attendance;
+            return newState;
+        }
         case REQUEST: {
-            newState = { allAttendances: { ...state.allAttendances }, singleAttendance: {}};
+            newState = { allAttendances: { ...state.allAttendances }, singleAttendance: {} };
             newState.allAttendances[action.attendance.id] = action.attendance;
             newState.singleAttendance = action.attendance;
             return newState;

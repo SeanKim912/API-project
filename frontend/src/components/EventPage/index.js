@@ -3,7 +3,7 @@ import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvent, removeEvent } from "../../store/event";
 import { confirmMembership } from "../../store/membership";
-import { getAttendees, confirmAttendee, rsvpEvent } from "../../store/attendance";
+import { getAttendees, confirmAttendee, rsvpEvent, rsvpUpdate } from "../../store/attendance";
 import './EventPage.css';
 
 const EventPage = () => {
@@ -20,6 +20,7 @@ const EventPage = () => {
     const start = new Date(event.startDate);
     const end = new Date(event.endDate);
     const [rsvp, setRSVP] = useState(true);
+    const [attend, setAttend] = useState("");
     let status = "notMember"
 
     if (!membership.id) {
@@ -30,7 +31,17 @@ const EventPage = () => {
         status = "responded"
     }
 
-    console.log("ATTEND STATUS", status)
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const rsvpPayload = {
+            userId: user.id,
+            status: attend
+        }
+
+        dispatch(rsvpUpdate(eventId, rsvpPayload))
+            .then(setRSVP(!rsvp))
+    }
 
     const deleterFunc = () => {
         dispatch(removeEvent(eventId))
@@ -86,16 +97,29 @@ const EventPage = () => {
                             <button className="eventPageButton" onClick={rsvpFunc}>Attend this event</button>
                         )}
                         {status === "responded" && (
-                            <div>{attendee.status.toUpperCase()}</div>
+                            <>
+                                <div>{attendee.status.toUpperCase()}</div>
+                                <form onSubmit={handleSubmit}>
+                                    <select
+                                        value={attend}
+                                        onChange={(e) => setAttend(e.target.value)}
+                                    >
+                                        <option value={"attending"}>Attending</option>
+                                        <option value={"not attending"}>Not Attending</option>
+                                        <option value={"maybe"}>Maybe</option>
+                                    </select>
+                                    <button className="formButton" type="submit">Edit RSVP</button>
+                                </form>
+                            </>
                         )}
                         {user.id === event.Group.organizerId && (
-                                <>
-                                    <NavLink exact to={`/events/${event.id}/edit`}>
-                                        <button className="eventPageButton">Edit this event</button>
-                                    </NavLink>
-                                    <button className="eventPageButton" onClick={deleterFunc}>Delete this event</button>
-                                </>
-                            )
+                            <>
+                                <NavLink exact to={`/events/${event.id}/edit`}>
+                                    <button className="eventPageButton">Edit this event</button>
+                                </NavLink>
+                                <button className="eventPageButton" onClick={deleterFunc}>Delete this event</button>
+                            </>
+                        )
                         }
                     </div>
                     <div className="dateInfo"></div>

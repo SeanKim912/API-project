@@ -100,7 +100,7 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-    const attendance = await Attendance.findOne({ where: { userId: userId } });
+    const attendance = await Attendance.findOne({ where: { userId: userId, eventId: eventId } });
 
     if (!attendance) {
         const err = new Error("Attendance between the user and the event does not exist");
