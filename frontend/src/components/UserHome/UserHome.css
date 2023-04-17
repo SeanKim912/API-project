@@ -6,7 +6,7 @@
     align-items: center;
     margin-top: 68px;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
-
+    min-height: 80vh;
 }
 
 .welcome {

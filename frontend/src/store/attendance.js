@@ -94,8 +94,8 @@ const rsvpReducer = (state = initialState, action) => {
         }
         case UPDATE: {
             newState = { allAttendances: { ...state.allAttendances }, singleAttendance: {} };
-            newState.allAttendances[action.attendance.id] = action.attendance;
-            newState.singleAttendance = action.attendance;
+            newState.allAttendances[action.attendee.id] = action.attendee;
+            newState.singleAttendance = action.attendee;
             return newState;
         }
         case REQUEST: {

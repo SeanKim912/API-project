@@ -13,10 +13,7 @@ const EventPage = () => {
     const user = useSelector(state => state.session.user);
     const event = useSelector(state => state.eventState.singleEvent);
     const membership = useSelector(state => state.membershipState.singleMembership);
-    const attendances = useSelector(state => state.attendanceState.allAttendances);
-    const attendanceArr = Object.values(attendances);
     const attendee = useSelector(state => state.attendanceState.singleAttendance);
-    console.log("ATTENDEE", attendee);
     const start = new Date(event.startDate);
     const end = new Date(event.endDate);
     const [rsvp, setRSVP] = useState(true);
@@ -91,15 +88,15 @@ const EventPage = () => {
                     </div>
                     <div className="crudButtons">
                         {status === "notMember" && (
-                            <div>Only members can RSVP</div>
+                            <div className="nonmember-text">Only members can RSVP</div>
                         )}
                         {status === "notResponded" && (
                             <button className="eventPageButton" onClick={rsvpFunc}>Attend this event</button>
                         )}
                         {status === "responded" && (
-                            <>
-                                <div>{attendee.status.toUpperCase()}</div>
-                                <form onSubmit={handleSubmit}>
+                            <div className="rsvp-container">
+                                <div className="status-indicator">RSVP: {attendee.status.toUpperCase()}</div>
+                                <form className="rsvp-form" onSubmit={handleSubmit}>
                                     <select
                                         value={attend}
                                         onChange={(e) => setAttend(e.target.value)}
@@ -108,9 +105,9 @@ const EventPage = () => {
                                         <option value={"not attending"}>Not Attending</option>
                                         <option value={"maybe"}>Maybe</option>
                                     </select>
-                                    <button className="formButton" type="submit">Edit RSVP</button>
+                                    <button className="eventPageButton" type="submit">Edit RSVP</button>
                                 </form>
-                            </>
+                            </div>
                         )}
                         {user.id === event.Group.organizerId && (
                             <>

@@ -18,18 +18,20 @@ const MembershipPage = () => {
     }, [dispatch, approve]);
 
     return (
-        <>
+        <div className='membership-container'>
             <h1 className='membersTitle'>Pending</h1>
+            {!pendingArr.length && (
+                <div>No membership requests currently pending</div>
+            )}
             {pendingArr.map(member => {
                 return (
-                    <div>
-                        <div className='membersCard'>{member.firstName} {member.lastName} {member.Membership.status}</div>
+                    <div className='pending-row'>
+                        <div className='membersCard'>{member.firstName} {member.lastName}</div>
                         <button className='groupButton' onClick={() => {
                             const membershipPayload = {
                                 memberId: member.id,
                                 status: 'member'
                             }
-                            
                             dispatch(membershipApproval(groupId, membershipPayload))
                                 .then(async (res) => {
                                     const data = await res;
@@ -41,9 +43,9 @@ const MembershipPage = () => {
             })}
             <h1 className='membersTitle'>Members</h1>
             {approvedArr.map(member => {
-                return <div className='membersCard'>{member.firstName} {member.lastName} {member.Membership.status}</div>
+                return <div className='membersCard'>{member.firstName} {member.lastName}: {member.Membership.status.toUpperCase()}</div>
             })}
-        </>
+        </div>
     )
 }
 

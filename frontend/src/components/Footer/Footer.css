@@ -9,6 +9,9 @@
     margin-top: 0px;
     padding-top: 16px;
     tab-size: 4;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
 .footerBody {
