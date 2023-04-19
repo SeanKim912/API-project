@@ -16,9 +16,9 @@ function SignupFormModal() {
     const { closeModal } = useModal();
 
     const demoInput = () => {
-        setEmail("fake@gmail.com");
-        setUsername("FakeUser");
-        setFirstName("Fake");
+        setEmail("demo@gmail.com");
+        setUsername("DemoUser");
+        setFirstName("Demo");
         setLastName("User");
         setPassword("password");
         setConfirmPassword("password");

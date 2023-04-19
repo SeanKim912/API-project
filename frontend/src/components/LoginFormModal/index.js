@@ -12,7 +12,7 @@ function LoginFormModal() {
     const { closeModal } = useModal();
 
     const demoInput = () => {
-        setCredential("FakeUser");
+        setCredential("DemoUser");
         setPassword("password");
     }
 
